@@ -6,9 +6,10 @@ import { BrandLogo } from './BrandLogo';
 interface HeaderProps {
   lang: 'nl' | 'en';
   setLang: (l: 'nl' | 'en') => void;
+  setActivePage?: (page: 'home' | 'privacy' | 'terms') => void;
 }
 
-export function Header({ lang, setLang }: HeaderProps) {
+export function Header({ lang, setLang, setActivePage }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -40,7 +41,7 @@ export function Header({ lang, setLang }: HeaderProps) {
         }`}
       >
         {/* Logo */}
-        <a href="#" className="group">
+        <a href="#" className="group" onClick={(e) => { e.preventDefault(); setActivePage?.('home'); }}>
           <BrandLogo variant={isScrolled ? 'dark' : 'light'} size="md" />
         </a>
         
@@ -52,6 +53,7 @@ export function Header({ lang, setLang }: HeaderProps) {
             <a 
               key={link.name} 
               href={link.href} 
+              onClick={() => setActivePage?.('home')}
               className={`transition-colors duration-200 ${
                 isScrolled ? 'hover:text-[var(--color-text-primary)]' : 'hover:text-white'
               }`}
@@ -91,6 +93,7 @@ export function Header({ lang, setLang }: HeaderProps) {
 
           <a 
             href="#boeken" 
+            onClick={() => setActivePage?.('home')}
             className={`hidden sm:inline-flex items-center gap-1.5 px-5 py-2 rounded-lg text-[13px] font-semibold transition-all duration-300 ${
               isScrolled 
                 ? 'bg-[var(--color-text-primary)] hover:bg-[var(--color-agency-accent)] text-white' 
@@ -134,7 +137,9 @@ export function Header({ lang, setLang }: HeaderProps) {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex flex-col gap-10 mt-14">
-                <BrandLogo variant="color" size="md" />
+                <div onClick={() => { setActivePage?.('home'); setIsMobileMenuOpen(false); }} className="cursor-pointer">
+                  <BrandLogo variant="color" size="md" />
+                </div>
                 
                 <nav className="flex flex-col gap-1">
                   {navLinks.map((link, index) => (
@@ -144,7 +149,7 @@ export function Header({ lang, setLang }: HeaderProps) {
                       transition={{ delay: index * 0.06 }}
                       key={link.name} 
                       href={link.href} 
-                      onClick={() => setIsMobileMenuOpen(false)}
+                      onClick={() => { setIsMobileMenuOpen(false); setActivePage?.('home'); }}
                       className="text-[var(--color-text-primary)] hover:text-[var(--color-agency-accent)] transition-colors py-3 border-b border-black/[0.04] text-[15px] font-medium flex items-center justify-between"
                     >
                       {link.name}
@@ -157,7 +162,7 @@ export function Header({ lang, setLang }: HeaderProps) {
               <div className="flex flex-col gap-3">
                 <a 
                   href="#boeken" 
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={() => { setIsMobileMenuOpen(false); setActivePage?.('home'); }}
                   className="w-full bg-[var(--color-text-primary)] text-white text-center py-3.5 rounded-lg text-[13px] font-semibold transition-all"
                 >
                   {lang === 'nl' ? 'Plan een kennismaking' : 'Book an intro call'}

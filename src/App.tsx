@@ -10,8 +10,10 @@ import { Boutique } from './components/Boutique';
 import { CTA } from './components/CTA';
 import { Footer } from './components/Footer';
 import { ChatWidget } from './components/ChatWidget';
+import { LegalPage } from './components/LegalPage';
 
 export default function App() {
+  const [activePage, setActivePage] = useState<'home' | 'privacy' | 'terms'>('home');
   const [lang, setLang] = useState<'nl' | 'en'>(() => {
     if (typeof window !== 'undefined') {
       const hostname = window.location.hostname;
@@ -23,18 +25,24 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col w-full overflow-x-hidden">
-      <Header lang={lang} setLang={setLang} />
+      <Header lang={lang} setLang={setLang} setActivePage={setActivePage} />
       <main className="flex-1 w-full flex flex-col">
-        <Hero lang={lang} />
+        {activePage === 'home' ? (
+          <>
+            <Hero lang={lang} />
         <LogoCloud lang={lang} />
         <Problem lang={lang} />
         <Services lang={lang} />
         <Results lang={lang} />
         <Methodology lang={lang} />
-        <Boutique lang={lang} />
-        <CTA lang={lang} />
+            <Boutique lang={lang} />
+            <CTA lang={lang} />
+          </>
+        ) : (
+          <LegalPage type={activePage as 'privacy' | 'terms'} lang={lang} onBack={() => setActivePage('home')} />
+        )}
       </main>
-      <Footer lang={lang} />
+      <Footer lang={lang} setActivePage={setActivePage} />
       <ChatWidget lang={lang} />
     </div>
   );

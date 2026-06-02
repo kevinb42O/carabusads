@@ -2,9 +2,10 @@ import { BrandLogo } from './BrandLogo';
 
 interface FooterProps {
   lang: 'nl' | 'en';
+  setActivePage?: (page: 'home' | 'privacy' | 'terms') => void;
 }
 
-export function Footer({ lang }: FooterProps) {
+export function Footer({ lang, setActivePage }: FooterProps) {
   const content = {
     nl: {
       description: "Performance marketing bureau gespecialiseerd in Social Ads en conversie-funnels. Gevestigd in België.",
@@ -67,7 +68,7 @@ export function Footer({ lang }: FooterProps) {
           
           {/* Branding */}
           <div className="lg:col-span-4 flex flex-col gap-4">
-            <a href="#" className="group">
+            <a href="#" className="group" onClick={(e) => { e.preventDefault(); setActivePage?.('home'); }}>
               <BrandLogo variant="light" size="md" />
             </a>
             <p className="text-[13px] text-white/50 font-light leading-relaxed max-w-[300px]">
@@ -114,8 +115,8 @@ export function Footer({ lang }: FooterProps) {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 text-[12px] text-white/35 font-light">
           <p>© {new Date().getFullYear()} CarabusADS. {content.allRights}</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-white/60 transition-colors">{content.privacy}</a>
-            <a href="#" className="hover:text-white/60 transition-colors">{content.terms}</a>
+            <button onClick={() => setActivePage?.('privacy')} className="hover:text-white/60 transition-colors cursor-pointer">{content.privacy}</button>
+            <button onClick={() => setActivePage?.('terms')} className="hover:text-white/60 transition-colors cursor-pointer">{content.terms}</button>
           </div>
         </div>
 
