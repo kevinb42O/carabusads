@@ -1,0 +1,6 @@
+{
+  "name": "CarabusADS",
+  "description": "High-end website for a performance marketing agency specializing in Ads & Funnels.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

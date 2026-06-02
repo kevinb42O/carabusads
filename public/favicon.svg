@@ -1,0 +1,29 @@
+<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    /* Default light theme colors for tabs */
+    .layer1 { stroke: #1a2e2e; }
+    .layer2 { stroke: #2D7D6F; }
+    .layer3 { stroke: #45A593; }
+    .dot { fill: #5CCBBA; }
+
+    /* Automated dark theme adjustments for dark browser tabs */
+    @media (prefers-color-scheme: dark) {
+      .layer1 { stroke: #FFFFFF; }
+      .layer2 { stroke: #5CCBBA; }
+      .layer3 { stroke: #86DDD0; }
+      .dot { fill: #A5F3E6; }
+    }
+  </style>
+
+  <!-- Top Funnel Layer -->
+  <path class="layer1" d="M6 9L16 14L26 9" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+  
+  <!-- Middle Funnel Layer -->
+  <path class="layer2" d="M9 16L16 20L23 16" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+  
+  <!-- Bottom Funnel Layer -->
+  <path class="layer3" d="M12 23L16 26L20 23" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+  
+  <!-- Conversion Focus Point -->
+  <circle class="dot" cx="16" cy="29" r="1.6" />
+</svg>

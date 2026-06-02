@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", sans-serif;
+  --font-display: "DM Serif Display", serif;
+  --font-outfit: "Outfit", sans-serif;
+
+  /* Refined Color Palette — deeper, richer, more premium */
+  --color-agency-bg: #f0f4f1;
+  --color-agency-surface: #ffffff;
+  --color-agency-accent: #2D7D6F;
+  --color-agency-accent-hover: #245f54;
+  --color-agency-accent-light: #e8f3f0;
+  --color-text-primary: #1a2e2e;
+  --color-text-secondary: #3d5a5a;
+  --color-text-muted: #6b8a8a;
+
+  /* Animations */
+  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+body {
+  @apply bg-[var(--color-agency-bg)] text-[var(--color-text-secondary)] antialiased selection:bg-[var(--color-agency-accent)]/20 scroll-smooth;
+}
+
+/* Clean Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-agency-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-text-muted);
+  border-radius: 4px;
+  border: 2px solid var(--color-agency-bg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-primary);
+}
+
+/* Card Styles — Solid, not glass everywhere */
+.card-elevated {
+  @apply bg-white border border-black/[0.06] shadow-[0_1px_3px_rgba(0,0,0,0.04),0_6px_24px_rgba(0,0,0,0.03)] transition-colors duration-300;
+  transition-property: box-shadow, border-color, background-color;
+}
+
+.card-elevated:hover {
+  @apply shadow-[0_2px_8px_rgba(0,0,0,0.06),0_12px_36px_rgba(0,0,0,0.06)] border-black/[0.08];
+}
+
+/* Glass — Used sparingly, only for floating/overlay elements */
+.glass-float {
+  @apply bg-white/70 backdrop-blur-xl border border-white/50 shadow-sm transition-colors duration-300;
+  transition-property: box-shadow, border-color, background-color, backdrop-filter;
+}
+
+/* Dark Panel */
+.dark-panel {
+  @apply bg-[var(--color-text-primary)] border border-white/[0.06] shadow-xl transition-colors duration-300;
+  transition-property: box-shadow, border-color, background-color;
+}
+
+/* Text Utilities */
+.text-gradient-accent {
+  @apply text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-text-primary)] to-[var(--color-agency-accent)];
+}
+
+/* Scroll-Driven Entry Animations */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.scroll-reveal {
+  @supports (animation-timeline: view()) {
+    animation: fade-up linear both;
+    animation-timeline: view();
+    animation-range: entry 5% cover 25%;
+  }
+}
+
+.scroll-reveal-fade {
+  @supports (animation-timeline: view()) {
+    animation: fade-in linear both;
+    animation-timeline: view();
+    animation-range: entry 5% cover 20%;
+  }
+}
+
+/* Section Spacing Consistency */
+.section-padding {
+  @apply py-20 md:py-28 px-6 sm:px-8;
+}
+
+/* Badge/Pill — consistent across sections */
+.section-badge {
+  @apply inline-flex items-center gap-2 py-1.5 px-3.5 rounded-md border border-[var(--color-agency-accent)]/15 bg-[var(--color-agency-accent-light)] text-[11px] font-semibold text-[var(--color-agency-accent)] mb-5 uppercase tracking-[0.12em];
+}
