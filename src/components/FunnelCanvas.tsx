@@ -326,12 +326,12 @@ export function FunnelCanvas() {
           if (img.complete) {
             // Give them a subtle white glow behind the logo
             ctx.beginPath();
-            ctx.arc(head.x, head.y, head.scale * 30, 0, Math.PI * 2);
+            ctx.arc(head.x, head.y, head.scale * 18, 0, Math.PI * 2);
             ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
             ctx.fill();
 
-            // Massively increased size so logos are unmistakable and fully visible
-            const size = head.scale * 80;
+            // Sized for a premium, balanced look
+            const size = head.scale * 35;
             
             // Draw Logo 
             ctx.drawImage(img, head.x - size/2, head.y - size/2, size, size);
