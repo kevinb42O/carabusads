@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { MessageSquareText, ChevronDown, Send } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { MessageSquare, X, Send, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import founderImg from '../assets/images/founder_portrait_1780056093258.png';
 
@@ -11,189 +11,264 @@ export function ChatWidget({ lang }: ChatWidgetProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({ naam: '', telefoon: '', vraag: '' });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
+
+  // Show a little "Hey there!" tooltip after a few seconds if not opened
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!isOpen) setShowTooltip(true);
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, [isOpen]);
 
   const content = {
     nl: {
-      role: "Strategist",
-      intro: "Heb je een vraag over je advertenties of funnel? Laat je gegevens achter en ik stuur je een persoonlijk antwoord.",
+      role: "Oprichter & Strateeg",
+      tooltip: "Vragen? Stuur me een berichtje 👋",
+      chatBubble: "Hoi! Ik ben Hans. Laat even je gegevens achter, dan stuur ik je via WhatsApp een persoonlijk antwoord op je vraag.",
       placeholderName: "Je naam",
-      placeholderPhone: "Telefoonnummer (WhatsApp)",
-      placeholderQuestion: "Wat is je vraag?",
-      submitBtn: "Verstuur",
-      successMsg: "Bedankt! Hans neemt zo snel mogelijk contact met je op.",
-      ariaClose: "Sluit chat",
-      ariaOpen: "Stel een vraag"
+      placeholderPhone: "Telefoonnummer",
+      placeholderQuestion: "Typ je vraag hier...",
+      submitBtn: "Start gesprek",
+      successMsg: "Bedankt! Ik heb je bericht ontvangen en app je zo snel mogelijk terug.",
+      ariaClose: "Sluit venster",
+      ariaOpen: "Open chat"
     },
     en: {
-      role: "Strategist",
-      intro: "Got a question about your ads or funnel? Leave your details and I'll send you a personal response.",
+      role: "Founder & Strategist",
+      tooltip: "Questions? Send me a message 👋",
+      chatBubble: "Hi! I'm Hans. Leave your details below and I'll send you a personal response via WhatsApp.",
       placeholderName: "Your name",
-      placeholderPhone: "Phone number (WhatsApp)",
-      placeholderQuestion: "What's your question?",
-      submitBtn: "Send",
-      successMsg: "Thanks! Hans will get back to you as soon as possible.",
-      ariaClose: "Close chat",
-      ariaOpen: "Ask a question"
+      placeholderPhone: "Phone number",
+      placeholderQuestion: "Type your question here...",
+      submitBtn: "Start conversation",
+      successMsg: "Thanks! I've received your message and will WhatsApp you as soon as possible.",
+      ariaClose: "Close window",
+      ariaOpen: "Open chat"
     }
   }[lang];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.naam || !formData.telefoon) return;
+    
+    const phoneNumber = "32472249346";
+    let message = "";
+    if (lang === 'nl') {
+      message = `Hallo Hans, mijn naam is ${formData.naam}. Mijn nummer is ${formData.telefoon}.`;
+      if (formData.vraag) message += `\n\nMijn vraag:\n${formData.vraag}`;
+    } else {
+      message = `Hi Hans, my name is ${formData.naam}. My number is ${formData.telefoon}.`;
+      if (formData.vraag) message += `\n\nMy question:\n${formData.vraag}`;
+    }
+    
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+
     setIsSubmitted(true);
   };
 
   return (
-    <div className="fixed bottom-5 right-5 z-50 font-sans">
+    <div className="fixed bottom-6 right-6 z-50 font-sans flex flex-col items-end">
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 16, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 16, scale: 0.96 }}
-            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="absolute bottom-16 right-0 w-[340px] bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col border border-black/[0.06]"
+            initial={{ opacity: 0, y: 20, scale: 0.95, filter: "blur(10px)" }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: 20, scale: 0.95, filter: "blur(10px)" }}
+            transition={{ duration: 0.4, type: "spring", bounce: 0.3 }}
+            className="absolute bottom-20 right-0 w-[380px] bg-white rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] overflow-hidden flex flex-col border border-black/[0.04]"
           >
-            {/* Header */}
-            <div 
-              className="bg-[var(--color-text-primary)] p-4 flex items-center justify-between text-white cursor-pointer" 
-              onClick={() => setIsOpen(false)}
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg overflow-hidden shrink-0 bg-[var(--color-agency-accent)]/20">
-                  <img 
-                    src={founderImg} 
-                    alt="Hans Claes"
-                    className="w-full h-full object-cover object-[center_20%]"
-                  />
+            {/* Header (Premium Intercom-style) */}
+            <div className="bg-gradient-to-br from-[var(--color-text-primary)] to-[#1a2e2e] p-6 relative overflow-hidden">
+              {/* Decorative shapes */}
+              <div className="absolute top-0 right-0 w-40 h-40 bg-[var(--color-agency-accent)]/20 rounded-full blur-3xl -translate-y-10 translate-x-10 pointer-events-none" />
+              
+              <div className="flex items-start justify-between relative z-10">
+                <div className="flex items-center gap-4">
+                  <div className="relative">
+                    <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-white/10 shadow-lg bg-[var(--color-agency-accent)]/20">
+                      <img 
+                        src={founderImg} 
+                        alt="Hans Claes"
+                        className="w-full h-full object-cover object-[center_20%]"
+                      />
+                    </div>
+                    {/* Online indicator */}
+                    <div className="absolute bottom-0.5 right-0.5 w-3.5 h-3.5 bg-green-500 border-2 border-[var(--color-text-primary)] rounded-full" />
+                  </div>
+                  <div>
+                    <h3 className="font-outfit font-semibold text-white text-[17px] leading-tight tracking-wide">Hans Claes</h3>
+                    <p className="text-[12px] text-white/60 font-light mt-0.5">{content.role}</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-outfit font-semibold text-[14px] leading-tight">Hans Claes</h3>
-                  <p className="text-[10px] text-white/50 font-medium">{content.role}</p>
-                </div>
+                <button 
+                  onClick={() => setIsOpen(false)}
+                  className="p-1.5 text-white/50 hover:text-white hover:bg-white/10 rounded-full transition-colors cursor-pointer"
+                >
+                  <X size={20} />
+                </button>
               </div>
-              <button 
-                className="p-1 hover:bg-white/10 rounded-md transition-colors cursor-pointer"
-                aria-label={content.ariaClose}
-              >
-                <ChevronDown size={18} />
-              </button>
             </div>
 
             {/* Body */}
-            <div className="p-5 flex flex-col gap-4">
-              
+            <div className="bg-[#f8fafc] flex-1 max-h-[60vh] overflow-y-auto custom-scrollbar">
               <AnimatePresence mode="wait">
                 {!isSubmitted ? (
                   <motion.div
-                    key="form"
+                    key="chat"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="flex flex-col gap-3.5"
+                    exit={{ opacity: 0, y: -10 }}
+                    className="p-5 flex flex-col gap-5"
                   >
-                    <p className="text-[13px] text-[var(--color-text-secondary)] font-light leading-relaxed">
-                      {content.intro}
-                    </p>
+                    {/* Chat Bubble from Hans */}
+                    <div className="flex gap-3 max-w-[92%]">
+                      <div className="w-7 h-7 rounded-full overflow-hidden shrink-0 mt-1 shadow-sm border border-black/[0.05]">
+                        <img src={founderImg} alt="Hans Claes" className="w-full h-full object-cover object-[center_20%]" />
+                      </div>
+                      <div className="bg-white p-4 rounded-2xl rounded-tl-sm shadow-sm border border-black/[0.03] text-[14px] text-[var(--color-text-secondary)] font-light leading-relaxed">
+                        {content.chatBubble}
+                      </div>
+                    </div>
 
-                    <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-                      <input 
-                        type="text" 
-                        required
-                        value={formData.naam}
-                        onChange={(e) => setFormData({...formData, naam: e.target.value})}
-                        placeholder={content.placeholderName}
-                        className="w-full outline-none border border-black/[0.08] rounded-lg px-3.5 py-2.5 text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] text-[13px] bg-[var(--color-agency-bg)]/50 focus:border-[var(--color-agency-accent)]/40 transition-colors"
-                      />
+                    {/* The Form */}
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-3 mt-1 bg-white p-5 rounded-2xl shadow-sm border border-black/[0.03]">
+                      
+                      <div className="relative">
+                        <input 
+                          type="text" 
+                          required
+                          value={formData.naam}
+                          onChange={(e) => setFormData({...formData, naam: e.target.value})}
+                          placeholder={content.placeholderName}
+                          className="w-full outline-none border border-black/[0.06] rounded-xl px-4 py-3 text-[var(--color-text-primary)] placeholder:text-black/30 text-[14px] bg-gray-50/50 focus:bg-white focus:border-[var(--color-agency-accent)]/50 focus:ring-4 focus:ring-[var(--color-agency-accent)]/10 transition-all font-light"
+                        />
+                      </div>
 
-                      <input 
-                        type="tel" 
-                        required
-                        value={formData.telefoon}
-                        onChange={(e) => setFormData({...formData, telefoon: e.target.value})}
-                        placeholder={content.placeholderPhone}
-                        className="w-full outline-none border border-black/[0.08] rounded-lg px-3.5 py-2.5 text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] text-[13px] bg-[var(--color-agency-bg)]/50 focus:border-[var(--color-agency-accent)]/40 transition-colors"
-                      />
+                      <div className="relative">
+                        <input 
+                          type="tel" 
+                          required
+                          value={formData.telefoon}
+                          onChange={(e) => setFormData({...formData, telefoon: e.target.value})}
+                          placeholder={content.placeholderPhone}
+                          className="w-full outline-none border border-black/[0.06] rounded-xl px-4 py-3 text-[var(--color-text-primary)] placeholder:text-black/30 text-[14px] bg-gray-50/50 focus:bg-white focus:border-[var(--color-agency-accent)]/50 focus:ring-4 focus:ring-[var(--color-agency-accent)]/10 transition-all font-light"
+                        />
+                      </div>
 
-                      <textarea 
-                        value={formData.vraag}
-                        onChange={(e) => setFormData({...formData, vraag: e.target.value})}
-                        placeholder={content.placeholderQuestion}
-                        rows={2}
-                        className="w-full outline-none border border-black/[0.08] rounded-lg px-3.5 py-2.5 text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] text-[13px] resize-none bg-[var(--color-agency-bg)]/50 focus:border-[var(--color-agency-accent)]/40 transition-colors"
-                      />
+                      <div className="relative">
+                        <textarea 
+                          value={formData.vraag}
+                          onChange={(e) => setFormData({...formData, vraag: e.target.value})}
+                          placeholder={content.placeholderQuestion}
+                          rows={2}
+                          className="w-full outline-none border border-black/[0.06] rounded-xl px-4 py-3 text-[var(--color-text-primary)] placeholder:text-black/30 text-[14px] resize-none bg-gray-50/50 focus:bg-white focus:border-[var(--color-agency-accent)]/50 focus:ring-4 focus:ring-[var(--color-agency-accent)]/10 transition-all font-light custom-scrollbar"
+                        />
+                      </div>
 
                       <button 
                         type="submit"
-                        className="bg-[var(--color-text-primary)] hover:bg-[var(--color-agency-accent)] text-white font-semibold text-[13px] py-2.5 rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                        className="mt-2 bg-[var(--color-text-primary)] hover:bg-[var(--color-agency-accent)] text-white font-medium text-[14px] py-3.5 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] hover:shadow-[0_6px_20px_rgba(45,125,111,0.2)] hover:-translate-y-0.5 active:translate-y-0"
                       >
                         {content.submitBtn}
-                        <Send size={13} />
+                        <ArrowRight size={16} />
                       </button>
                     </form>
                   </motion.div>
                 ) : (
                   <motion.div
                     key="success"
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="py-6 text-center"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="p-10 flex flex-col items-center justify-center text-center h-[320px]"
                   >
-                    <div className="size-10 rounded-lg bg-[var(--color-agency-accent)]/10 flex items-center justify-center text-[var(--color-agency-accent)] mx-auto mb-4 text-lg">
-                      ✓
+                    <div className="size-16 rounded-full bg-[var(--color-agency-accent)]/10 flex items-center justify-center text-[var(--color-agency-accent)] mb-5 shadow-sm border border-[var(--color-agency-accent)]/20">
+                      <Send size={24} className="ml-1" />
                     </div>
+                    <h4 className="font-outfit font-semibold text-[20px] text-[var(--color-text-primary)] mb-2">
+                      {lang === 'nl' ? 'Onderweg!' : 'Sent!'}
+                    </h4>
                     <p className="text-[14px] text-[var(--color-text-secondary)] font-light leading-relaxed">
                       {content.successMsg}
                     </p>
                   </motion.div>
                 )}
               </AnimatePresence>
-
+            </div>
+            
+            {/* Footer */}
+            <div className="bg-white border-t border-black/[0.04] py-3 text-center">
+              <span className="text-[10px] text-[var(--color-text-muted)] font-medium uppercase tracking-wider">Powered by CarabusADS</span>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Toggle Button */}
-      <button
-        onClick={() => {
-          setIsOpen(!isOpen);
-          if (!isOpen) {
-            setIsSubmitted(false);
-            setFormData({ naam: '', telefoon: '', vraag: '' });
-          }
-        }}
-        className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-lg transition-all duration-200 hover:scale-105 active:scale-95 z-50 relative cursor-pointer ${
-          isOpen 
-            ? 'bg-white text-[var(--color-text-primary)] border border-black/[0.06]' 
-            : 'bg-[var(--color-text-primary)] text-white hover:bg-[var(--color-agency-accent)]'
-        }`}
-        aria-label={isOpen ? content.ariaClose : content.ariaOpen}
-      >
-        <AnimatePresence mode="wait">
-          {isOpen ? (
-            <motion.div
-              key="close"
-              initial={{ opacity: 0, rotate: -90 }}
-              animate={{ opacity: 1, rotate: 0 }}
-              exit={{ opacity: 0, rotate: 90 }}
-              transition={{ duration: 0.12 }}
+      {/* Floating Action Button & Tooltip */}
+      <div className="relative flex items-center justify-end">
+        {/* Tooltip */}
+        <AnimatePresence>
+          {showTooltip && !isOpen && (
+            <motion.div 
+              initial={{ opacity: 0, x: 20, scale: 0.9 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: 10, scale: 0.9 }}
+              transition={{ duration: 0.5, type: "spring", bounce: 0.5 }}
+              className="absolute right-20 mr-1 bg-white px-4 py-3 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-black/[0.04] text-[13px] font-medium text-[var(--color-text-primary)] whitespace-nowrap cursor-pointer origin-right"
+              onClick={() => {
+                setIsOpen(true);
+                setShowTooltip(false);
+              }}
             >
-              <ChevronDown size={22} />
-            </motion.div>
-          ) : (
-            <motion.div
-              key="open"
-              initial={{ opacity: 0, rotate: 90 }}
-              animate={{ opacity: 1, rotate: 0 }}
-              exit={{ opacity: 0, rotate: -90 }}
-              transition={{ duration: 0.12 }}
-            >
-              <MessageSquareText size={20} />
+              {content.tooltip}
+              {/* Little triangle pointing right */}
+              <div className="absolute top-1/2 -right-1.5 -translate-y-1/2 w-3 h-3 bg-white border-r border-t border-black/[0.04] rotate-45" />
             </motion.div>
           )}
         </AnimatePresence>
-      </button>
+
+        <button
+          onClick={() => {
+            setIsOpen(!isOpen);
+            setShowTooltip(false);
+            if (!isOpen) {
+              setIsSubmitted(false);
+              setFormData({ naam: '', telefoon: '', vraag: '' });
+            }
+          }}
+          className={`w-[64px] h-[64px] rounded-full flex items-center justify-center shadow-[0_8px_30px_rgb(0,0,0,0.2)] transition-all duration-300 hover:scale-105 active:scale-95 z-50 relative cursor-pointer ${
+            isOpen 
+              ? 'bg-white text-[var(--color-text-primary)] border border-black/[0.06]' 
+              : 'bg-[var(--color-text-primary)] text-white hover:bg-[#1f3333]'
+          }`}
+          aria-label={isOpen ? content.ariaClose : content.ariaOpen}
+        >
+          <AnimatePresence mode="wait">
+            {isOpen ? (
+              <motion.div
+                key="close"
+                initial={{ opacity: 0, rotate: -90 }}
+                animate={{ opacity: 1, rotate: 0 }}
+                exit={{ opacity: 0, rotate: 90 }}
+                transition={{ duration: 0.15 }}
+              >
+                <X size={28} />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="open"
+                initial={{ opacity: 0, rotate: 90 }}
+                animate={{ opacity: 1, rotate: 0 }}
+                exit={{ opacity: 0, rotate: -90 }}
+                transition={{ duration: 0.15 }}
+              >
+                <MessageSquare size={28} className="mt-0.5" />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </button>
+      </div>
     </div>
   );
 }
