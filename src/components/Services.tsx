@@ -1,4 +1,4 @@
-import { Search, Target, Share2, Layers, ArrowRight } from 'lucide-react';
+import { Target, Share2, Layers, ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
 
 interface ServicesProps {
@@ -14,19 +14,8 @@ export function Services({ lang }: ServicesProps) {
       cta: "Meer weten",
       items: [
         {
-          title: "Google Ads",
-          desc: "Search, Shopping en Display campagnes die vindbare bedrijven bouwen. Wij zorgen dat je bovenaan staat wanneer je klant actief zoekt naar jouw product of dienst.",
-          icon: Search,
-          bullets: [
-            "Search & Shopping campagnes",
-            "Zoekwoordonderzoek & biedstrategie",
-            "Conversietracking & attributie",
-            "Wekelijks account management"
-          ]
-        },
-        {
           title: "Meta & Social Ads",
-          desc: "Campagnes op Facebook, Instagram, LinkedIn en TikTok die je merk zichtbaar maken bij de juiste doelgroep — ook als ze nog niet actief zoeken.",
+          desc: "Campagnes op Facebook, Instagram en LinkedIn die je merk zichtbaar maken bij de juiste doelgroep — ook als ze nog niet actief zoeken.",
           icon: Target,
           bullets: [
             "Doelgroeponderzoek & targeting",
@@ -66,19 +55,8 @@ export function Services({ lang }: ServicesProps) {
       cta: "Learn more",
       items: [
         {
-          title: "Google Ads",
-          desc: "Search, Shopping and Display campaigns that put you in front of customers actively searching for your product or service.",
-          icon: Search,
-          bullets: [
-            "Search & Shopping campaigns",
-            "Keyword research & bid strategy",
-            "Conversion tracking & attribution",
-            "Weekly account management"
-          ]
-        },
-        {
           title: "Meta & Social Ads",
-          desc: "Campaigns on Facebook, Instagram, LinkedIn and TikTok that put your brand in front of the right audience — even before they're actively searching.",
+          desc: "Campaigns on Facebook, Instagram and LinkedIn that put your brand in front of the right audience — even before they're actively searching.",
           icon: Target,
           bullets: [
             "Audience research & targeting",
@@ -178,13 +156,13 @@ export function Services({ lang }: ServicesProps) {
           </motion.p>
         </motion.div>
 
-        {/* Services Grid — 2x2 for visual variety */}
+        {/* Services Grid */}
         <motion.div 
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid md:grid-cols-2 gap-6 w-full"
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 w-full"
         >
           {translations.items.map((service, i) => (
             <motion.div

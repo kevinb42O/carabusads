@@ -19,7 +19,8 @@ export function FunnelCanvas() {
       height = parent?.clientHeight || window.innerHeight;
       
       // High DPI support for ultra professional look
-      const dpr = window.devicePixelRatio || 1;
+      const maxDpr = window.innerWidth < 768 ? 1.5 : 2;
+      const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
       canvas.width = width * dpr;
       canvas.height = height * dpr;
       ctx.scale(dpr, dpr);
@@ -34,9 +35,10 @@ export function FunnelCanvas() {
     const focalLength = 700;
     let cameraY = -400; // Camera Y position (animated)
     const cameraZ = -800;
-    const gridCols = 50;
-    const gridRows = 50;
-    const spacing = 60;
+    const isMobile = window.innerWidth < 768;
+    const gridCols = isMobile ? 25 : 50;
+    const gridRows = isMobile ? 25 : 50;
+    const spacing = isMobile ? 120 : 60;
     
     // Grid generation
     const vertices: {x: number, z: number, currentY: number}[] = [];
@@ -117,7 +119,7 @@ export function FunnelCanvas() {
       }
     }
 
-    const particles = Array.from({ length: 35 }, () => new Particle());
+    const particles = Array.from({ length: isMobile ? 15 : 35 }, () => new Particle());
 
     const project = (x: number, y: number, z: number, time: number, pitch: number) => {
       // 1. Orbit Rotation (Y-axis)
