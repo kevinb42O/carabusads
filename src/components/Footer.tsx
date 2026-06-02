@@ -1,4 +1,5 @@
 import { BrandLogo } from './BrandLogo';
+import { ExternalLink } from 'lucide-react';
 
 interface FooterProps {
   lang: 'nl' | 'en';
@@ -112,9 +113,20 @@ export function Footer({ lang, setActivePage }: FooterProps) {
         </div>
 
         {/* Bottom */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 text-[12px] text-white/35 font-light">
-          <p>© {new Date().getFullYear()} CarabusADS. {content.allRights}</p>
-          <div className="flex gap-6">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-6 pt-8 text-[12px] text-white/35 font-light">
+          <p className="order-2 lg:order-1">© {new Date().getFullYear()} CarabusADS. {content.allRights}</p>
+          
+          <a 
+            href="https://www.webaanzee.be" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="order-1 lg:order-2 flex items-center gap-1.5 hover:text-white/60 transition-colors group"
+          >
+            {lang === 'nl' ? 'website door' : 'website by'} <span className="font-semibold text-white group-hover:text-white/80 transition-colors tracking-wide">Web<span className="text-[#FFC107]">aan</span>Zee</span>
+            <ExternalLink className="size-3 opacity-50 group-hover:opacity-100 transition-opacity" />
+          </a>
+
+          <div className="order-3 flex gap-6">
             <button onClick={() => setActivePage?.('privacy')} className="hover:text-white/60 transition-colors cursor-pointer">{content.privacy}</button>
             <button onClick={() => setActivePage?.('terms')} className="hover:text-white/60 transition-colors cursor-pointer">{content.terms}</button>
           </div>
