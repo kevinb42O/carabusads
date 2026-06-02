@@ -7,7 +7,7 @@ interface FooterProps {
 export function Footer({ lang }: FooterProps) {
   const content = {
     nl: {
-      description: "Performance marketing bureau gespecialiseerd in Google Ads, Social Ads en conversie-funnels. Gevestigd in België.",
+      description: "Performance marketing bureau gespecialiseerd in Social Ads en conversie-funnels. Gevestigd in België.",
       navigationHeader: "Navigatie",
       expertiseHeader: "Diensten",
       hoursHeader: "Contact",
@@ -19,7 +19,7 @@ export function Footer({ lang }: FooterProps) {
       terms: "Voorwaarden",
     },
     en: {
-      description: "Performance marketing agency specializing in Google Ads, Social Ads and conversion funnels. Based in Belgium.",
+      description: "Performance marketing agency specializing in Social Ads and conversion funnels. Based in Belgium.",
       navigationHeader: "Navigation",
       expertiseHeader: "Services",
       hoursHeader: "Contact",
@@ -47,13 +47,11 @@ export function Footer({ lang }: FooterProps) {
   ];
 
   const services = lang === 'nl' ? [
-    'Google Search & Shopping',
     'Meta (Facebook & IG) Ads',
     'LinkedIn Campagnes',
     'Landingspagina\'s & Funnels',
     'Server-Side Tracking',
   ] : [
-    'Google Search & Shopping',
     'Meta (Facebook & IG) Ads',
     'LinkedIn Campaigns',
     'Landing Pages & Funnels',
@@ -101,6 +99,9 @@ export function Footer({ lang }: FooterProps) {
           <div className="lg:col-span-3 flex flex-col gap-4">
             <h4 className="font-outfit font-semibold text-[12px] uppercase tracking-wider text-white/40">{content.hoursHeader}</h4>
             <div className="flex flex-col gap-2 text-[13px] text-white/65 font-light">
+              <a href={`mailto:info@carabusads.${lang === 'nl' ? 'be' : 'com'}`} className="hover:text-white transition-colors mb-2">
+                info@carabusads.{lang === 'nl' ? 'be' : 'com'}
+              </a>
               <div>{content.hoursWeek}</div>
               <div className="font-medium text-white/80">{content.hoursTime}</div>
               <div className="mt-2 text-[12px] text-white/40">{content.hoursSub}</div>

@@ -12,7 +12,14 @@ import { Footer } from './components/Footer';
 import { ChatWidget } from './components/ChatWidget';
 
 export default function App() {
-  const [lang, setLang] = useState<'nl' | 'en'>('nl');
+  const [lang, setLang] = useState<'nl' | 'en'>(() => {
+    if (typeof window !== 'undefined') {
+      const hostname = window.location.hostname;
+      if (hostname.endsWith('.be')) return 'nl';
+      if (hostname.endsWith('.com')) return 'en';
+    }
+    return 'nl';
+  });
 
   return (
     <div className="min-h-screen flex flex-col w-full overflow-x-hidden">
