@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MessageSquare, X, Send, ArrowRight } from 'lucide-react';
+import { MessageSquare, X, Send, ArrowRight, Phone, Mail, MessageCircle } from 'lucide-react';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'motion/react';
 import founderImg from '../assets/images/founder_portrait_1780056093258.png';
 
@@ -9,6 +9,7 @@ interface ChatWidgetProps {
 
 export function ChatWidget({ lang }: ChatWidgetProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [method, setMethod] = useState<'whatsapp' | 'email' | 'phone'>('whatsapp');
   const [formData, setFormData] = useState({ naam: '', telefoon: '', vraag: '' });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
@@ -45,47 +46,79 @@ export function ChatWidget({ lang }: ChatWidgetProps) {
     nl: {
       role: "Oprichter & Strateeg",
       tooltip: "Vragen? Stuur me een berichtje 👋",
-      chatBubble: "Hoi! Ik ben Hans. Laat even je gegevens achter, dan stuur ik je via WhatsApp een persoonlijk antwoord op je vraag.",
+      chatBubble: "Hoi! Ik ben Hans. Kies hieronder hoe je contact wilt opnemen, dan spreek ik je snel.",
       placeholderName: "Je naam",
       placeholderPhone: "Telefoonnummer",
       placeholderQuestion: "Typ je vraag hier...",
-      submitBtn: "Start gesprek",
-      successMsg: "Bedankt! Ik heb je bericht ontvangen en app je zo snel mogelijk terug.",
+      submitBtnWhatsapp: "Start WhatsApp",
+      submitBtnEmail: "Stuur e-mail",
+      successMsg: "Bedankt! Ik heb je bericht ontvangen en kom er zo snel mogelijk op terug.",
       ariaClose: "Sluit venster",
-      ariaOpen: "Open chat"
+      ariaOpen: "Open chat",
+      methodWhatsapp: "WhatsApp",
+      methodEmail: "E-mail",
+      methodPhone: "Bellen",
+      callText: "Liever direct contact? Bel me gerust op onderstaand nummer. Ik sta voor je klaar.",
+      callBtn: "Bel +32 472 24 93 46"
     },
     en: {
       role: "Founder & Strategist",
       tooltip: "Questions? Send me a message 👋",
-      chatBubble: "Hi! I'm Hans. Leave your details below and I'll send you a personal response via WhatsApp.",
+      chatBubble: "Hi! I'm Hans. Choose your preferred contact method below, and we'll talk soon.",
       placeholderName: "Your name",
       placeholderPhone: "Phone number",
       placeholderQuestion: "Type your question here...",
-      submitBtn: "Start conversation",
-      successMsg: "Thanks! I've received your message and will WhatsApp you as soon as possible.",
+      submitBtnWhatsapp: "Start WhatsApp",
+      submitBtnEmail: "Send Email",
+      successMsg: "Thanks! I've received your message and will get back to you as soon as possible.",
       ariaClose: "Close window",
-      ariaOpen: "Open chat"
+      ariaOpen: "Open chat",
+      methodWhatsapp: "WhatsApp",
+      methodEmail: "Email",
+      methodPhone: "Call",
+      callText: "Prefer to talk directly? Feel free to call me on the number below. I'm ready to help.",
+      callBtn: "Call +32 472 24 93 46"
     }
   }[lang];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.naam || !formData.telefoon) return;
+    if (method === 'phone') return;
     
-    const phoneNumber = "32472249346";
-    let message = "";
-    if (lang === 'nl') {
-      message = `Hallo Hans, mijn naam is ${formData.naam}. Mijn nummer is ${formData.telefoon}.`;
-      if (formData.vraag) message += `\n\nMijn vraag:\n${formData.vraag}`;
-    } else {
-      message = `Hi Hans, my name is ${formData.naam}. My number is ${formData.telefoon}.`;
-      if (formData.vraag) message += `\n\nMy question:\n${formData.vraag}`;
+    if (method === 'whatsapp') {
+      if (!formData.naam || !formData.telefoon) return;
+      
+      const phoneNumber = "32472249346";
+      let message = "";
+      if (lang === 'nl') {
+        message = `Hallo Hans, mijn naam is ${formData.naam}. Mijn nummer is ${formData.telefoon}.`;
+        if (formData.vraag) message += `\n\nMijn vraag:\n${formData.vraag}`;
+      } else {
+        message = `Hi Hans, my name is ${formData.naam}. My number is ${formData.telefoon}.`;
+        if (formData.vraag) message += `\n\nMy question:\n${formData.vraag}`;
+      }
+      
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+      setIsSubmitted(true);
+    } else if (method === 'email') {
+      if (!formData.naam) return;
+      
+      const emailDomain = lang === 'nl' ? 'be' : 'com';
+      const email = `info@carabusads.${emailDomain}`;
+      let subject = lang === 'nl' ? `Nieuwe aanvraag via website van ${formData.naam}` : `New website inquiry from ${formData.naam}`;
+      let body = "";
+      
+      if (lang === 'nl') {
+        body = `Naam: ${formData.naam}\nTelefoon: ${formData.telefoon || 'Niet opgegeven'}\n\nVraag:\n${formData.vraag}`;
+      } else {
+        body = `Name: ${formData.naam}\nPhone: ${formData.telefoon || 'Not provided'}\n\nQuestion:\n${formData.vraag}`;
+      }
+      
+      const mailtoUrl = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailtoUrl;
+      setIsSubmitted(true);
     }
-    
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
-
-    setIsSubmitted(true);
   };
 
   return (
@@ -160,49 +193,112 @@ export function ChatWidget({ lang }: ChatWidgetProps) {
                           </div>
                         </div>
 
-                        {/* The Form */}
-                        <form onSubmit={handleSubmit} className="flex flex-col gap-3 mt-1 bg-[var(--color-agency-bg)] p-5 rounded-2xl shadow-sm border border-white/5">
-                          
-                          <div className="relative">
-                            <input 
-                              type="text" 
-                              required
-                              value={formData.naam}
-                              onChange={(e) => setFormData({...formData, naam: e.target.value})}
-                              placeholder={content.placeholderName}
-                              className="w-full outline-none border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/30 text-[14px] bg-white/5 focus:bg-white/10 focus:border-[var(--color-agency-accent)]/50 focus:ring-4 focus:ring-[var(--color-agency-accent)]/10 transition-all font-light"
-                            />
-                          </div>
-
-                          <div className="relative">
-                            <input 
-                              type="tel" 
-                              required
-                              value={formData.telefoon}
-                              onChange={(e) => setFormData({...formData, telefoon: e.target.value})}
-                              placeholder={content.placeholderPhone}
-                              className="w-full outline-none border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/30 text-[14px] bg-white/5 focus:bg-white/10 focus:border-[var(--color-agency-accent)]/50 focus:ring-4 focus:ring-[var(--color-agency-accent)]/10 transition-all font-light"
-                            />
-                          </div>
-
-                          <div className="relative">
-                            <textarea 
-                              value={formData.vraag}
-                              onChange={(e) => setFormData({...formData, vraag: e.target.value})}
-                              placeholder={content.placeholderQuestion}
-                              rows={2}
-                              className="w-full outline-none border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/30 text-[14px] resize-none bg-white/5 focus:bg-white/10 focus:border-[var(--color-agency-accent)]/50 focus:ring-4 focus:ring-[var(--color-agency-accent)]/10 transition-all font-light custom-scrollbar"
-                            />
-                          </div>
-
-                          <button 
-                            type="submit"
-                            className="mt-2 bg-white hover:bg-[var(--color-agency-accent)] text-[var(--color-agency-bg)] hover:text-white font-medium text-[14px] py-3.5 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer shadow-[0_4px_14px_0_rgba(0,0,0,0.3)] hover:-translate-y-0.5 active:translate-y-0"
+                        {/* Method Selector */}
+                        <div className="flex gap-1.5 p-1 bg-[var(--color-agency-bg)] rounded-xl border border-white/5 mt-1 shadow-sm">
+                          <button
+                            type="button"
+                            onClick={() => setMethod('whatsapp')}
+                            className={`flex-1 py-2.5 px-2 text-[12px] font-medium rounded-lg transition-all flex items-center justify-center gap-1.5 ${method === 'whatsapp' ? 'bg-[var(--color-agency-accent)] text-white shadow-sm' : 'text-white/50 hover:text-white hover:bg-white/5 cursor-pointer'}`}
                           >
-                            {content.submitBtn}
-                            <ArrowRight size={16} />
+                            <MessageCircle size={14} />
+                            <span className="hidden sm:inline">{content.methodWhatsapp}</span>
+                            <span className="sm:hidden">App</span>
                           </button>
-                        </form>
+                          <button
+                            type="button"
+                            onClick={() => setMethod('email')}
+                            className={`flex-1 py-2.5 px-2 text-[12px] font-medium rounded-lg transition-all flex items-center justify-center gap-1.5 ${method === 'email' ? 'bg-[var(--color-agency-accent)] text-white shadow-sm' : 'text-white/50 hover:text-white hover:bg-white/5 cursor-pointer'}`}
+                          >
+                            <Mail size={14} />
+                            <span className="hidden sm:inline">{content.methodEmail}</span>
+                            <span className="sm:hidden">Mail</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setMethod('phone')}
+                            className={`flex-1 py-2.5 px-2 text-[12px] font-medium rounded-lg transition-all flex items-center justify-center gap-1.5 ${method === 'phone' ? 'bg-[var(--color-agency-accent)] text-white shadow-sm' : 'text-white/50 hover:text-white hover:bg-white/5 cursor-pointer'}`}
+                          >
+                            <Phone size={14} />
+                            <span className="hidden sm:inline">{content.methodPhone}</span>
+                            <span className="sm:hidden">Bel</span>
+                          </button>
+                        </div>
+
+                        {/* Form or Call Info */}
+                        {method === 'phone' ? (
+                          <div className="flex flex-col gap-4 mt-2 bg-[var(--color-agency-bg)] p-6 rounded-2xl shadow-sm border border-white/5 text-center items-center justify-center">
+                            <div className="size-14 rounded-full bg-[var(--color-agency-accent)]/10 flex items-center justify-center text-[var(--color-agency-accent)] mb-1">
+                              <Phone size={24} />
+                            </div>
+                            <p className="text-[14px] text-[var(--color-text-secondary)] font-light leading-relaxed mb-1">
+                              {content.callText}
+                            </p>
+                            <a 
+                              href="tel:+32472249346"
+                              className="w-full bg-white hover:bg-[var(--color-agency-accent)] text-[var(--color-agency-bg)] hover:text-white font-medium text-[15px] py-3.5 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_4px_14px_0_rgba(0,0,0,0.3)] hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+                            >
+                              <Phone size={16} />
+                              {content.callBtn}
+                            </a>
+                          </div>
+                        ) : (
+                          <form onSubmit={handleSubmit} className="flex flex-col gap-3 mt-2 bg-[var(--color-agency-bg)] p-5 rounded-2xl shadow-sm border border-white/5">
+                            
+                            <div className="relative">
+                              <input 
+                                type="text" 
+                                required
+                                value={formData.naam}
+                                onChange={(e) => setFormData({...formData, naam: e.target.value})}
+                                placeholder={content.placeholderName}
+                                className="w-full outline-none border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/30 text-[14px] bg-white/5 focus:bg-white/10 focus:border-[var(--color-agency-accent)]/50 focus:ring-4 focus:ring-[var(--color-agency-accent)]/10 transition-all font-light"
+                              />
+                            </div>
+
+                            {method === 'whatsapp' && (
+                              <div className="relative">
+                                <input 
+                                  type="tel" 
+                                  required
+                                  value={formData.telefoon}
+                                  onChange={(e) => setFormData({...formData, telefoon: e.target.value})}
+                                  placeholder={content.placeholderPhone}
+                                  className="w-full outline-none border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/30 text-[14px] bg-white/5 focus:bg-white/10 focus:border-[var(--color-agency-accent)]/50 focus:ring-4 focus:ring-[var(--color-agency-accent)]/10 transition-all font-light"
+                                />
+                              </div>
+                            )}
+
+                            {method === 'email' && (
+                              <div className="relative">
+                                <input 
+                                  type="tel" 
+                                  value={formData.telefoon}
+                                  onChange={(e) => setFormData({...formData, telefoon: e.target.value})}
+                                  placeholder={lang === 'nl' ? 'Telefoonnummer (optioneel)' : 'Phone number (optional)'}
+                                  className="w-full outline-none border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/30 text-[14px] bg-white/5 focus:bg-white/10 focus:border-[var(--color-agency-accent)]/50 focus:ring-4 focus:ring-[var(--color-agency-accent)]/10 transition-all font-light"
+                                />
+                              </div>
+                            )}
+
+                            <div className="relative">
+                              <textarea 
+                                value={formData.vraag}
+                                onChange={(e) => setFormData({...formData, vraag: e.target.value})}
+                                placeholder={content.placeholderQuestion}
+                                rows={2}
+                                className="w-full outline-none border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/30 text-[14px] resize-none bg-white/5 focus:bg-white/10 focus:border-[var(--color-agency-accent)]/50 focus:ring-4 focus:ring-[var(--color-agency-accent)]/10 transition-all font-light custom-scrollbar"
+                              />
+                            </div>
+
+                            <button 
+                              type="submit"
+                              className="mt-2 bg-white hover:bg-[var(--color-agency-accent)] text-[var(--color-agency-bg)] hover:text-white font-medium text-[14px] py-3.5 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer shadow-[0_4px_14px_0_rgba(0,0,0,0.3)] hover:-translate-y-0.5 active:translate-y-0"
+                            >
+                              {method === 'whatsapp' ? content.submitBtnWhatsapp : content.submitBtnEmail}
+                              {method === 'whatsapp' ? <MessageCircle size={16} /> : <Mail size={16} />}
+                            </button>
+                          </form>
+                        )}
                       </motion.div>
                     ) : (
                       <motion.div
