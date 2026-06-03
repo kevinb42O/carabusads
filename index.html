@@ -22,6 +22,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
   <body class="bg-[#f0f4f1] text-[#3d5a5a] antialiased selection:bg-[#2D7D6F]/20 overflow-x-hidden">
+    <div id="preloader" style="position: fixed; inset: 0; background-color: #1a2e2e; display: flex; align-items: center; justify-content: center; z-index: 99999; font-family: 'Outfit', sans-serif;">
+      <div style="display: flex; align-items: center; gap: 16px; animation: preloaderPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="height: 40px; width: auto;">
+          <path d="M6 9L16 14L26 9" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M9 16L16 20L23 16" stroke="rgba(255,255,255,0.85)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M12 23L16 26L20 23" stroke="rgba(255,255,255,0.65)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
+          <circle cx="16" cy="29" r="1.6" fill="#5CCBBA" />
+        </svg>
+        <span style="color: white; font-weight: 700; font-size: 28px; line-height: 1;">Carabus<span style="color: #5CCBBA; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; margin-left: 2px;">Ads</span></span>
+      </div>
+    </div>
+    <style>
+      @keyframes preloaderPulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.5; transform: scale(0.95); }
+      }
+    </style>
     <div id="root" class="w-full min-h-screen"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

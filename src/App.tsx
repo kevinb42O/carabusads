@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { LogoCloud } from './components/LogoCloud';
@@ -14,6 +14,19 @@ import { LegalPage } from './components/LegalPage';
 
 export default function App() {
   const [activePage, setActivePage] = useState<'home' | 'privacy' | 'terms'>('home');
+
+  useEffect(() => {
+    // Remove the HTML preloader smoothly once React is ready
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+      setTimeout(() => {
+        preloader.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+        preloader.style.opacity = '0';
+        preloader.style.transform = 'scale(1.05)';
+        setTimeout(() => preloader.remove(), 600);
+      }, 200); // Slight delay for Canvas/Framer initial paint
+    }
+  }, []);
   const [lang, setLang] = useState<'nl' | 'en'>(() => {
     if (typeof window !== 'undefined') {
       const hostname = window.location.hostname;
