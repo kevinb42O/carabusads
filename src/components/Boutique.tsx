@@ -9,42 +9,126 @@ interface BoutiqueProps {
 export function Boutique({ lang }: BoutiqueProps) {
   const content = {
     nl: {
-      badge: "Over ons",
-      h2: "Eén aanspreekpunt. Geen tussenschakels.",
-      p1: "Bij de meeste bureaus word je binnengehaald door een accountmanager en draagt hij je over aan een junior of stagiair. Bij Carabus Ads werk je rechtstreeks met de specialist die je campagnes beheert.",
-      p2: "Dat betekent: korte lijnen, snelle beslissingen, en iemand die je account écht kent. Geen ticketsystemen, geen wachttijden van drie werkdagen.",
-      quote: "Campagnes moeten meetbare groei opleveren, geen vanity metrics. Dat is de enige KPI die telt.",
+      badge: "Onze Filosofie",
+      h2: "Direct access. Geen accountmanagers.",
+      p1: "Bij grote bureaus word je binnengehaald door de founder, maar wordt je account beheerd door een stagiair. Wij doen niet aan bait-and-switch. Je werkt 1-op-1 met de senior strategist.",
+      p2: "Dat betekent actie in plaats van bureaucratie. Geen eindeloze e-mailketens of ticketsystemen, maar een directe Slack/WhatsApp-lijn naar de persoon die daadwerkelijk de knoppen bedient.",
+      quote: "We sturen niet op bereik of impressies. Als een campagne geen aantoonbare MRR oplevert, draaien we 'm uit.",
       name: "Hans Claes",
-      role: "Oprichter & Strategist",
+      role: "Oprichter & Lead Strategist",
       promises: [
-        "Direct contact via WhatsApp, telefoon of mail",
-        "Dagelijks actief accountbeheer",
-        "Transparante rapportage op netto resultaat"
+        "Directe communicatielijnen via WhatsApp/Slack",
+        "Extreem korte iteratiecycli en snelle executie",
+        "Brute eerlijkheid over je data en performance"
       ]
     },
     en: {
-      badge: "About us",
-      h2: "One point of contact. No middlemen.",
-      p1: "At most agencies, you're brought in by an account manager and then handed off to a junior or intern. At Carabus Ads, you work directly with the specialist managing your campaigns.",
-      p2: "That means: short communication lines, fast decisions, and someone who truly knows your account. No ticketing systems, no three-day waiting periods.",
-      quote: "Campaigns should drive measurable growth, not vanity metrics. That's the only KPI that matters.",
+      badge: "Our Philosophy",
+      h2: "Direct access. No account managers.",
+      p1: "Sold by the founder, serviced by the intern. That's the standard agency model we refuse to follow. At Carabus Ads, you work 1-on-1 with the senior strategist actually managing your budget.",
+      p2: "That means execution over bureaucracy. No endless email threads or ticketing systems, just a direct Slack/WhatsApp line to the person pulling the levers.",
+      quote: "We don't care about reach or impressions. If a campaign isn't driving measurable MRR, we kill it.",
       name: "Hans Claes",
-      role: "Founder & Strategist",
+      role: "Founder & Lead Strategist",
       promises: [
-        "Direct contact via WhatsApp, phone or email",
-        "Daily active account management",
-        "Transparent reporting on net results"
+        "Direct communication lines via WhatsApp/Slack",
+        "Extremely short iteration cycles and fast execution",
+        "Brutal honesty about your data and performance"
       ]
     }
   }[lang];
 
-  return (
-    <section id="aanpak" className="section-padding bg-white overflow-hidden relative border-y border-black/[0.04]">
-      {/* Subtle background ambient glow */}
-      <div className="absolute top-1/2 right-0 w-[600px] h-[600px] bg-[var(--color-agency-accent)]/[0.02] rounded-full blur-[100px] -translate-y-1/2 pointer-events-none" />
+  // For staggered text
+  const quoteWords = content.quote.split(" ");
+  const quoteContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.05, delayChildren: 0.3 }
+    }
+  };
+  const quoteWord = {
+    hidden: { opacity: 0, y: 10, filter: "blur(4px)" },
+    visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.6 } }
+  };
 
-      <div className="max-w-[1100px] mx-auto flex flex-col lg:flex-row items-center gap-16 lg:gap-20 w-full relative z-10">
+  return (
+    <section id="aanpak" className="section-padding bg-[var(--color-agency-bg)] overflow-hidden relative z-10">
+      {/* Abstract geometric pulsing background behind the photo area */}
+      <motion.div 
+        animate={{ 
+          scale: [1, 1.1, 1],
+          opacity: [0.1, 0.2, 0.1],
+          rotate: [0, 90, 0]
+        }}
+        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+        className="absolute top-1/2 left-1/2 lg:left-3/4 w-[800px] h-[800px] border border-[var(--color-agency-accent)]/10 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none" 
+      />
+      
+      <div className="absolute top-1/2 left-1/2 lg:left-3/4 w-[400px] h-[400px] bg-[var(--color-agency-accent)]/5 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+
+      <div className="max-w-[1200px] mx-auto flex flex-col lg:flex-row items-center gap-16 lg:gap-24 w-full relative z-10">
         
+        {/* Visual Column */}
+        <div className="flex-1 w-full relative order-2 lg:order-1">
+          {/* Main Workspace Image with Clip-Path Reveal */}
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl group border border-white/5">
+            <motion.div 
+              initial={{ clipPath: "inset(100% 0% 0% 0%)" }}
+              whileInView={{ clipPath: "inset(0% 0% 0% 0%)" }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              className="w-full aspect-[4/5] sm:aspect-square lg:aspect-[4/5]"
+            >
+              <motion.img 
+                whileHover={{ scale: 1.05 }} 
+                transition={{ duration: 1.5, ease: "easeOut" }}
+                src={workspaceImg} 
+                alt="Carabus Ads Workspace" 
+                className="w-full h-full object-cover object-center"
+              />
+            </motion.div>
+          </div>
+
+          {/* Overlapping Quote Card (Dark Mode) */}
+          <motion.div 
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ delay: 0.6, duration: 0.8, type: "spring", bounce: 0.15 }}
+            className="absolute -bottom-8 -right-4 sm:-right-12 sm:bottom-12 w-[calc(100%-2rem)] sm:w-[420px] dark-panel rounded-2xl p-8 sm:p-10 shadow-2xl ring-1 ring-white/10 backdrop-blur-xl"
+          >
+            <blockquote className="mb-8 relative">
+              <span className="absolute -top-6 -left-4 text-[60px] text-[var(--color-agency-accent)]/20 font-display leading-none pointer-events-none">"</span>
+              <motion.p 
+                variants={quoteContainer}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="font-outfit text-[18px] sm:text-[22px] text-white font-medium leading-[1.6] relative z-10 flex flex-wrap gap-x-1.5"
+              >
+                {quoteWords.map((word, i) => (
+                  <motion.span key={i} variants={quoteWord}>{word}</motion.span>
+                ))}
+              </motion.p>
+            </blockquote>
+            
+            <div className="flex items-center gap-4">
+              <div className="size-12 rounded-full overflow-hidden shrink-0 border border-white/20 shadow-lg">
+                <img 
+                  src={founderImg} 
+                  alt={content.name}
+                  className="w-full h-full object-cover object-[center_20%]"
+                />
+              </div>
+              <div>
+                <div className="font-outfit font-bold text-[15px] text-white">{content.name}</div>
+                <div className="text-[13px] text-[var(--color-agency-accent)] font-medium">{content.role}</div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
         {/* Copy Column */}
         <motion.div 
           initial="hidden"
@@ -54,31 +138,31 @@ export function Boutique({ lang }: BoutiqueProps) {
             hidden: { opacity: 0 },
             visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
           }}
-          className="flex-1 w-full lg:max-w-[480px]"
+          className="flex-1 w-full lg:max-w-[500px] order-1 lg:order-2"
         >
           <motion.div 
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100 } } }}
-            className="section-badge"
+            className="section-badge mb-8"
           >
             {content.badge}
           </motion.div>
           
           <motion.h2 
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100 } } }}
-            className="font-display text-[32px] md:text-[42px] font-normal tracking-[-0.01em] mb-6 text-[var(--color-text-primary)] leading-[1.15]"
+            className="font-display text-[36px] md:text-[48px] font-normal tracking-[-0.01em] mb-8 text-white leading-[1.1]"
           >
             {content.h2}
           </motion.h2>
           
           <motion.p 
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100 } } }}
-            className="text-[16px] sm:text-[17px] font-light text-[var(--color-text-secondary)] mb-4 leading-[1.75]"
+            className="text-[17px] sm:text-[18px] font-light text-[var(--color-text-secondary)] mb-6 leading-[1.7]"
           >
             {content.p1}
           </motion.p>
           <motion.p 
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100 } } }}
-            className="text-[16px] sm:text-[17px] font-light text-[var(--color-text-secondary)] mb-10 leading-[1.75]"
+            className="text-[17px] sm:text-[18px] font-light text-[var(--color-text-secondary)] mb-12 leading-[1.7]"
           >
             {content.p2}
           </motion.p>
@@ -86,77 +170,19 @@ export function Boutique({ lang }: BoutiqueProps) {
           {/* Promises list */}
           <motion.ul 
             variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } }}
-            className="flex flex-col gap-4 border-t border-black/[0.05] pt-8"
+            className="flex flex-col gap-5 border-t border-white/5 pt-8"
           >
             {content.promises.map((promise, i) => (
               <motion.li 
                 key={i} 
                 variants={{ hidden: { opacity: 0, x: -10 }, visible: { opacity: 1, x: 0 } }}
-                className="flex items-center gap-4 text-[14px] sm:text-[15px] text-[var(--color-text-primary)] font-medium"
+                className="flex items-center gap-4 text-[15px] sm:text-[16px] text-white/90 font-light"
               >
-                <div className="size-2 rounded-full bg-[var(--color-agency-accent)]/80" />
+                <div className="size-2 rounded-full bg-[var(--color-agency-accent)] shadow-[0_0_8px_rgba(92,203,186,0.6)]" />
                 {promise}
               </motion.li>
             ))}
           </motion.ul>
-        </motion.div>
-
-        {/* Visual Column */}
-        <motion.div 
-          initial={{ opacity: 0, x: 40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="flex-1 w-full relative"
-        >
-          {/* Main Workspace Image */}
-          <div className="relative rounded-2xl overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] group">
-            <motion.div 
-              whileHover={{ scale: 1.03 }} 
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="w-full aspect-[4/5] sm:aspect-square lg:aspect-[4/5]"
-            >
-              <img 
-                src={workspaceImg} 
-                alt="Carabus Ads Workspace" 
-                className="w-full h-full object-cover object-center"
-              />
-            </motion.div>
-            
-            {/* Soft inner shadow for depth */}
-            <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-2xl pointer-events-none" />
-          </div>
-
-          {/* Overlapping Quote Card */}
-          <motion.div 
-            initial={{ opacity: 0, y: 30, scale: 0.95 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ delay: 0.4, duration: 0.8, type: "spring", bounce: 0.15 }}
-            className="absolute -bottom-8 -left-4 sm:-left-12 sm:bottom-12 w-[calc(100%-2rem)] sm:w-[380px] bg-white rounded-2xl p-6 sm:p-8 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.15)] ring-1 ring-black/[0.04]"
-          >
-            <blockquote className="mb-6 relative">
-              <span className="absolute -top-3 -left-2 text-[40px] text-[var(--color-agency-accent)]/10 font-display leading-none">"</span>
-              <p className="font-outfit text-[16px] sm:text-[18px] text-[var(--color-text-primary)] font-medium leading-[1.5] relative z-10 italic">
-                {content.quote}
-              </p>
-            </blockquote>
-            
-            <div className="flex items-center gap-4">
-              <div className="size-11 rounded-full overflow-hidden shrink-0 border border-black/5 ring-2 ring-[var(--color-agency-bg)]">
-                <img 
-                  src={founderImg} 
-                  alt={content.name}
-                  className="w-full h-full object-cover object-[center_20%]"
-                />
-              </div>
-              <div>
-                <div className="font-outfit font-bold text-[14px] text-[var(--color-text-primary)]">{content.name}</div>
-                <div className="text-[12px] text-[var(--color-text-muted)] font-medium">{content.role}</div>
-              </div>
-            </div>
-          </motion.div>
-
         </motion.div>
 
       </div>

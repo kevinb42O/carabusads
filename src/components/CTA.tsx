@@ -21,61 +21,61 @@ export function CTA({ lang }: CTAProps) {
 
   const translations = {
     nl: {
-      badge: "Kennismaken",
-      h2: "Benieuwd wat wij voor je kunnen betekenen?",
-      p: "Plan een vrijblijvend gesprek van 30 minuten. We analyseren je huidige setup en geven je direct 3 concrete verbeterpunten — ongeacht of we gaan samenwerken.",
+      badge: "Growth Audit",
+      h2: "Klaar om winstgevend te schalen?",
+      p: "Boek een Discovery Call van 30 minuten. We leggen je huidige funnel onder de loep en spotten direct de bottlenecks die je nu MRR kosten — zonder hard-selling BS.",
       bullets: [
-        "Gratis analyse van je huidige campagnes",
-        "Persoonlijk gesprek met de specialist",
-        "Concreet advies dat je direct kunt toepassen"
+        "Diepgaande scan van je huidige ad-architectuur",
+        "Identificatie van de grootste lekken in je funnel",
+        "1-op-1 strategische sparring met de founder"
       ],
-      formTitle: "Laat je gegevens achter",
-      formSubtitle: "We nemen binnen 4 uur contact op.",
+      formTitle: "Vraag je audit aan",
+      formSubtitle: "We reageren binnen 4 uur.",
       labelName: "Naam",
       placeholderName: "Je volledige naam",
-      labelEmail: "E-mailadres",
+      labelEmail: "Work e-mail",
       placeholderEmail: "naam@bedrijf.be",
       labelPhone: "Telefoonnummer",
       placeholderPhone: "+32 470 12 34 56",
-      submitBtn: "Verstuur",
-      security: "Je gegevens worden vertrouwelijk behandeld.",
-      successTitle: "Ontvangen!",
+      submitBtn: "Claim mijn Audit",
+      security: "Je data wordt 100% vertrouwelijk behandeld.",
+      successTitle: "Aanvraag ontvangen",
       successDesc: (naam: string) => (
         <>
-          Bedankt {naam && <strong className="font-semibold text-[var(--color-agency-accent)]">{naam}</strong>}. Hans neemt binnen <strong className="font-semibold text-white">4 kantooruren</strong> contact met je op.
+          Bedankt {naam && <strong className="font-semibold text-[var(--color-agency-accent)]">{naam}</strong>}. We plannen binnen <strong className="font-semibold text-white">4 kantooruren</strong> de audit in.
         </>
       ),
     },
     en: {
-      badge: "Get in touch",
-      h2: "Curious what we could do for you?",
-      p: "Schedule a free 30-minute call. We'll analyze your current setup and give you 3 concrete improvements — regardless of whether we end up working together.",
+      badge: "Growth Audit",
+      h2: "Ready to scale your revenue?",
+      p: "Book a 30-minute Discovery Call. We'll examine your current funnel and immediately spot the bottlenecks costing you MRR today — no hard-selling BS attached.",
       bullets: [
-        "Free analysis of your current campaigns",
-        "Personal call with the specialist",
-        "Actionable advice you can apply immediately"
+        "Deep-dive scan of your current ad-architecture",
+        "Identification of the biggest leaks in your funnel",
+        "1-on-1 strategic sparring with the founder"
       ],
-      formTitle: "Leave your details",
-      formSubtitle: "We'll get back to you within 4 hours.",
+      formTitle: "Request your audit",
+      formSubtitle: "We'll be in touch within 4 hours.",
       labelName: "Name",
       placeholderName: "Your full name",
-      labelEmail: "Email address",
+      labelEmail: "Work email",
       placeholderEmail: "name@company.com",
       labelPhone: "Phone number",
       placeholderPhone: "+32 470 12 34 56",
-      submitBtn: "Send",
-      security: "Your data is treated confidentially.",
-      successTitle: "Received!",
+      submitBtn: "Claim my Audit",
+      security: "Your data is treated with 100% confidentiality.",
+      successTitle: "Request received",
       successDesc: (naam: string) => (
         <>
-          Thanks {naam && <strong className="font-semibold text-[var(--color-agency-accent)]">{naam}</strong>}. Hans will reach out within <strong className="font-semibold text-white">4 business hours</strong>.
+          Thanks {naam && <strong className="font-semibold text-[var(--color-agency-accent)]">{naam}</strong>}. We'll reach out within <strong className="font-semibold text-white">4 business hours</strong> to schedule your audit.
         </>
       ),
     }
   }[lang];
 
   return (
-    <section id="boeken" className="section-padding relative bg-[var(--color-text-primary)] overflow-hidden">
+    <section id="boeken" className="section-padding relative bg-[var(--color-agency-surface)] overflow-hidden border-t border-white/5">
       {/* Animated ambient glow */}
       <motion.div 
         animate={{ 

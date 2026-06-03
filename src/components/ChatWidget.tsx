@@ -77,10 +77,10 @@ export function ChatWidget({ lang }: ChatWidgetProps) {
             animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
             exit={{ opacity: 0, y: 20, scale: 0.95, filter: "blur(10px)" }}
             transition={{ duration: 0.4, type: "spring", bounce: 0.3 }}
-            className="absolute bottom-20 right-0 w-[380px] bg-white rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.15)] overflow-hidden flex flex-col border border-black/[0.04]"
+            className="absolute bottom-20 right-0 w-[380px] bg-[var(--color-agency-bg)] rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col border border-white/10"
           >
             {/* Header (Premium Intercom-style) */}
-            <div className="bg-gradient-to-br from-[var(--color-text-primary)] to-[#1a2e2e] p-6 relative overflow-hidden">
+            <div className="bg-gradient-to-br from-[var(--color-agency-surface)] to-[#111a1a] p-6 relative overflow-hidden border-b border-white/5">
               {/* Decorative shapes */}
               <div className="absolute top-0 right-0 w-40 h-40 bg-[var(--color-agency-accent)]/20 rounded-full blur-3xl -translate-y-10 translate-x-10 pointer-events-none" />
               
@@ -95,11 +95,11 @@ export function ChatWidget({ lang }: ChatWidgetProps) {
                       />
                     </div>
                     {/* Online indicator */}
-                    <div className="absolute bottom-0.5 right-0.5 w-3.5 h-3.5 bg-green-500 border-2 border-[var(--color-text-primary)] rounded-full" />
+                    <div className="absolute bottom-0.5 right-0.5 w-3.5 h-3.5 bg-green-500 border-2 border-[var(--color-agency-surface)] rounded-full" />
                   </div>
                   <div>
                     <h3 className="font-outfit font-semibold text-white text-[17px] leading-tight tracking-wide">Hans Claes</h3>
-                    <p className="text-[12px] text-white/60 font-light mt-0.5">{content.role}</p>
+                    <p className="text-[12px] text-[var(--color-agency-accent)] font-light mt-0.5">{content.role}</p>
                   </div>
                 </div>
                 <button 
@@ -112,7 +112,7 @@ export function ChatWidget({ lang }: ChatWidgetProps) {
             </div>
 
             {/* Body */}
-            <div className="bg-[#f8fafc] flex-1 max-h-[60vh] overflow-y-auto custom-scrollbar">
+            <div className="bg-[var(--color-agency-surface)] flex-1 max-h-[60vh] overflow-y-auto custom-scrollbar">
               <AnimatePresence mode="wait">
                 {!isSubmitted ? (
                   <motion.div
@@ -124,16 +124,16 @@ export function ChatWidget({ lang }: ChatWidgetProps) {
                   >
                     {/* Chat Bubble from Hans */}
                     <div className="flex gap-3 max-w-[92%]">
-                      <div className="w-7 h-7 rounded-full overflow-hidden shrink-0 mt-1 shadow-sm border border-black/[0.05]">
+                      <div className="w-7 h-7 rounded-full overflow-hidden shrink-0 mt-1 shadow-sm border border-white/10">
                         <img src={founderImg} alt="Hans Claes" className="w-full h-full object-cover object-[center_20%]" />
                       </div>
-                      <div className="bg-white p-4 rounded-2xl rounded-tl-sm shadow-sm border border-black/[0.03] text-[14px] text-[var(--color-text-secondary)] font-light leading-relaxed">
+                      <div className="bg-[var(--color-agency-bg)] p-4 rounded-2xl rounded-tl-sm shadow-sm border border-white/5 text-[14px] text-[var(--color-text-secondary)] font-light leading-relaxed">
                         {content.chatBubble}
                       </div>
                     </div>
 
                     {/* The Form */}
-                    <form onSubmit={handleSubmit} className="flex flex-col gap-3 mt-1 bg-white p-5 rounded-2xl shadow-sm border border-black/[0.03]">
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-3 mt-1 bg-[var(--color-agency-bg)] p-5 rounded-2xl shadow-sm border border-white/5">
                       
                       <div className="relative">
                         <input 
@@ -142,7 +142,7 @@ export function ChatWidget({ lang }: ChatWidgetProps) {
                           value={formData.naam}
                           onChange={(e) => setFormData({...formData, naam: e.target.value})}
                           placeholder={content.placeholderName}
-                          className="w-full outline-none border border-black/[0.06] rounded-xl px-4 py-3 text-[var(--color-text-primary)] placeholder:text-black/30 text-[14px] bg-gray-50/50 focus:bg-white focus:border-[var(--color-agency-accent)]/50 focus:ring-4 focus:ring-[var(--color-agency-accent)]/10 transition-all font-light"
+                          className="w-full outline-none border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/30 text-[14px] bg-white/5 focus:bg-white/10 focus:border-[var(--color-agency-accent)]/50 focus:ring-4 focus:ring-[var(--color-agency-accent)]/10 transition-all font-light"
                         />
                       </div>
 
@@ -153,7 +153,7 @@ export function ChatWidget({ lang }: ChatWidgetProps) {
                           value={formData.telefoon}
                           onChange={(e) => setFormData({...formData, telefoon: e.target.value})}
                           placeholder={content.placeholderPhone}
-                          className="w-full outline-none border border-black/[0.06] rounded-xl px-4 py-3 text-[var(--color-text-primary)] placeholder:text-black/30 text-[14px] bg-gray-50/50 focus:bg-white focus:border-[var(--color-agency-accent)]/50 focus:ring-4 focus:ring-[var(--color-agency-accent)]/10 transition-all font-light"
+                          className="w-full outline-none border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/30 text-[14px] bg-white/5 focus:bg-white/10 focus:border-[var(--color-agency-accent)]/50 focus:ring-4 focus:ring-[var(--color-agency-accent)]/10 transition-all font-light"
                         />
                       </div>
 
@@ -163,13 +163,13 @@ export function ChatWidget({ lang }: ChatWidgetProps) {
                           onChange={(e) => setFormData({...formData, vraag: e.target.value})}
                           placeholder={content.placeholderQuestion}
                           rows={2}
-                          className="w-full outline-none border border-black/[0.06] rounded-xl px-4 py-3 text-[var(--color-text-primary)] placeholder:text-black/30 text-[14px] resize-none bg-gray-50/50 focus:bg-white focus:border-[var(--color-agency-accent)]/50 focus:ring-4 focus:ring-[var(--color-agency-accent)]/10 transition-all font-light custom-scrollbar"
+                          className="w-full outline-none border border-white/10 rounded-xl px-4 py-3 text-white placeholder:text-white/30 text-[14px] resize-none bg-white/5 focus:bg-white/10 focus:border-[var(--color-agency-accent)]/50 focus:ring-4 focus:ring-[var(--color-agency-accent)]/10 transition-all font-light custom-scrollbar"
                         />
                       </div>
 
                       <button 
                         type="submit"
-                        className="mt-2 bg-[var(--color-text-primary)] hover:bg-[var(--color-agency-accent)] text-white font-medium text-[14px] py-3.5 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] hover:shadow-[0_6px_20px_rgba(45,125,111,0.2)] hover:-translate-y-0.5 active:translate-y-0"
+                        className="mt-2 bg-white hover:bg-[var(--color-agency-accent)] text-[var(--color-agency-bg)] hover:text-white font-medium text-[14px] py-3.5 rounded-xl flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer shadow-[0_4px_14px_0_rgba(0,0,0,0.3)] hover:-translate-y-0.5 active:translate-y-0"
                       >
                         {content.submitBtn}
                         <ArrowRight size={16} />
@@ -186,7 +186,7 @@ export function ChatWidget({ lang }: ChatWidgetProps) {
                     <div className="size-16 rounded-full bg-[var(--color-agency-accent)]/10 flex items-center justify-center text-[var(--color-agency-accent)] mb-5 shadow-sm border border-[var(--color-agency-accent)]/20">
                       <Send size={24} className="ml-1" />
                     </div>
-                    <h4 className="font-outfit font-semibold text-[20px] text-[var(--color-text-primary)] mb-2">
+                    <h4 className="font-outfit font-semibold text-[20px] text-white mb-2">
                       {lang === 'nl' ? 'Onderweg!' : 'Sent!'}
                     </h4>
                     <p className="text-[14px] text-[var(--color-text-secondary)] font-light leading-relaxed">
@@ -198,7 +198,7 @@ export function ChatWidget({ lang }: ChatWidgetProps) {
             </div>
             
             {/* Footer */}
-            <div className="bg-white border-t border-black/[0.04] py-3 text-center">
+            <div className="bg-[var(--color-agency-bg)] border-t border-white/5 py-3 text-center">
               <span className="text-[10px] text-[var(--color-text-muted)] font-medium uppercase tracking-wider">Powered by CarabusADS</span>
             </div>
           </motion.div>
@@ -215,7 +215,7 @@ export function ChatWidget({ lang }: ChatWidgetProps) {
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 10, scale: 0.9 }}
               transition={{ duration: 0.5, type: "spring", bounce: 0.5 }}
-              className="absolute right-20 mr-1 bg-white px-4 py-3 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-black/[0.04] text-[13px] font-medium text-[var(--color-text-primary)] whitespace-nowrap cursor-pointer origin-right"
+              className="absolute right-20 mr-1 bg-[var(--color-agency-surface)] px-4 py-3 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.5)] border border-white/10 text-[13px] font-medium text-white whitespace-nowrap cursor-pointer origin-right"
               onClick={() => {
                 setIsOpen(true);
                 setShowTooltip(false);
@@ -223,7 +223,7 @@ export function ChatWidget({ lang }: ChatWidgetProps) {
             >
               {content.tooltip}
               {/* Little triangle pointing right */}
-              <div className="absolute top-1/2 -right-1.5 -translate-y-1/2 w-3 h-3 bg-white border-r border-t border-black/[0.04] rotate-45" />
+              <div className="absolute top-1/2 -right-1.5 -translate-y-1/2 w-3 h-3 bg-[var(--color-agency-surface)] border-r border-t border-white/10 rotate-45" />
             </motion.div>
           )}
         </AnimatePresence>
@@ -237,10 +237,10 @@ export function ChatWidget({ lang }: ChatWidgetProps) {
               setFormData({ naam: '', telefoon: '', vraag: '' });
             }
           }}
-          className={`w-[64px] h-[64px] rounded-full flex items-center justify-center shadow-[0_8px_30px_rgb(0,0,0,0.2)] transition-all duration-300 hover:scale-105 active:scale-95 z-50 relative cursor-pointer ${
+          className={`w-[64px] h-[64px] rounded-full flex items-center justify-center shadow-[0_8px_30px_rgba(0,0,0,0.4)] transition-all duration-300 hover:scale-105 active:scale-95 z-50 relative cursor-pointer ${
             isOpen 
-              ? 'bg-white text-[var(--color-text-primary)] border border-black/[0.06]' 
-              : 'bg-[var(--color-text-primary)] text-white hover:bg-[#1f3333]'
+              ? 'bg-[var(--color-agency-surface)] text-white border border-white/20' 
+              : 'bg-white text-[var(--color-agency-bg)] hover:bg-[var(--color-agency-accent)] hover:text-white'
           }`}
           aria-label={isOpen ? content.ariaClose : content.ariaOpen}
         >

@@ -44,7 +44,7 @@ const platforms = [
 
 export function LogoCloud({ lang }: LogoCloudProps) {
   return (
-    <section className="py-6 border-y border-black/[0.04] bg-white/40 scroll-reveal-fade">
+    <section className="py-6 border-y border-white/5 bg-[var(--color-agency-bg)] relative z-10 scroll-reveal-fade">
       <div className="max-w-[1100px] mx-auto px-6 flex flex-col sm:flex-row items-center gap-6 sm:gap-10 justify-center">
         <p className="text-[12px] font-medium text-[var(--color-text-muted)] shrink-0 whitespace-nowrap">
           {lang === 'nl' ? 'Gecertificeerd in' : 'Certified in'}

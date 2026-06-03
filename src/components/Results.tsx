@@ -1,71 +1,90 @@
-import { motion } from 'motion/react';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useSpring, useTransform, useInView } from 'motion/react';
 
 interface ResultsProps {
   lang: 'nl' | 'en';
 }
 
+function Odometer({ target, prefix = "", suffix = "", decimals = 0, start = 0 }: { target: number, prefix?: string, suffix?: string, decimals?: number, start?: number }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const springValue = useSpring(start, { bounce: 0, duration: 2500 });
+  
+  useEffect(() => {
+    if (isInView) {
+      springValue.set(target);
+    }
+  }, [isInView, target, springValue]);
+
+  const display = useTransform(springValue, (current) => {
+    return prefix + current.toFixed(decimals) + suffix;
+  });
+
+  return <motion.span ref={ref}>{display}</motion.span>;
+}
+
 export function Results({ lang }: ResultsProps) {
   const content = {
     nl: {
-      badge: "Resultaten",
-      h2: "Wat onze aanpak oplevert",
-      subtitle: "Concrete voorbeelden van wat er mogelijk is met een gestructureerde campagne-aanpak en goed gebouwde funnels.",
+      badge: "Track Record",
+      h2: "De ROI van Growth Engineering",
+      subtitle: "Wat er gebeurt wanneer je data-gedreven media buying combineert met high-converting infrastructuur.",
       cases: [
         {
-          metric: "4.2x → 8.7x",
-          label: "ROAS",
-          desc: "Return on ad spend verbeterd door gestructureerde campagne-architectuur en server-side tracking.",
+          odometer: <Odometer target={8.7} decimals={1} suffix="x" />,
+          label: "ROAS (was 4.2x)",
+          desc: "Winstgevendheid verdubbeld door over te stappen van basiscampagnes naar een rigide campagne-architectuur en server-side tracking.",
           context: "B2B SaaS · Google Ads"
         },
         {
-          metric: "€142 → €38",
-          label: "Kosten per lead",
-          desc: "Cost per lead met 73% verlaagd door gerichte landingspagina's en funnel-optimalisatie.",
+          odometer: <Odometer start={142} target={38} prefix="€" />,
+          label: "CPA (was €142)",
+          desc: "Cost Per Acquisition gekelderd door dode traffic op te vangen in gespecialiseerde funnel-flows.",
           context: "E-commerce · Meta Ads"
         },
         {
-          metric: "+210%",
+          odometer: <Odometer target={210} prefix="+" suffix="%" />,
           label: "Conversieratio",
-          desc: "Meer conversies uit hetzelfde verkeer dankzij A/B testing en verbeterde pagina-structuur.",
+          desc: "Gekwalificeerde pipeline verdrievoudigd uit hetzelfde advertentiebudget dankzij harde data-driven A/B tests.",
           context: "Dienstverlener · Google + Meta"
         }
       ],
-      note: "* Resultaten variëren per branche en uitgangssituatie. Deze voorbeelden zijn gebaseerd op werkelijke klanttrajecten."
+      note: "* Performance is afhankelijk van ad spend en uitgangssituatie. Data gebaseerd op ge-auditeerde klanttrajecten."
     },
     en: {
-      badge: "Results",
-      h2: "What our approach delivers",
-      subtitle: "Concrete examples of what's possible with a structured campaign approach and well-built funnels.",
+      badge: "Track Record",
+      h2: "The ROI of engineered growth",
+      subtitle: "What happens when you combine data-driven media buying with high-converting infrastructure.",
       cases: [
         {
-          metric: "4.2x → 8.7x",
-          label: "ROAS",
-          desc: "Return on ad spend improved through structured campaign architecture and server-side tracking.",
+          odometer: <Odometer target={8.7} decimals={1} suffix="x" />,
+          label: "ROAS (was 4.2x)",
+          desc: "Profitability doubled by migrating from basic setups to a rigid campaign architecture and server-side tracking.",
           context: "B2B SaaS · Google Ads"
         },
         {
-          metric: "€142 → €38",
-          label: "Cost per lead",
-          desc: "Cost per lead reduced by 73% through targeted landing pages and funnel optimization.",
+          odometer: <Odometer start={142} target={38} prefix="€" />,
+          label: "CPA (was €142)",
+          desc: "Cost Per Acquisition slashed by redirecting dead-end traffic into specialized funnel flows.",
           context: "E-commerce · Meta Ads"
         },
         {
-          metric: "+210%",
+          odometer: <Odometer target={210} prefix="+" suffix="%" />,
           label: "Conversion rate",
-          desc: "More conversions from the same traffic through A/B testing and improved page structure.",
+          desc: "Qualified pipeline tripled from the exact same ad budget through relentless data-driven A/B testing.",
           context: "Service provider · Google + Meta"
         }
       ],
-      note: "* Results vary by industry and starting point. These examples are based on actual client engagements."
+      note: "* Performance depends on ad spend and starting point. Data based on audited client engagements."
     }
   }[lang];
 
   return (
-    <section className="section-padding bg-white w-full border-y border-black/[0.04] relative z-10 overflow-hidden">
+    <section className="section-padding bg-[var(--color-agency-bg)] w-full relative z-10 overflow-hidden">
       {/* Decorative gradient for premium feel */}
-      <div className="absolute -bottom-20 -left-20 w-[500px] h-[500px] bg-[var(--color-agency-accent)]/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute -bottom-20 -left-20 w-[600px] h-[600px] bg-[var(--color-agency-accent)]/10 rounded-full blur-[140px] pointer-events-none" />
       
-      <div className="max-w-[1100px] mx-auto relative z-10">
+      <div className="max-w-[1200px] mx-auto relative z-10">
         
         {/* Header */}
         <motion.div 
@@ -73,21 +92,21 @@ export function Results({ lang }: ResultsProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="max-w-[540px] mb-14"
+          className="max-w-[640px] mb-20"
         >
-          <div className="section-badge">
+          <div className="section-badge mb-8">
             {content.badge}
           </div>
           
-          <h2 className="font-display text-[32px] md:text-[42px] font-normal tracking-[-0.01em] mb-4 text-[var(--color-text-primary)] leading-[1.15]">
+          <h2 className="font-display text-[36px] md:text-[48px] font-normal tracking-[-0.01em] mb-6 text-white leading-[1.1]">
             {content.h2}
           </h2>
-          <p className="text-[16px] sm:text-[17px] font-light text-[var(--color-text-secondary)] leading-[1.7]">
+          <p className="text-[17px] md:text-[19px] font-light text-[var(--color-text-secondary)] leading-[1.7]">
             {content.subtitle}
           </p>
         </motion.div>
 
-        {/* Results Grid */}
+        {/* Data Wall */}
         <motion.div 
           initial="hidden"
           whileInView="visible"
@@ -101,45 +120,33 @@ export function Results({ lang }: ResultsProps) {
               }
             }
           }}
-          className="grid md:grid-cols-3 gap-6 mb-8"
+          className="grid lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-white/10 border-y border-white/10 mb-12"
         >
           {content.cases.map((c, i) => (
             <motion.div
               key={i}
               variants={{
-                hidden: { opacity: 0, y: 30, scale: 0.95 },
-                visible: { 
-                  opacity: 1, 
-                  y: 0, 
-                  scale: 1,
-                  transition: { type: "spring", bounce: 0.2, duration: 0.8 }
-                }
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
               }}
-              whileHover={{ y: -5 }}
-              className="card-elevated rounded-xl p-8 flex flex-col relative overflow-hidden group bg-white border border-black/[0.04]"
+              className="py-12 lg:py-16 lg:px-12 flex flex-col relative overflow-hidden group first:lg:pl-0 last:lg:pr-0"
             >
-              {/* Subtle hover gradient */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-agency-accent)]/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              {/* Subtle hover line graph animation effect */}
+              <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[var(--color-agency-accent)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700 translate-y-8 group-hover:translate-y-0 pointer-events-none" />
               
-              {/* Big metric */}
-              <div className="mb-6 relative z-10">
-                <motion.span 
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 + (i * 0.1), type: "spring", bounce: 0.5 }}
-                  className="font-outfit font-bold text-[32px] sm:text-[38px] text-[var(--color-agency-accent)] leading-none block"
-                >
-                  {c.metric}
-                </motion.span>
-                <div className="text-[12px] font-semibold text-[var(--color-text-primary)] mt-2 uppercase tracking-wider">{c.label}</div>
+              {/* Big metric with odometer */}
+              <div className="mb-8 relative z-10">
+                <div className="font-display font-bold text-[64px] sm:text-[80px] lg:text-[96px] text-white leading-none tracking-tight mb-4 transition-colors duration-500 group-hover:text-[var(--color-agency-accent)]">
+                  {c.odometer}
+                </div>
+                <div className="text-[13px] font-semibold text-[var(--color-agency-accent)] uppercase tracking-widest">{c.label}</div>
               </div>
               
               {/* Description */}
-              <p className="text-[14px] font-light text-[var(--color-text-secondary)] leading-[1.65] mb-6 flex-1 relative z-10">{c.desc}</p>
+              <p className="text-[16px] font-light text-[var(--color-text-secondary)] leading-[1.7] mb-8 flex-1 relative z-10">{c.desc}</p>
               
               {/* Context tag */}
-              <span className="text-[11px] font-medium text-[var(--color-text-muted)] bg-[var(--color-agency-bg)] px-3 py-1.5 rounded-md self-start border border-black/[0.03] relative z-10">
+              <span className="text-[12px] font-medium text-white/50 border border-white/10 px-4 py-2 rounded-lg self-start relative z-10 backdrop-blur-sm group-hover:border-white/20 transition-colors duration-300">
                 {c.context}
               </span>
             </motion.div>
@@ -152,7 +159,7 @@ export function Results({ lang }: ResultsProps) {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.8 }}
-          className="text-[12px] text-[var(--color-text-muted)] font-light"
+          className="text-[13px] text-white/30 font-light"
         >
           {content.note}
         </motion.p>

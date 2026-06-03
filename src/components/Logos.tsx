@@ -34,7 +34,7 @@ export const Logos = {
   ),
   TikTok: () => (
     <div className="flex items-center gap-2 transition-all duration-300 hover:scale-105">
-      <svg viewBox="0 0 16 16" className="h-6 object-contain text-black" fill="currentColor" width="auto" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 16 16" className="h-6 object-contain text-white" fill="currentColor" width="auto" xmlns="http://www.w3.org/2000/svg">
         <path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z" />
       </svg>
       <span className="font-sans font-bold tracking-tighter text-[15px] text-[var(--color-text-primary)]">TikTok Ads</span>

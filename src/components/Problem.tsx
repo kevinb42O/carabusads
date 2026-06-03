@@ -8,41 +8,41 @@ interface ProblemProps {
 export function Problem({ lang }: ProblemProps) {
   const content = {
     nl: {
-      badge: "Herkenbaar?",
-      h2: "Je geeft duizenden euro's uit aan ads, maar het levert te weinig op.",
-      p: "Je hebt al geïnvesteerd in Google Ads of Social campagnes. Misschien via een bureau, misschien zelf. De kliks komen binnen, maar de telefoon gaat niet vaker. Je weet dat het beter kan — maar niet waar het fout loopt.",
-      badTitle: "Wat je nu waarschijnlijk meemaakt",
+      badge: "De Bottleneck",
+      h2: "Je ad spend stijgt, maar de agenda blijft pijnlijk leeg.",
+      p: "Je investeert stevig in Google & Meta. De dashboards staan vol met impressies en klikken, maar onderaan de streep ontbreekt de voorspelbare omzet. Je weet dat de funnel lekt, maar niet wáár.",
+      badTitle: "Het verouderde model",
       badBullets: [
-        "Advertentieverkeer dat naar je homepage gaat in plaats van een gerichte landingspagina",
-        "Geen duidelijk beeld welke campagnes écht omzet opleveren",
-        "Rapportages vol impressies en klikken, maar weinig over daadwerkelijke leads",
-        "Het gevoel dat je bureau je account niet echt kent"
+        "Duur advertentieverkeer dat doodloopt op een algemene homepage",
+        "Blinde vlekken in attributie: geen idee welke ad écht MRR oplevert",
+        "Vanity metrics: rapportages over 'bereik' in plaats van Cost Per Acquisition",
+        "Een bureau dat maandelijks de rekening stuurt, maar niet proactief meedenkt"
       ],
-      goodTitle: "Hoe wij het aanpakken",
+      goodTitle: "De Carabus Ads Architectuur",
       goodBullets: [
-        "Elke campagne gekoppeld aan een landingspagina gebouwd voor conversie",
-        "Server-side tracking zodat je exact weet welke euro wat oplevert",
-        "Wekelijkse rapportage op leads, kosten per lead en omzet",
-        "Eén vast aanspreekpunt dat je account dagelijks beheert"
+        "Dedicated conversie-flows voor elke traffic source",
+        "Server-side tracking (GTM) voor 100% waterdichte omzet-attributie",
+        "Keiharde focus op ROAS, CAC en gekwalificeerde leads",
+        "Direct contact met de strategist die zélf aan de knoppen zit"
       ],
     },
     en: {
-      badge: "Sound familiar?",
-      h2: "You're spending thousands on ads, but the returns don't add up.",
-      p: "You've invested in Google Ads or Social campaigns — maybe through an agency, maybe yourself. The clicks are coming in, but the phone isn't ringing more. You know it can be better — you just don't know where it's going wrong.",
-      badTitle: "What you're probably experiencing",
+      badge: "The Bottleneck",
+      h2: "Your ad spend is scaling, but your calendar is empty.",
+      p: "You're heavily invested in Google & Meta. The dashboards are full of impressions and clicks, but you lack predictable revenue at the bottom line. You know your funnel is leaking, you just don't know where.",
+      badTitle: "The broken model",
       badBullets: [
-        "Ad traffic landing on your homepage instead of a dedicated conversion page",
-        "No clear picture of which campaigns actually generate revenue",
-        "Reports full of impressions and clicks, but little on actual leads",
-        "The feeling that your agency doesn't truly know your account"
+        "Expensive traffic hitting a generic homepage instead of a focused funnel",
+        "Blind spots in attribution: no clue which ad actually drives MRR",
+        "Vanity metrics: agencies reporting on 'reach' instead of Cost Per Acquisition",
+        "A standard agency that sends the invoice but lacks proactive strategy"
       ],
-      goodTitle: "How we approach it",
+      goodTitle: "The Carabus Ads Architecture",
       goodBullets: [
-        "Every campaign linked to a landing page built for conversion",
-        "Server-side tracking so you know exactly which euro drives what",
-        "Weekly reporting on leads, cost per lead, and revenue",
-        "One dedicated specialist managing your account daily"
+        "Dedicated conversion pipelines for every traffic source",
+        "Server-side tracking (GTM) for bulletproof revenue attribution",
+        "Relentless focus on ROAS, CAC, and qualified pipeline",
+        "Direct access to the senior strategist pulling the levers"
       ],
     }
   }[lang];
@@ -153,103 +153,94 @@ export function Problem({ lang }: ProblemProps) {
     <section id="pijnpunt" className="section-padding bg-[var(--color-agency-bg)] w-full relative overflow-hidden">
       {/* Ambient background glow */}
       <motion.div 
-        animate={{ opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[var(--color-agency-accent)]/5 rounded-full blur-[100px] -translate-y-1/2 pointer-events-none" 
+        animate={{ opacity: [0.1, 0.3, 0.1] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[var(--color-agency-accent)]/10 rounded-full blur-[140px] -translate-y-1/2 pointer-events-none" 
       />
 
-      <div className="max-w-[1100px] mx-auto w-full relative z-10">
+      <div className="max-w-[1200px] mx-auto w-full relative z-10 flex flex-col lg:flex-row items-start gap-12 lg:gap-24">
         
-        {/* Header */}
-        <motion.div 
-          variants={headerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          className="max-w-[640px] mb-16"
-        >
-          <motion.div variants={headerItem} className="section-badge">
-            {content.badge}
-          </motion.div>
-          
-          <motion.h2 variants={headerItem} className="font-display text-[32px] md:text-[42px] font-normal tracking-[-0.01em] mb-6 text-[var(--color-text-primary)] leading-[1.15]">
-            {content.h2}
-          </motion.h2>
-          
-          <motion.p variants={headerItem} className="text-[16px] sm:text-[17px] text-[var(--color-text-secondary)] font-light leading-[1.75]">
-            {content.p}
-          </motion.p>
-        </motion.div>
-
-        {/* Comparison Grid */}
-        <motion.div 
-          variants={gridVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          className="grid md:grid-cols-2 gap-6 w-full"
-        >
-          
-          {/* The problem */}
+        {/* Left Side: Sticky Header */}
+        <div className="lg:sticky lg:top-40 w-full lg:w-[45%] shrink-0 z-20">
           <motion.div 
-            variants={leftCardVariants}
-            className="card-elevated rounded-xl p-7 sm:p-9 flex flex-col group relative overflow-hidden"
+            variants={headerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
           >
-            {/* Subtle red danger zone overlay on hover */}
-            <div className="absolute inset-0 bg-red-500/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <motion.div variants={headerItem} className="section-badge mb-8">
+              {content.badge}
+            </motion.div>
             
-            <h3 className="font-outfit font-semibold text-[18px] text-[var(--color-text-primary)] mb-6 transition-colors duration-300 group-hover:text-red-500/80">{content.badTitle}</h3>
+            <motion.h2 variants={headerItem} className="font-display text-[36px] md:text-[48px] lg:text-[56px] font-normal tracking-[-0.02em] mb-6 text-[var(--color-text-primary)] leading-[1.1]">
+              {content.h2}
+            </motion.h2>
             
-            <ul className="flex flex-col gap-5">
+            <motion.p variants={headerItem} className="text-[17px] md:text-[19px] text-[var(--color-text-secondary)] font-light leading-[1.7] max-w-[480px]">
+              {content.p}
+            </motion.p>
+          </motion.div>
+        </div>
+
+        {/* Right Side: Stacking Cards */}
+        <div className="w-full lg:w-[55%] flex flex-col gap-10 pb-10 lg:pb-32 relative z-30">
+          
+          {/* Card 1: The broken model */}
+          <motion.div 
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: customEase }}
+            className="card-elevated rounded-2xl p-8 sm:p-10 flex flex-col group relative overflow-hidden ring-1 ring-white/5"
+          >
+            {/* Abstract Background Indicator for bad (Red-ish gradient) */}
+            <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-red-500/[0.03] rounded-full blur-[80px] group-hover:bg-red-500/[0.06] transition-colors duration-700 pointer-events-none" />
+            
+            <h3 className="font-outfit font-semibold text-[22px] text-[var(--color-text-primary)] mb-8 transition-colors duration-300 group-hover:text-white/90">{content.badTitle}</h3>
+            
+            <ul className="flex flex-col gap-6 relative z-10">
               {content.badBullets.map((bullet, idx) => (
-                <motion.li variants={badItemVariants} key={idx} className="flex items-start gap-4 text-[14px] sm:text-[15px] text-[var(--color-text-secondary)] font-light leading-relaxed group-hover:text-[var(--color-text-primary)] transition-colors duration-300">
-                  <motion.div variants={crossIconVariants} className="mt-0.5 shrink-0">
-                    <div className="size-6 rounded-full bg-red-50 flex items-center justify-center border border-red-100">
-                      <X className="size-3.5 text-red-500" />
-                    </div>
-                  </motion.div>
-                  <span className="pt-0.5">{bullet}</span>
-                </motion.li>
+                <li key={idx} className="flex items-start gap-4 text-[15px] sm:text-[16px] text-[var(--color-text-secondary)] font-light leading-relaxed group-hover:text-[var(--color-text-secondary)] transition-colors duration-300">
+                  <div className="mt-1.5 shrink-0 size-1.5 bg-red-500/50 rounded-full" />
+                  <span className="pt-0">{bullet}</span>
+                </li>
               ))}
             </ul>
           </motion.div>
 
-          {/* The solution */}
+          {/* Card 2: The Solution */}
           <motion.div 
-            variants={rightCardVariants}
-            className="dark-panel rounded-xl p-7 sm:p-9 flex flex-col relative overflow-hidden group hover:border-[var(--color-agency-accent)]/40 hover:shadow-[0_0_40px_rgba(45,125,111,0.15)] transition-colors duration-700"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: customEase }}
+            className="dark-panel bg-[var(--color-agency-surface)] rounded-2xl p-8 sm:p-10 flex flex-col relative overflow-hidden group border border-[var(--color-agency-accent)]/20 hover:border-[var(--color-agency-accent)]/40 hover:shadow-[0_0_50px_rgba(45,125,111,0.15)] transition-all duration-700"
           >
-            {/* Animated shimmer effect across the panel */}
+            {/* Abstract Background Indicator for good (Green-ish matrix) */}
+            <div className="absolute -top-10 -right-10 w-[400px] h-[400px] bg-[var(--color-agency-accent)]/10 rounded-full blur-[80px] pointer-events-none transition-all duration-700 group-hover:bg-[var(--color-agency-accent)]/20 group-hover:scale-110 z-0" />
+            
+            {/* Shimmer effect */}
             <motion.div 
               initial={{ x: "-100%" }}
               whileInView={{ x: "200%" }}
               viewport={{ once: true }}
-              transition={{ duration: 1.5, ease: "easeInOut", delay: 0.8 }}
-              className="absolute top-0 bottom-0 w-1/2 bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-[-20deg] pointer-events-none z-0"
-            />
-
-            {/* Subtle corner accent, animates on hover */}
-            <motion.div 
-              className="absolute -top-10 -right-10 w-60 h-60 bg-[var(--color-agency-accent)]/20 rounded-full blur-[60px] pointer-events-none transition-colors duration-700 group-hover:bg-[var(--color-agency-accent)]/30 group-hover:scale-110 z-0" 
+              transition={{ duration: 1.5, ease: "easeInOut", delay: 0.5 }}
+              className="absolute top-0 bottom-0 w-1/2 bg-gradient-to-r from-transparent via-[var(--color-agency-accent)]/10 to-transparent skew-x-[-20deg] pointer-events-none z-0"
             />
             
-            <h3 className="font-outfit font-semibold text-[18px] text-white mb-6 relative z-10 transition-colors duration-300 group-hover:text-[var(--color-agency-accent-light)]">{content.goodTitle}</h3>
+            <h3 className="font-outfit font-semibold text-[22px] text-white mb-8 relative z-10 transition-colors duration-300 group-hover:text-[var(--color-agency-accent)]">{content.goodTitle}</h3>
             
-            <ul className="flex flex-col gap-5 relative z-10">
+            <ul className="flex flex-col gap-6 relative z-10">
               {content.goodBullets.map((bullet, idx) => (
-                <motion.li variants={goodItemVariants} key={idx} className="flex items-start gap-4 text-[14px] sm:text-[15px] text-white/85 font-light leading-relaxed">
-                  <motion.div variants={checkIconVariants} className="mt-0.5 shrink-0">
-                    <div className="size-6 rounded-full bg-[var(--color-agency-accent)]/10 flex items-center justify-center border border-[var(--color-agency-accent)]/30">
-                      <Check className="size-3.5 text-[var(--color-agency-accent)]" />
-                    </div>
-                  </motion.div>
-                  <span className="pt-0.5">{bullet}</span>
-                </motion.li>
+                <li key={idx} className="flex items-start gap-4 text-[15px] sm:text-[16px] text-white/85 font-light leading-relaxed">
+                  <div className="mt-1.5 shrink-0 size-2 bg-[var(--color-agency-accent)] rounded-sm shadow-[0_0_10px_rgba(92,203,186,0.5)]" />
+                  <span className="pt-0">{bullet}</span>
+                </li>
               ))}
             </ul>
           </motion.div>
 
-        </motion.div>
+        </div>
       </div>
     </section>
   );

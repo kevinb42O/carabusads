@@ -1,93 +1,104 @@
+import { useRef } from 'react';
 import { Search, PenTool, TrendingUp } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, useScroll, useTransform } from 'motion/react';
 
 interface MethodologyProps {
   lang: 'nl' | 'en';
 }
 
 export function Methodology({ lang }: MethodologyProps) {
+  const targetRef = useRef<HTMLDivElement>(null);
+  
+  // For desktop horizontal scroll
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ["start start", "end end"]
+  });
+  // Use a function for useTransform because Framer Motion cannot interpolate between complex calc() strings in an array
+  const x = useTransform(scrollYProgress, (v) => `calc(${v * 100}vw - ${v * 100}%)`);
+
   const translations = {
     nl: {
-      badge: "Werkwijze",
-      title: "Van intake tot resultaat in 3 stappen",
-      subtitle: "Geen verrassingen, geen vaag proces. Je weet precies wat er gebeurt en wanneer.",
+      badge: "Onze Blauwdruk",
+      title: "Het protocol voor schaalbare groei",
+      subtitle: "Geen giswerk of vage processen. Een strak kader dat zorgt voor voorspelbare en winstgevende acquisitie.",
       steps: [
         {
           num: "01",
-          timeline: "Week 1–2",
-          title: "Audit & Strategie",
-          desc: "We analyseren je huidige advertentie-accounts, website en funnel. Je ontvangt een helder rapport met wat werkt, wat niet werkt, en een concreet actieplan.",
+          timeline: "Fase 1",
+          title: "Growth Audit & Strategie",
+          desc: "We leggen je huidige accounts, tracking en funnels onder het vergrootglas. We identificeren de bottlenecks en leveren een data-gedreven actieplan om direct ROI te verbeteren.",
           deliverables: [
-            "Account audit rapport",
-            "Mediaplan met budgetverdeling",
-            "Funnel & tracking analyse"
+            "Diepgaande account audit",
+            "Data & attributie analyse",
+            "Schaalbaarheids-roadmap"
           ],
           icon: Search
         },
         {
           num: "02",
-          timeline: "Week 2–4",
-          title: "Setup & Bouw",
-          desc: "We bouwen de campagnestructuur, landingspagina's en tracking in. Je krijgt alles te zien vóór lancering — niets gaat live zonder jouw akkoord.",
+          timeline: "Fase 2",
+          title: "Infrastructuur & Build",
+          desc: "We bouwen een waterdichte basis. Van converterende landing pages tot server-side GTM tracking en hyper-gerichte Meta/Google campagnes. Alles klaar voor schaal.",
           deliverables: [
-            "Campagnestructuur & advertenties",
-            "Landingspagina('s) op maat",
-            "Server-side tracking installatie"
+            "High-converting funnel setup",
+            "Server-side tracking (GTM)",
+            "Nieuwe campagne-architectuur"
           ],
           icon: PenTool
         },
         {
           num: "03",
-          timeline: "Doorlopend",
-          title: "Beheer & Optimalisatie",
-          desc: "De campagnes gaan live. Wij monitoren dagelijks, optimaliseren wekelijks en rapporteren maandelijks. Je weet altijd waar je aan toe bent.",
+          timeline: "Fase 3",
+          title: "Schalen & Optimaliseren",
+          desc: "We draaien de kraan open. Met meedogenloos A/B-testen, dagelijks beheer en wekelijkse iteraties sturen we puur op Cost Per Acquisition (CPA) en Return on Ad Spend (ROAS).",
           deliverables: [
-            "Dagelijks account management",
-            "Wekelijkse optimalisatie-cyclus",
-            "Maandelijkse rapportage & call"
+            "Dagelijks performance beheer",
+            "Creatieve & funnel iteraties",
+            "Wekelijkse live rapportage"
           ],
           icon: TrendingUp
         }
       ]
     },
     en: {
-      badge: "Method",
-      title: "From intake to results in 3 steps",
-      subtitle: "No surprises, no vague process. You know exactly what happens and when.",
+      badge: "The Blueprint",
+      title: "Our framework for scalable growth",
+      subtitle: "No guesswork or vague promises. A rigid framework designed for predictable and profitable client acquisition.",
       steps: [
         {
           num: "01",
-          timeline: "Week 1–2",
-          title: "Audit & Strategy",
-          desc: "We analyze your current ad accounts, website and funnel. You receive a clear report on what works, what doesn't, and a concrete action plan.",
+          timeline: "Phase 1",
+          title: "Growth Audit & Strategy",
+          desc: "We dissect your current accounts, tracking, and funnels. We identify the bottlenecks and deliver a data-driven action plan to immediately improve ROI.",
           deliverables: [
-            "Account audit report",
-            "Media plan with budget allocation",
-            "Funnel & tracking analysis"
+            "Deep-dive account audit",
+            "Data & attribution analysis",
+            "Scalability roadmap"
           ],
           icon: Search
         },
         {
           num: "02",
-          timeline: "Week 2–4",
-          title: "Setup & Build",
-          desc: "We build the campaign structure, landing pages and tracking. You see everything before launch — nothing goes live without your sign-off.",
+          timeline: "Phase 2",
+          title: "Infrastructure & Build",
+          desc: "We build a bulletproof foundation. From high-converting landing pages to server-side GTM tracking and hyper-targeted Meta/Google campaigns. Built to scale.",
           deliverables: [
-            "Campaign structure & creatives",
-            "Custom landing page(s)",
-            "Server-side tracking setup"
+            "High-converting funnel setup",
+            "Server-side tracking (GTM)",
+            "New campaign architecture"
           ],
           icon: PenTool
         },
         {
           num: "03",
-          timeline: "Ongoing",
-          title: "Management & Optimization",
-          desc: "Campaigns go live. We monitor daily, optimize weekly, and report monthly. You always know where you stand.",
+          timeline: "Phase 3",
+          title: "Scale & Optimize",
+          desc: "We open the valve. Through relentless A/B testing, daily management, and weekly iterations, we steer purely on Cost Per Acquisition (CPA) and Return on Ad Spend (ROAS).",
           deliverables: [
-            "Daily account management",
-            "Weekly optimization cycles",
-            "Monthly reporting & strategy call"
+            "Daily performance management",
+            "Creative & funnel iterations",
+            "Weekly live reporting"
           ],
           icon: TrendingUp
         }
@@ -96,85 +107,130 @@ export function Methodology({ lang }: MethodologyProps) {
   }[lang];
 
   return (
-    <section id="werkwijze" className="section-padding w-full bg-white relative z-10 border-y border-black/[0.04] overflow-hidden">
+    <section id="werkwijze" className="w-full bg-[var(--color-agency-bg)] relative z-10">
       
-      <div className="max-w-[1100px] mx-auto relative z-10">
-        {/* Header */}
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="max-w-[540px] mb-16"
-        >
-          <div className="section-badge">
-            {translations.badge}
-          </div>
-          
-          <h2 className="font-display text-[32px] md:text-[42px] font-normal tracking-[-0.01em] mb-4 text-[var(--color-text-primary)] leading-[1.15]">
+      {/* Mobile Layout (Standard vertical) */}
+      <div className="md:hidden section-padding flex flex-col gap-12">
+        <div className="mb-8">
+          <div className="section-badge mb-6">{translations.badge}</div>
+          <h2 className="font-display text-[32px] font-normal tracking-[-0.01em] mb-4 text-[var(--color-text-primary)] leading-[1.15]">
             {translations.title}
           </h2>
-          <p className="text-[16px] sm:text-[17px] font-light text-[var(--color-text-secondary)] leading-[1.7]">
+          <p className="text-[16px] font-light text-[var(--color-text-secondary)] leading-[1.7]">
             {translations.subtitle}
           </p>
-        </motion.div>
+        </div>
 
-        {/* Steps — Vertical Timeline */}
-        <div className="flex flex-col gap-0 relative">
-          {/* Animated Vertical line */}
-          <motion.div 
-            initial={{ scaleY: 0 }}
-            whileInView={{ scaleY: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
-            className="hidden md:block absolute left-[31px] top-0 bottom-0 w-px bg-gradient-to-b from-[var(--color-agency-accent)]/10 via-[var(--color-agency-accent)]/50 to-transparent origin-top" 
-          />
-
+        <div className="flex flex-col gap-16">
           {translations.steps.map((step, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.5, delay: i * 0.2 }}
-              className="flex gap-6 md:gap-10 relative pb-12 last:pb-0 group"
-            >
-              {/* Number & Line Connector */}
-              <div className="shrink-0 flex flex-col items-center">
-                <motion.div 
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  className="size-16 rounded-xl bg-white border border-black/[0.06] shadow-sm flex items-center justify-center relative z-10 group-hover:border-[var(--color-agency-accent)]/30 group-hover:shadow-md transition-colors duration-300"
-                >
-                  <span className="font-outfit font-bold text-[var(--color-agency-accent)] text-[15px]">{step.num}</span>
-                </motion.div>
+            <div key={i} className="relative">
+              {/* Massive background number */}
+              <div className="absolute -top-10 -left-4 text-[120px] font-display font-bold text-white/5 pointer-events-none z-0">
+                {step.num}
               </div>
-
-              {/* Content */}
-              <div className="flex-1 pt-1">
-                <div className="flex items-center gap-3 mb-3">
-                  <h3 className="font-outfit font-semibold text-[20px] text-[var(--color-text-primary)] transition-colors group-hover:text-[var(--color-agency-accent)]">{step.title}</h3>
-                  <span className="text-[11px] font-semibold text-[var(--color-agency-accent)] bg-[var(--color-agency-accent-light)] px-2.5 py-0.5 rounded-md">
-                    {step.timeline}
-                  </span>
+              
+              <div className="relative z-10 dark-panel p-6 rounded-2xl">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="size-10 rounded-xl bg-[var(--color-agency-accent)]/10 text-[var(--color-agency-accent)] flex items-center justify-center shrink-0">
+                    <step.icon className="size-5" />
+                  </div>
+                  <h3 className="font-outfit font-semibold text-[20px] text-white">{step.title}</h3>
                 </div>
-                
-                <p className="text-[15px] font-light text-[var(--color-text-secondary)] leading-[1.7] mb-5 max-w-[540px]">{step.desc}</p>
-                
-                {/* Deliverables */}
+                <p className="text-[15px] font-light text-[var(--color-text-secondary)] leading-[1.7] mb-6">
+                  {step.desc}
+                </p>
                 <div className="flex flex-wrap gap-2">
                   {step.deliverables.map((d, idx) => (
-                    <motion.span 
-                      key={idx} 
-                      whileHover={{ scale: 1.05, backgroundColor: "var(--color-agency-accent-light)" }}
-                      className="text-[12px] text-[var(--color-text-secondary)] bg-[var(--color-agency-bg)] px-3 py-1.5 rounded-md border border-black/[0.04] transition-colors cursor-default"
-                    >
+                    <span key={idx} className="text-[12px] text-white/70 bg-white/5 border border-white/10 px-3 py-1.5 rounded-md">
                       {d}
-                    </motion.span>
+                    </span>
                   ))}
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
+        </div>
+      </div>
+
+      {/* Desktop Layout (Horizontal Scroll) */}
+      <div ref={targetRef} className="hidden md:block h-[300vh] relative">
+        <div className="sticky top-0 h-screen flex items-center overflow-hidden bg-[var(--color-agency-bg)]">
+          
+          {/* Static Header pinned to left with solid background to hide cards sliding behind it */}
+          <div className="absolute top-0 left-0 w-[45vw] lg:w-[40vw] h-full flex flex-col justify-center pl-10 lg:pl-[10vw] pr-12 z-20 bg-[var(--color-agency-bg)] shadow-[30px_0_50px_var(--color-agency-bg)] border-r border-white/5">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="section-badge mb-6"
+            >
+              {translations.badge}
+            </motion.div>
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="font-display text-[42px] lg:text-[48px] font-normal tracking-[-0.01em] mb-4 text-[var(--color-text-primary)] leading-[1.1]"
+            >
+              {translations.title}
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-[17px] font-light text-[var(--color-text-secondary)] leading-[1.7]"
+            >
+              {translations.subtitle}
+            </motion.p>
+          </div>
+
+          {/* Scrolling Content */}
+          <motion.div style={{ x }} className="flex w-max h-full items-center pl-[50vw] lg:pl-[45vw] pr-[10vw] gap-10 lg:gap-16">
+            {translations.steps.map((step, i) => (
+              <div key={i} className="w-[85vw] max-w-[450px] shrink-0 h-[500px] flex items-center justify-center relative">
+                
+                {/* Kinetic Typography Number */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[280px] lg:text-[380px] font-display font-bold text-transparent" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.03)' }}>
+                  {step.num}
+                </div>
+
+                <motion.div 
+                  whileHover={{ y: -10 }}
+                  className="w-full dark-panel rounded-3xl p-8 lg:p-10 relative z-10 shadow-2xl border border-white/10 group hover:border-[var(--color-agency-accent)]/30 transition-all duration-500 bg-[var(--color-agency-surface)]/90 backdrop-blur-md"
+                >
+                  <div className="absolute top-0 right-0 p-8 text-white/5 text-[80px] font-display leading-none pointer-events-none transition-colors duration-500 group-hover:text-[var(--color-agency-accent)]/10">
+                    {step.num}
+                  </div>
+                  
+                  <div className="flex items-center gap-4 mb-8 relative z-10">
+                    <div className="size-14 rounded-2xl bg-white/5 border border-white/10 text-[var(--color-agency-accent)] flex items-center justify-center shrink-0 group-hover:bg-[var(--color-agency-accent)] group-hover:text-white transition-colors duration-500">
+                      <step.icon className="size-6" />
+                    </div>
+                    <div>
+                      <span className="text-[12px] font-semibold tracking-wider text-[var(--color-agency-accent)] uppercase block mb-1">
+                        {step.timeline}
+                      </span>
+                      <h3 className="font-outfit font-semibold text-[22px] lg:text-[24px] text-white">{step.title}</h3>
+                    </div>
+                  </div>
+                  
+                  <p className="text-[15px] lg:text-[16px] font-light text-[var(--color-text-secondary)] leading-[1.8] mb-8 relative z-10">
+                    {step.desc}
+                  </p>
+                  
+                  <div className="flex flex-wrap gap-2 relative z-10">
+                    {step.deliverables.map((d, idx) => (
+                      <span key={idx} className="text-[12px] lg:text-[13px] text-white/80 bg-white/5 border border-white/10 px-4 py-2 rounded-lg backdrop-blur-sm">
+                        {d}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              </div>
+            ))}
+          </motion.div>
         </div>
       </div>
     </section>

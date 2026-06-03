@@ -1,6 +1,11 @@
 import React, { useEffect, useRef } from 'react';
+import { MotionValue } from 'motion/react';
 
-export function FunnelCanvas() {
+interface FunnelCanvasProps {
+  scrollProgress?: MotionValue<number>;
+}
+
+export function FunnelCanvas({ scrollProgress }: FunnelCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -133,9 +138,8 @@ export function FunnelCanvas() {
 
     const particles = Array.from({ length: isMobile ? 15 : 35 }, () => new Particle());
 
-    const project = (x: number, y: number, z: number, time: number, pitch: number) => {
+    const project = (x: number, y: number, z: number, time: number, pitch: number, theta: number) => {
       // 1. Orbit Rotation (Y-axis)
-      const theta = ((time % 15) / 15) * Math.PI * 2;
       const rotatedX = x * Math.cos(theta) - z * Math.sin(theta);
       const rotatedZ = x * Math.sin(theta) + z * Math.cos(theta);
       
@@ -168,47 +172,49 @@ export function FunnelCanvas() {
 
     const render = () => {
       const now = performance.now();
-      // Make everything exquisitely slow and subtle for high-end feel
+      // Particles still use real time
       time = ((now - startTime) / 1000) * 0.3;
       
-      // 15 seconds loop
+      const progress = scrollProgress ? scrollProgress.get() : -1;
+      const isScrubbing = progress >= 0;
+
+      // When scrubbing, we map 0->1 scroll to 0->1 loopTime
+      // When not scrubbing, we just loop normally over 15 seconds
       const loopDuration = 15;
-      const loopTime = (time % loopDuration) / loopDuration; // 0 to 1
+      const loopTime = isScrubbing ? progress : ((time % loopDuration) / loopDuration);
       
-      // Funnel intensity curve (0 -> 1 -> 0 over the 15s)
+      // Funnel intensity curve
       let funnelIntensity = 0;
       if (loopTime > 0.05 && loopTime < 0.95) {
-        // Smooth transition using sine wave mapping
         const activeTime = (loopTime - 0.05) / 0.9;
         funnelIntensity = Math.pow(Math.sin(activeTime * Math.PI), 1.5); 
       }
 
-      // Camera Animation (Look down when charging, tilt up towards peak)
+      // Camera Animation
       const lerp = (start: number, end: number, t: number) => start + (end - start) * t;
       const easeInOut = (t: number) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
       
       if (loopTime < 0.2) {
-        // 0.0 -> 0.2: Camera moves UP to look steeper down at the charging (e.g., -400 to -900)
         const t = easeInOut(loopTime / 0.2);
         cameraY = lerp(-400, -900, t);
       } else if (loopTime < 0.5) {
-        // 0.2 -> 0.5 (peak): Camera lowers to tilt up towards the peak (e.g., -900 to -150)
         const t = easeInOut((loopTime - 0.2) / 0.3);
         cameraY = lerp(-900, -150, t);
       } else if (loopTime < 0.95) {
-        // 0.5 -> 0.95: Camera returns smoothly to base (-150 to -400)
         const t = easeInOut((loopTime - 0.5) / 0.45);
         cameraY = lerp(-150, -400, t);
       } else {
         cameraY = -400;
       }
 
-      // Calculate the camera pitch to track the center of the base grid.
-      // This makes the camera look steeply down when it's high up, 
-      // but keeps it looking level (without tilting upwards) when it drops low, 
-      // allowing the massive peak to tower over the camera.
       const targetY = 0; 
       const pitch = Math.atan2(-(cameraY - targetY), -cameraZ);
+
+      // The theta calculation (orbit)
+      // When scrubbing, we rotate the camera 2 full times (4 * PI) across the entire scroll
+      const theta = isScrubbing 
+        ? progress * Math.PI * 4 
+        : ((time % loopDuration) / loopDuration) * Math.PI * 2;
 
       // Draw background
       ctx.fillStyle = '#1a2e2e';
@@ -231,7 +237,7 @@ export function FunnelCanvas() {
           const wave = Math.sin(v.x * 0.003 + time * 2) * 50 + Math.cos(v.z * 0.003 + time * 1.5) * 50;
           v.currentY = wave - funnelDrop;
           
-          projectedGrid[i][j] = project(v.x, v.currentY, v.z, time, pitch);
+          projectedGrid[i][j] = project(v.x, v.currentY, v.z, time, pitch, theta);
         }
       }
 
@@ -292,7 +298,7 @@ export function FunnelCanvas() {
         let trailDrawing = false;
         for (let i = 0; i < p.trail.length; i++) {
           const tp = p.trail[i];
-          const proj = project(tp.x, tp.y, tp.z, time, pitch);
+          const proj = project(tp.x, tp.y, tp.z, time, pitch, theta);
           if (proj) {
             if (!trailDrawing) {
               ctx.moveTo(proj.x, proj.y);
@@ -320,7 +326,7 @@ export function FunnelCanvas() {
         if (!p.active || p.trail.length < 2) return;
 
         const headTp = p.trail[p.trail.length - 1];
-        const head = project(headTp.x, headTp.y, headTp.z, time, pitch);
+        const head = project(headTp.x, headTp.y, headTp.z, time, pitch, theta);
         if (head) {
           const img = logos[p.logoIndex];
           if (img.complete) {
@@ -340,7 +346,7 @@ export function FunnelCanvas() {
       });
 
       // Core Glow at the bottom of the funnel
-      const coreProj = project(0, -1800 * funnelIntensity, 0, time, pitch);
+      const coreProj = project(0, -1800 * funnelIntensity, 0, time, pitch, theta);
       if (coreProj && funnelIntensity > 0.05) {
         const glowRadius = 800 * coreProj.scale * funnelIntensity;
         const grad = ctx.createRadialGradient(coreProj.x, coreProj.y, 0, coreProj.x, coreProj.y, glowRadius);

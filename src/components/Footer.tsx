@@ -61,7 +61,7 @@ export function Footer({ lang, setActivePage }: FooterProps) {
   ];
 
   return (
-    <footer className="bg-[var(--color-text-primary)] text-white pt-16 pb-10 px-6 sm:px-10 border-t border-white/[0.04]">
+    <footer className="bg-[var(--color-agency-bg)] text-white pt-16 pb-10 px-6 sm:px-10 border-t border-white/5 relative z-10">
       <div className="max-w-[1100px] mx-auto w-full">
         
         {/* Main Grid */}

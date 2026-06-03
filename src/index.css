@@ -6,15 +6,15 @@
   --font-display: "DM Serif Display", serif;
   --font-outfit: "Outfit", sans-serif;
 
-  /* Refined Color Palette — deeper, richer, more premium */
-  --color-agency-bg: #f0f4f1;
-  --color-agency-surface: #ffffff;
-  --color-agency-accent: #2D7D6F;
-  --color-agency-accent-hover: #245f54;
-  --color-agency-accent-light: #e8f3f0;
-  --color-text-primary: #1a2e2e;
-  --color-text-secondary: #3d5a5a;
-  --color-text-muted: #6b8a8a;
+  /* Refined Color Palette — High-End Dark Theme */
+  --color-agency-bg: #090e0e; /* Deep rich almost black green */
+  --color-agency-surface: #111a1a; /* Slightly lighter for cards */
+  --color-agency-accent: #5CCBBA; /* Mint green accent */
+  --color-agency-accent-hover: #4bb3a4;
+  --color-agency-accent-light: rgba(92, 203, 186, 0.1);
+  --color-text-primary: #ffffff;
+  --color-text-secondary: rgba(255, 255, 255, 0.75);
+  --color-text-muted: rgba(255, 255, 255, 0.45);
 
   /* Animations */
   --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
@@ -32,34 +32,35 @@ body {
   background: var(--color-agency-bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-text-muted);
+  background: var(--color-agency-surface);
   border-radius: 4px;
-  border: 2px solid var(--color-agency-bg);
+  border: 1px solid rgba(255,255,255,0.1);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-primary);
+  background: var(--color-text-muted);
 }
 
-/* Card Styles — Solid, not glass everywhere */
+/* Card Styles — Dark mode elevated */
 .card-elevated {
-  @apply bg-white border border-black/[0.06] shadow-[0_1px_3px_rgba(0,0,0,0.04),0_6px_24px_rgba(0,0,0,0.03)] transition-colors duration-300;
-  transition-property: box-shadow, border-color, background-color;
+  @apply bg-[var(--color-agency-surface)] border border-white/[0.04] shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-300;
 }
 
 .card-elevated:hover {
-  @apply shadow-[0_2px_8px_rgba(0,0,0,0.06),0_12px_36px_rgba(0,0,0,0.06)] border-black/[0.08];
+  @apply shadow-[0_16px_48px_rgba(0,0,0,0.6)] border-white/[0.08];
 }
 
-/* Glass — Used sparingly, only for floating/overlay elements */
+/* Glass — Used for floating/overlay elements */
 .glass-float {
-  @apply bg-white/70 backdrop-blur-xl border border-white/50 shadow-sm transition-colors duration-300;
-  transition-property: box-shadow, border-color, background-color, backdrop-filter;
+  @apply bg-black/40 backdrop-blur-xl border border-white/[0.08] shadow-2xl transition-all duration-300;
+}
+
+.glass-panel {
+  @apply bg-white/[0.02] backdrop-blur-xl border border-white/[0.05] shadow-[0_8px_32px_rgba(0,0,0,0.4)];
 }
 
 /* Dark Panel */
 .dark-panel {
-  @apply bg-[var(--color-text-primary)] border border-white/[0.06] shadow-xl transition-colors duration-300;
-  transition-property: box-shadow, border-color, background-color;
+  @apply bg-[var(--color-agency-surface)] border border-white/[0.06] shadow-xl transition-all duration-300;
 }
 
 /* Text Utilities */

@@ -20,15 +20,15 @@ export function Header({ lang, setLang, setActivePage }: HeaderProps) {
   }, []);
 
   const navLinks = lang === 'nl' ? [
-    { name: 'Probleem', href: '#pijnpunt' },
-    { name: 'Diensten', href: '#diensten' },
-    { name: 'Werkwijze', href: '#werkwijze' },
-    { name: 'Over ons', href: '#aanpak' },
+    { name: 'De Bottleneck', href: '#pijnpunt' },
+    { name: 'Expertise', href: '#diensten' },
+    { name: 'Blauwdruk', href: '#werkwijze' },
+    { name: 'Filosofie', href: '#aanpak' },
   ] : [
-    { name: 'Problem', href: '#pijnpunt' },
-    { name: 'Services', href: '#diensten' },
-    { name: 'Method', href: '#werkwijze' },
-    { name: 'About', href: '#aanpak' },
+    { name: 'The Bottleneck', href: '#pijnpunt' },
+    { name: 'Expertise', href: '#diensten' },
+    { name: 'Blueprint', href: '#werkwijze' },
+    { name: 'Philosophy', href: '#aanpak' },
   ];
 
   return (
@@ -42,7 +42,7 @@ export function Header({ lang, setLang, setActivePage }: HeaderProps) {
       >
         {/* Logo */}
         <a href="#" className="group" onClick={(e) => { e.preventDefault(); setActivePage?.('home'); }}>
-          <BrandLogo variant={isScrolled ? 'dark' : 'light'} size="md" />
+          <BrandLogo variant="light" size="md" />
         </a>
         
         {/* Navigation - Desktop */}
@@ -67,14 +67,14 @@ export function Header({ lang, setLang, setActivePage }: HeaderProps) {
         <div className="flex items-center gap-4">
           {/* Language toggle */}
           <div className={`flex items-center border rounded-md overflow-hidden text-[11px] font-semibold transition-colors duration-300 ${
-            isScrolled ? 'border-black/[0.08] text-[var(--color-text-secondary)]' : 'border-white/20 text-white/90'
+            isScrolled ? 'border-white/10 text-[var(--color-text-secondary)]' : 'border-white/20 text-white/90'
           }`}>
             <button 
               onClick={() => setLang('nl')} 
               className={`px-2.5 py-1 transition-all cursor-pointer ${
                 lang === 'nl' 
-                  ? (isScrolled ? 'bg-[var(--color-text-primary)] text-white' : 'bg-white text-[var(--color-text-primary)]') 
-                  : (isScrolled ? 'bg-white hover:bg-gray-50' : 'bg-transparent hover:bg-white/10')
+                  ? 'bg-white text-[var(--color-agency-bg)]' 
+                  : 'bg-transparent hover:bg-white/10 text-white/70'
               }`}
             >
               NL
@@ -83,8 +83,8 @@ export function Header({ lang, setLang, setActivePage }: HeaderProps) {
               onClick={() => setLang('en')} 
               className={`px-2.5 py-1 transition-all cursor-pointer ${
                 lang === 'en' 
-                  ? (isScrolled ? 'bg-[var(--color-text-primary)] text-white' : 'bg-white text-[var(--color-text-primary)]') 
-                  : (isScrolled ? 'bg-white hover:bg-gray-50' : 'bg-transparent hover:bg-white/10')
+                  ? 'bg-white text-[var(--color-agency-bg)]' 
+                  : 'bg-transparent hover:bg-white/10 text-white/70'
               }`}
             >
               EN
@@ -96,11 +96,11 @@ export function Header({ lang, setLang, setActivePage }: HeaderProps) {
             onClick={() => setActivePage?.('home')}
             className={`hidden sm:inline-flex items-center gap-1.5 px-5 py-2 rounded-lg text-[13px] font-semibold transition-all duration-300 ${
               isScrolled 
-                ? 'bg-[var(--color-text-primary)] hover:bg-[var(--color-agency-accent)] text-white' 
-                : 'bg-white/10 hover:bg-white text-white hover:text-[var(--color-text-primary)] border border-white/20 backdrop-blur-sm'
+                ? 'bg-white hover:bg-[var(--color-agency-accent)] text-[var(--color-agency-bg)] hover:text-white' 
+                : 'bg-white/10 hover:bg-white text-white hover:text-[var(--color-agency-bg)] border border-white/20 backdrop-blur-sm'
             }`}
           >
-            {lang === 'nl' ? 'Contact' : 'Get in touch'}
+            {lang === 'nl' ? 'Growth Audit' : 'Growth Audit'}
           </a>
 
           {/* Mobile Menu Button */}
@@ -165,10 +165,10 @@ export function Header({ lang, setLang, setActivePage }: HeaderProps) {
                   onClick={() => { setIsMobileMenuOpen(false); setActivePage?.('home'); }}
                   className="w-full bg-[var(--color-text-primary)] text-white text-center py-3.5 rounded-lg text-[13px] font-semibold transition-all"
                 >
-                  {lang === 'nl' ? 'Plan een kennismaking' : 'Book an intro call'}
+                  {lang === 'nl' ? 'Claim mijn Audit' : 'Claim my Audit'}
                 </a>
                 <p className="text-center text-[11px] text-[var(--color-text-muted)]">
-                  {lang === 'nl' ? 'Rechtstreeks met de specialist' : 'Directly with the specialist'}
+                  {lang === 'nl' ? '1-op-1 met de founder' : '1-on-1 with the founder'}
                 </p>
               </div>
             </motion.div>
