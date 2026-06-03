@@ -137,31 +137,7 @@ export function Hero({ lang }: HeroProps) {
             {content.p}
           </motion.p>
 
-          <motion.div
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-5 w-full sm:w-auto mt-6"
-          >
-            <a 
-              href="#boeken"
-              className="w-full sm:w-auto bg-white text-[#0a1919] px-9 py-5 rounded-full text-[13px] font-bold tracking-widest uppercase transition-all duration-500 shadow-[0_0_40px_rgba(92,203,186,0.15)] hover:shadow-[0_0_60px_rgba(92,203,186,0.3)] ring-1 ring-white/50 hover:ring-white flex items-center justify-center gap-3 group cursor-pointer"
-            >
-              {content.ctaPrimary}
-              <ArrowUpRight className="size-4 text-[var(--color-agency-accent)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </a>
-            
-            <a 
-              href="#diensten"
-              className="w-full sm:w-auto text-white/70 hover:text-white px-6 py-5 text-[13px] font-bold tracking-widest uppercase transition-all duration-300 flex items-center justify-center gap-2 group relative overflow-hidden cursor-pointer"
-            >
-              <span className="relative z-10 flex items-center gap-2">
-                {content.ctaSecondary}
-                <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </span>
-              <span className="absolute bottom-4 left-6 right-10 h-[1px] bg-white/30 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
-            </a>
-          </motion.div>
+
         </motion.div>
 
         {/* PHASE 2: MASKED REVEAL */}
