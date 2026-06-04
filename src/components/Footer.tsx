@@ -112,6 +112,22 @@ export function Footer({ lang, setActivePage }: FooterProps) {
 
         </div>
 
+        {/* Company Info Bar */}
+        <div className="py-6 border-b border-white/[0.06]">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-[12px] text-white/40 font-light">
+            <div className="flex items-center gap-2">
+              <span className="font-medium text-white/60">I-Transform SLU</span>
+            </div>
+            <div className="hidden sm:block w-px h-3 bg-white/10"></div>
+            <div>AD100 Canillo, Andorra</div>
+            <div className="hidden sm:block w-px h-3 bg-white/10"></div>
+            <div className="flex items-center gap-1.5">
+              <span className="text-white/30">VAT</span>
+              <span className="font-mono text-white/50">L-720368-C</span>
+            </div>
+          </div>
+        </div>
+
         {/* Bottom */}
         <div className="flex flex-col lg:flex-row items-center justify-between gap-6 pt-8 text-[12px] text-white/35 font-light">
           <p className="order-2 lg:order-1">© {new Date().getFullYear()} CarabusADS. {content.allRights}</p>
