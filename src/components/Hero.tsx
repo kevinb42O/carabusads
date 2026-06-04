@@ -97,9 +97,9 @@ export function Hero({ lang, isReady = false }: HeroProps) {
         className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center bg-cover bg-center bg-no-repeat"
         style={{ 
           backgroundColor: '#0b1a29',
-          backgroundImage: isMobile 
-            ? 'none' 
-            : "linear-gradient(to bottom, rgba(11, 26, 41, 0.5), rgba(11, 26, 41, 0.95)), url('/carabusMETTEKST.png')" 
+          backgroundImage: "linear-gradient(to bottom, rgba(11, 26, 41, 0.5), rgba(11, 26, 41, 0.95)), url('/carabusMETTEKST.png')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
         }}
       >
         

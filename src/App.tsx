@@ -17,29 +17,20 @@ export default function App() {
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    // Wait for critical resources and initial render to complete
-    const handleReady = async () => {
-      // Wait for fonts to be loaded
-      if (document.fonts) {
-        await document.fonts.ready;
-      }
-      
-      // Wait for next frame to ensure render is complete
-      await new Promise(resolve => requestAnimationFrame(resolve));
-      await new Promise(resolve => requestAnimationFrame(resolve));
-      
-      setIsReady(true);
-      
-      // Remove the HTML preloader smoothly
-      const preloader = document.getElementById('preloader');
-      if (preloader) {
-        setTimeout(() => {
-          preloader.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+    // Quick preloader removal with minimal delay
+    const handleReady = () => {
+      // Single RAF to let React paint
+      requestAnimationFrame(() => {
+        setIsReady(true);
+        
+        // Remove the HTML preloader immediately
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+          preloader.style.transition = 'opacity 0.4s ease-out';
           preloader.style.opacity = '0';
-          preloader.style.transform = 'scale(1.05)';
-          setTimeout(() => preloader.remove(), 600);
-        }, 100);
-      }
+          setTimeout(() => preloader.remove(), 400);
+        }
+      });
     };
     
     handleReady();
@@ -56,7 +47,7 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col w-full overflow-clip">
       <Header lang={lang} setLang={setLang} setActivePage={setActivePage} />
-      <main className="flex-1 w-full flex flex-col" style={{ opacity: isReady ? 1 : 0, transition: 'opacity 0.3s ease-in' }}>
+      <main className="flex-1 w-full flex flex-col">
         {activePage === 'home' ? (
           <>
             <Hero lang={lang} isReady={isReady} />
