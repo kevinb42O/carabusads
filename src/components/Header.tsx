@@ -163,7 +163,7 @@ export function Header({ lang, setLang, setActivePage }: HeaderProps) {
                 <a 
                   href="#boeken" 
                   onClick={() => { setIsMobileMenuOpen(false); setActivePage?.('home'); }}
-                  className="w-full bg-[var(--color-text-primary)] text-white text-center py-3.5 rounded-lg text-[13px] font-semibold transition-all"
+                  className="w-full bg-[var(--color-agency-accent)] text-[var(--color-agency-bg)] text-center py-3.5 rounded-lg text-[14px] font-bold transition-all hover:bg-[var(--color-agency-accent-hover)]"
                 >
                   {lang === 'nl' ? 'Claim mijn Audit' : 'Claim my Audit'}
                 </a>

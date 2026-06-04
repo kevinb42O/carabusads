@@ -66,7 +66,8 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
   const bgOpacity = useTransform(scrollYProgress, [0.8, 1], [1, 0]);
 
   // --- End-state background image --- fades in ONLY at the very end of the hero animation
-  const bgImageOpacity = useTransform(scrollYProgress, [0.75, 0.98], [0, 1]);
+  // Max opacity 0.3 so it's atmospheric/visible behind the animation, never fully covers
+  const bgImageOpacity = useTransform(scrollYProgress, [0.75, 0.98], [0, 0.3]);
 
   // --- Phase 1: The Fly-Through (Initial Content) ---
   const initialScale = useTransform(scrollYProgress, [0, 0.25], [1, prefersReducedMotion ? 1 : 4]);
@@ -144,7 +145,7 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display text-[48px] sm:text-[64px] md:text-[80px] lg:text-[96px] font-bold tracking-[-0.03em] text-white leading-[1.05] mb-8 max-w-[1000px] drop-shadow-2xl"
+          className="font-display text-[36px] sm:text-[56px] md:text-[80px] lg:text-[96px] font-bold tracking-[-0.03em] text-white leading-[1.05] mb-5 sm:mb-8 max-w-[1000px] drop-shadow-2xl"
           >
             {content.h1}
           </motion.h1>
@@ -153,7 +154,7 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="font-sans text-[17px] sm:text-[19px] md:text-[21px] text-white/85 font-light max-w-[740px] leading-[1.8] text-center"
+            className="font-sans text-[15px] sm:text-[18px] md:text-[21px] text-white/85 font-light max-w-[740px] leading-[1.7] text-center"
           >
             {content.p}
           </motion.p>
@@ -162,18 +163,18 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col sm:flex-row items-center gap-4 mt-12"
+            className="flex flex-col sm:flex-row items-center gap-3 mt-8 sm:mt-12 w-full sm:w-auto"
           >
             <button 
               onClick={() => document.getElementById('boeken')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-8 py-4 bg-[#9bbcd9] text-[#0b1a29] rounded-full font-bold text-lg hover:bg-[#6b9ec7] transition-colors flex items-center justify-center gap-2 w-full sm:w-auto"
+              className="px-7 py-3.5 sm:py-4 bg-[#9bbcd9] text-[#0b1a29] rounded-full font-bold text-base sm:text-lg hover:bg-[#6b9ec7] transition-colors flex items-center justify-center gap-2 w-full sm:w-auto"
             >
               {content.ctaPrimary}
               <ArrowUpRight className="w-5 h-5" />
             </button>
             <button 
               onClick={() => document.getElementById('werkwijze')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-8 py-4 bg-transparent border border-white/20 text-white rounded-full font-bold text-lg hover:bg-white/10 transition-colors flex items-center justify-center gap-2 w-full sm:w-auto"
+              className="px-7 py-3.5 sm:py-4 bg-transparent border border-white/20 text-white rounded-full font-bold text-base sm:text-lg hover:bg-white/10 transition-colors flex items-center justify-center gap-2 w-full sm:w-auto"
             >
               {content.ctaSecondary}
               <ChevronRight className="w-5 h-5" />
@@ -197,7 +198,7 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
           <div className="overflow-hidden py-4">
             <motion.h2 
               style={{ y: p1Y }}
-              className="font-display text-[40px] sm:text-[60px] md:text-[80px] font-bold text-white text-center tracking-[-0.03em] leading-tight drop-shadow-[0_0_30px_rgba(0,0,0,0.5)] max-w-[900px]"
+              className="font-display text-[34px] sm:text-[56px] md:text-[80px] font-bold text-white text-center tracking-[-0.03em] leading-tight drop-shadow-[0_0_30px_rgba(0,0,0,0.5)] max-w-[900px]"
             >
               {content.punchline1}
             </motion.h2>
@@ -216,7 +217,7 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
         >
           <motion.h2 
             style={{ textShadow: p2TextShadow }}
-            className="font-display text-[44px] sm:text-[64px] md:text-[90px] font-bold text-white text-center tracking-[-0.02em] leading-tight max-w-[900px]"
+            className="font-display text-[38px] sm:text-[58px] md:text-[90px] font-bold text-white text-center tracking-[-0.02em] leading-tight max-w-[900px]"
           >
             {content.punchline2_1}{" "}
             <span className="text-white/50 italic font-serif tracking-normal">{content.punchline2_2}</span><br />
