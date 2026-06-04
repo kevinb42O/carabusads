@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'motion/react';
 import { ArrowUpRight, ChevronRight } from 'lucide-react';
 import { FunnelCanvas } from './FunnelCanvas';
@@ -63,15 +63,6 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
   });
   const scrollYProgress = isMobile ? rawProgress : springProgress;
 
-  // On mobile there is no canvas, so signal ready immediately after first paint.
-  useEffect(() => {
-    if (isMobile) {
-      const raf = requestAnimationFrame(() => onReady?.());
-      return () => cancelAnimationFrame(raf);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // --- Background Canvas ---
   const bgBlurValue = useTransform(scrollYProgress, [0.7, 1], [0, prefersReducedMotion ? 0 : 20]);
   const bgOpacity = useTransform(scrollYProgress, [0.8, 1], [1, 0]);
@@ -125,18 +116,16 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
           }}
         />
 
-        {/* Background Vortex: desktop only — canvas blocks main thread on mobile */}
-        {!isMobile && (
-          <motion.div 
-            className="absolute inset-0 w-full h-full z-[1] pointer-events-none origin-center"
-            style={{ 
-              opacity: bgOpacity,
-              willChange: "opacity"
-            }}
-          >
-            <FunnelCanvas scrollProgress={scrollYProgress} onReady={onReady} />
-          </motion.div>
-        )}
+        {/* Background Vortex: always rendered — preloader waits for first canvas frame */}
+        <motion.div 
+          className="absolute inset-0 w-full h-full z-[1] pointer-events-none origin-center"
+          style={{ 
+            opacity: bgOpacity,
+            willChange: "opacity"
+          }}
+        >
+          <FunnelCanvas scrollProgress={scrollYProgress} onReady={onReady} />
+        </motion.div>
         
         <div className="absolute top-[10%] left-[20%] w-[40%] h-[40%] bg-[var(--color-agency-accent)]/15 rounded-full blur-[140px] pointer-events-none z-0" />
         <div className="absolute bottom-[10%] right-[20%] w-[45%] h-[45%] bg-[#9bbcd9]/5 rounded-full blur-[160px] pointer-events-none z-0" />

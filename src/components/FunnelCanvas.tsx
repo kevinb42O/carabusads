@@ -24,7 +24,8 @@ export function FunnelCanvas({ scrollProgress, onReady }: FunnelCanvasProps) {
       width = parent?.clientWidth || window.innerWidth;
       height = parent?.clientHeight || window.innerHeight;
       
-      const maxDpr = window.innerWidth < 768 ? 1.5 : 2;
+      // Cap DPR at 1 on mobile — halves fill-rate cost
+      const maxDpr = window.innerWidth < 768 ? 1 : 2;
       const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
       canvas.width = width * dpr;
       canvas.height = height * dpr;
@@ -40,9 +41,10 @@ export function FunnelCanvas({ scrollProgress, onReady }: FunnelCanvasProps) {
     let cameraY = -400; 
     const cameraZ = -800;
     const isMobile = window.innerWidth < 768;
-    const gridCols = isMobile ? 20 : 30;
-    const gridRows = isMobile ? 20 : 30;
-    const spacing = isMobile ? 140 : 100;
+    // Mobile: 10x10 grid (vs 30x30), much cheaper to project and draw
+    const gridCols = isMobile ? 10 : 30;
+    const gridRows = isMobile ? 10 : 30;
+    const spacing = isMobile ? 200 : 100;
     
     const vertices: {x: number, z: number, currentY: number}[] = [];
     for (let i = 0; i < gridRows; i++) {
@@ -118,11 +120,11 @@ export function FunnelCanvas({ scrollProgress, onReady }: FunnelCanvasProps) {
         this.y = wave - funnelDrop;
 
         this.trail.push({ x: this.x, y: this.y, z: this.z });
-        if (this.trail.length > 25) this.trail.shift();
+        if (this.trail.length > (window.innerWidth < 768 ? 12 : 25)) this.trail.shift();
       }
     }
 
-    const particles = Array.from({ length: isMobile ? 20 : 45 }, () => new Particle());
+    const particles = Array.from({ length: isMobile ? 8 : 45 }, () => new Particle());
 
     const project = (x: number, y: number, z: number, time: number, pitch: number, theta: number) => {
       const rotatedX = x * Math.cos(theta) - z * Math.sin(theta);
@@ -153,7 +155,8 @@ export function FunnelCanvas({ scrollProgress, onReady }: FunnelCanvasProps) {
     let animationFrameId: number;
     let startTime = performance.now();
     let lastFrameTime = startTime;
-    const targetFrameTime = isMobile ? 1000 / 30 : 1000 / 60;
+    // 20fps on mobile (was 30), 60fps on desktop
+    const targetFrameTime = isMobile ? 1000 / 20 : 1000 / 60;
     let firstFrameDone = false;
 
     const render = () => {
@@ -293,7 +296,6 @@ export function FunnelCanvas({ scrollProgress, onReady }: FunnelCanvasProps) {
         const headTp = p.trail[p.trail.length - 1];
         const head = project(headTp.x, headTp.y, headTp.z, time, pitch, theta);
         if (head) {
-          // Cap visual scale heavily to make orbs sharp and tiny, preventing massive overdraw
           const visualScale = Math.min(head.scale, 1.5);
           
           ctx.beginPath();
@@ -308,18 +310,20 @@ export function FunnelCanvas({ scrollProgress, onReady }: FunnelCanvasProps) {
         }
       });
 
-      const coreProj = project(0, -1800 * funnelIntensity, 0, time, pitch, theta);
-      if (coreProj && funnelIntensity > 0.05) {
-        // Cap the max radius of the gradient to prevent fill-rate lag spikes
-        const glowRadius = Math.min(width * 0.5, 400 * coreProj.scale * funnelIntensity);
-        const grad = ctx.createRadialGradient(coreProj.x, coreProj.y, 0, coreProj.x, coreProj.y, glowRadius);
-        grad.addColorStop(0, `rgba(155, 188, 217, ${0.4 * funnelIntensity})`);
-        grad.addColorStop(0.2, `rgba(155, 188, 217, ${0.1 * funnelIntensity})`);
-        grad.addColorStop(1, 'rgba(155, 188, 217, 0)');
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.arc(coreProj.x, coreProj.y, glowRadius, 0, Math.PI * 2);
-        ctx.fill();
+      // Skip expensive radial gradient glow on mobile
+      if (!isMobile) {
+        const coreProj = project(0, -1800 * funnelIntensity, 0, time, pitch, theta);
+        if (coreProj && funnelIntensity > 0.05) {
+          const glowRadius = Math.min(width * 0.5, 400 * coreProj.scale * funnelIntensity);
+          const grad = ctx.createRadialGradient(coreProj.x, coreProj.y, 0, coreProj.x, coreProj.y, glowRadius);
+          grad.addColorStop(0, `rgba(155, 188, 217, ${0.4 * funnelIntensity})`);
+          grad.addColorStop(0.2, `rgba(155, 188, 217, ${0.1 * funnelIntensity})`);
+          grad.addColorStop(1, 'rgba(155, 188, 217, 0)');
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(coreProj.x, coreProj.y, glowRadius, 0, Math.PI * 2);
+          ctx.fill();
+        }
       }
 
       ctx.globalCompositeOperation = 'source-over';
