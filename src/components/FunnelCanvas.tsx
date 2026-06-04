@@ -149,9 +149,20 @@ export function FunnelCanvas({ scrollProgress }: FunnelCanvasProps) {
     let time = 0;
     let animationFrameId: number;
     let startTime = performance.now();
+    let lastFrameTime = startTime;
+    const targetFrameTime = isMobile ? 1000 / 30 : 1000 / 60; // 30fps on mobile, 60fps on desktop
 
     const render = () => {
       const now = performance.now();
+      const deltaTime = now - lastFrameTime;
+      
+      // Throttle frame rate on mobile for better performance
+      if (deltaTime < targetFrameTime) {
+        animationFrameId = requestAnimationFrame(render);
+        return;
+      }
+      
+      lastFrameTime = now - (deltaTime % targetFrameTime);
       time = ((now - startTime) / 1000) * 0.3;
       
       const progress = scrollProgress ? scrollProgress.get() : -1;
