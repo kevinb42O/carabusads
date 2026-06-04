@@ -36,6 +36,21 @@ export default function App() {
     const fallback = setTimeout(handleCanvasReady, 6000);
     return () => clearTimeout(fallback);
   }, [handleCanvasReady]);
+
+  // Lock scroll until ready — prevents user flying past the hero while it initialises
+  useEffect(() => {
+    if (!isReady) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    };
+  }, [isReady]);
   const [lang, setLang] = useState<'nl' | 'en'>(() => {
     if (typeof window !== 'undefined') {
       const hostname = window.location.hostname;
