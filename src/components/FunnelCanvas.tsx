@@ -3,10 +3,13 @@ import { MotionValue } from 'motion/react';
 
 interface FunnelCanvasProps {
   scrollProgress?: MotionValue<number>;
+  onReady?: () => void;
 }
 
-export function FunnelCanvas({ scrollProgress }: FunnelCanvasProps) {
+export function FunnelCanvas({ scrollProgress, onReady }: FunnelCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const onReadyRef = useRef(onReady);
+  useEffect(() => { onReadyRef.current = onReady; }, [onReady]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -150,13 +153,13 @@ export function FunnelCanvas({ scrollProgress }: FunnelCanvasProps) {
     let animationFrameId: number;
     let startTime = performance.now();
     let lastFrameTime = startTime;
-    const targetFrameTime = isMobile ? 1000 / 30 : 1000 / 60; // 30fps on mobile, 60fps on desktop
+    const targetFrameTime = isMobile ? 1000 / 30 : 1000 / 60;
+    let firstFrameDone = false;
 
     const render = () => {
       const now = performance.now();
       const deltaTime = now - lastFrameTime;
       
-      // Throttle frame rate on mobile for better performance
       if (deltaTime < targetFrameTime) {
         animationFrameId = requestAnimationFrame(render);
         return;
@@ -320,6 +323,13 @@ export function FunnelCanvas({ scrollProgress }: FunnelCanvasProps) {
       }
 
       ctx.globalCompositeOperation = 'source-over';
+
+      // Signal ready after the very first complete frame is painted
+      if (!firstFrameDone) {
+        firstFrameDone = true;
+        onReadyRef.current?.();
+      }
+
       animationFrameId = requestAnimationFrame(render);
     };
 
