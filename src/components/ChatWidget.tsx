@@ -141,7 +141,7 @@ export function ChatWidget({ lang }: ChatWidgetProps) {
                 className="absolute bottom-20 right-0 w-[380px] bg-[var(--color-agency-bg)] rounded-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col border border-white/10"
               >
                 {/* Header (Premium Intercom-style) */}
-                <div className="bg-gradient-to-br from-[var(--color-agency-surface)] to-[#111a1a] p-6 relative overflow-hidden border-b border-white/5">
+                <div className="bg-gradient-to-br from-[var(--color-agency-surface)] to-[#0b1a29] p-6 relative overflow-hidden border-b border-white/5">
                   {/* Decorative shapes */}
                   <div className="absolute top-0 right-0 w-40 h-40 bg-[var(--color-agency-accent)]/20 rounded-full blur-3xl -translate-y-10 translate-x-10 pointer-events-none" />
                   

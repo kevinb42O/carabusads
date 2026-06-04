@@ -1,7 +1,5 @@
 import { motion } from 'motion/react';
 import founderImg from '../assets/images/founder_portrait_1780056093258.png';
-import workspaceImg from '../assets/images/agency_workspace_clean.png';
-
 interface BoutiqueProps {
   lang: 'nl' | 'en';
 }
@@ -74,59 +72,23 @@ export function Boutique({ lang }: BoutiqueProps) {
           {/* Main Workspace Image with Clip-Path Reveal */}
           <div className="relative rounded-3xl overflow-hidden shadow-2xl group border border-white/5">
             <motion.div 
-              initial={{ clipPath: "inset(100% 0% 0% 0%)" }}
-              whileInView={{ clipPath: "inset(0% 0% 0% 0%)" }}
-              viewport={{ once: true, amount: 0.3 }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, amount: 0.1 }}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
               className="w-full aspect-[4/5] sm:aspect-square lg:aspect-[4/5]"
             >
               <motion.img 
                 whileHover={{ scale: 1.05 }} 
                 transition={{ duration: 1.5, ease: "easeOut" }}
-                src={workspaceImg} 
-                alt="Carabus Ads Workspace" 
+                src="/hans_foto.jpeg" 
+                alt="Hans Claes - Carabus Ads" 
                 className="w-full h-full object-cover object-center"
               />
             </motion.div>
           </div>
 
-          {/* Overlapping Quote Card (Dark Mode) */}
-          <motion.div 
-            initial={{ opacity: 0, y: 30, scale: 0.95 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ delay: 0.6, duration: 0.8, type: "spring", bounce: 0.15 }}
-            className="absolute -bottom-8 -right-4 sm:-right-12 sm:bottom-12 w-[calc(100%-2rem)] sm:w-[420px] dark-panel rounded-2xl p-8 sm:p-10 shadow-2xl ring-1 ring-white/10 backdrop-blur-xl"
-          >
-            <blockquote className="mb-8 relative">
-              <span className="absolute -top-6 -left-4 text-[60px] text-[var(--color-agency-accent)]/20 font-display leading-none pointer-events-none">"</span>
-              <motion.p 
-                variants={quoteContainer}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                className="font-outfit text-[18px] sm:text-[22px] text-white font-medium leading-[1.6] relative z-10 flex flex-wrap gap-x-1.5"
-              >
-                {quoteWords.map((word, i) => (
-                  <motion.span key={i} variants={quoteWord}>{word}</motion.span>
-                ))}
-              </motion.p>
-            </blockquote>
-            
-            <div className="flex items-center gap-4">
-              <div className="size-12 rounded-full overflow-hidden shrink-0 border border-white/20 shadow-lg">
-                <img 
-                  src={founderImg} 
-                  alt={content.name}
-                  className="w-full h-full object-cover object-[center_20%]"
-                />
-              </div>
-              <div>
-                <div className="font-outfit font-bold text-[15px] text-white">{content.name}</div>
-                <div className="text-[13px] text-[var(--color-agency-accent)] font-medium">{content.role}</div>
-              </div>
-            </div>
-          </motion.div>
+
         </div>
 
         {/* Copy Column */}

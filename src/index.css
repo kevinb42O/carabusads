@@ -1,17 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-sans: "Inter", sans-serif;
-  --font-display: "DM Serif Display", serif;
+  --font-display: "Plus Jakarta Sans", sans-serif;
+  --font-serif: "Instrument Serif", serif;
   --font-outfit: "Outfit", sans-serif;
 
   /* Refined Color Palette — High-End Dark Theme */
-  --color-agency-bg: #090e0e; /* Deep rich almost black green */
-  --color-agency-surface: #111a1a; /* Slightly lighter for cards */
-  --color-agency-accent: #5CCBBA; /* Mint green accent */
-  --color-agency-accent-hover: #4bb3a4;
-  --color-agency-accent-light: rgba(92, 203, 186, 0.1);
+  --color-agency-bg: #0b1a29; /* Deep rich blue */
+  --color-agency-surface: #132b3f; /* Slightly lighter blue for cards */
+  --color-agency-accent: #9bbcd9; /* Light blue accent */
+  --color-agency-accent-hover: #6b9ec7; /* Medium blue */
+  --color-agency-accent-light: rgba(155, 188, 217, 0.1);
   --color-text-primary: #ffffff;
   --color-text-secondary: rgba(255, 255, 255, 0.75);
   --color-text-muted: rgba(255, 255, 255, 0.45);

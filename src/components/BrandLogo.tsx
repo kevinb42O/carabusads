@@ -24,28 +24,28 @@ export function BrandLogo({
   // Theme-based colors for the 3-tier marketing funnel
   const colors = {
     color: {
-      layer1: '#1a2e2e',      // Top (Awareness) - Deep Charcoal
-      layer2: '#2D7D6F',      // Middle (Consideration) - Accent Teal
-      layer3: '#45A593',      // Bottom (Conversion) - Bright Mint Teal
-      dot: '#5CCBBA',         // Final converted client - Neon Mint
-      textMain: 'text-[#1a2e2e]',
-      textSub: 'text-[#2D7D6F]',
+      layer1: '#0b1a29',      // Top (Awareness) - Deep Blue
+      layer2: '#2e6d9e',      // Middle (Consideration) - Accent Blue
+      layer3: '#6b9ec7',      // Bottom (Conversion) - Bright Blue
+      dot: '#9bbcd9',         // Final converted client - Light Blue
+      textMain: 'text-[#0b1a29]',
+      textSub: 'text-[#2e6d9e]',
     },
     dark: {
-      layer1: '#1a2e2e',
-      layer2: '#3d5a5a',
-      layer3: '#6b8a8a',
-      dot: '#1a2e2e',
-      textMain: 'text-[#1a2e2e]',
-      textSub: 'text-[#3d5a5a]',
+      layer1: '#0b1a29',
+      layer2: '#6b9ec7',
+      layer3: '#9bbcd9',
+      dot: '#0b1a29',
+      textMain: 'text-[#0b1a29]',
+      textSub: 'text-[#6b9ec7]',
     },
     light: {
       layer1: '#FFFFFF',
       layer2: 'rgba(255,255,255,0.85)',
       layer3: 'rgba(255,255,255,0.65)',
-      dot: '#5CCBBA',
+      dot: '#9bbcd9',
       textMain: 'text-white',
-      textSub: 'text-[#5CCBBA]',
+      textSub: 'text-[#9bbcd9]',
     },
   }[variant];
 

@@ -75,15 +75,24 @@ export function CTA({ lang }: CTAProps) {
   }[lang];
 
   return (
-    <section id="boeken" className="section-padding relative bg-[var(--color-agency-surface)] overflow-hidden border-t border-white/5">
+    <section 
+      id="boeken" 
+      className="section-padding relative bg-[var(--color-agency-surface)] z-20"
+    >
+      {/* Premium Glowing Top Border Separator */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--color-agency-accent)]/30 to-transparent" />
+      
+      {/* Subtle top edge glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 max-w-[800px] h-[300px] bg-[var(--color-agency-accent)]/5 blur-[100px] pointer-events-none z-0" />
+
       {/* Animated ambient glow */}
       <motion.div 
         animate={{ 
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3],
+          scale: [1, 1.1, 1],
+          opacity: [0.2, 0.4, 0.2],
         }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[var(--color-agency-accent)]/[0.08] rounded-full blur-[120px] pointer-events-none" 
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-[var(--color-agency-accent)]/[0.06] rounded-full blur-[140px] pointer-events-none z-0" 
       />
 
       <div className="max-w-[1100px] mx-auto relative z-10 w-full">
@@ -157,18 +166,18 @@ export function CTA({ lang }: CTAProps) {
             </motion.div>
           </motion.div>
 
-          {/* Right: Form */}
+          {/* Right: Form (Starts overlapping, springs down to balanced position) */}
           <motion.div 
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: -250 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, type: "spring", bounce: 0.2 }}
-            className="w-full relative group"
+            transition={{ duration: 1.4, type: "spring", bounce: 0.5, delay: 0.1 }}
+            className="w-full relative group z-30"
           >
             {/* Form Glow Effect */}
             <div className="absolute -inset-1 bg-gradient-to-r from-[var(--color-agency-accent)]/20 to-[var(--color-agency-accent)]/0 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 pointer-events-none" />
             
-            <div className="bg-[#1f3333] border border-white/[0.08] rounded-xl p-7 sm:p-9 shadow-2xl relative z-10 transition-colors duration-500 hover:border-white/[0.15]">
+            <div className="bg-[#132b3f] border border-white/[0.08] rounded-xl p-7 sm:p-9 shadow-2xl relative z-10 transition-colors duration-500 hover:border-white/[0.15]">
               
               <AnimatePresence mode="wait">
                 {!isSubmitted ? (

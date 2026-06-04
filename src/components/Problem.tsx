@@ -150,13 +150,15 @@ export function Problem({ lang }: ProblemProps) {
   };
 
   return (
-    <section id="pijnpunt" className="section-padding bg-[var(--color-agency-bg)] w-full relative overflow-hidden">
+    <section id="pijnpunt" className="section-padding bg-[var(--color-agency-bg)] w-full relative">
       {/* Ambient background glow */}
-      <motion.div 
-        animate={{ opacity: [0.1, 0.3, 0.1] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[var(--color-agency-accent)]/10 rounded-full blur-[140px] -translate-y-1/2 pointer-events-none" 
-      />
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div 
+          animate={{ opacity: [0.1, 0.3, 0.1] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[var(--color-agency-accent)]/10 rounded-full blur-[140px] -translate-y-1/2" 
+        />
+      </div>
 
       <div className="max-w-[1200px] mx-auto w-full relative z-10 flex flex-col lg:flex-row items-start gap-12 lg:gap-24">
         
@@ -183,7 +185,7 @@ export function Problem({ lang }: ProblemProps) {
         </div>
 
         {/* Right Side: Stacking Cards */}
-        <div className="w-full lg:w-[55%] flex flex-col gap-10 pb-10 lg:pb-32 relative z-30">
+        <div className="w-full lg:w-[55%] flex flex-col gap-10 relative z-30">
           
           {/* Card 1: The broken model */}
           <motion.div 

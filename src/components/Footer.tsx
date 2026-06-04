@@ -122,7 +122,7 @@ export function Footer({ lang, setActivePage }: FooterProps) {
             rel="noopener noreferrer" 
             className="order-1 lg:order-2 flex items-center gap-1.5 hover:text-white/60 transition-colors group"
           >
-            {lang === 'nl' ? 'website door' : 'website by'} <span className="font-semibold text-white group-hover:text-white/80 transition-colors tracking-wide">Web<span className="text-[#FFC107]">aan</span>Zee</span>
+            {lang === 'nl' ? 'website door' : 'website by'} <span className="font-semibold text-white group-hover:text-white/80 transition-colors tracking-wide">Web<span className="text-[#9bbcd9]">aan</span>Zee</span>
             <ExternalLink className="size-3 opacity-50 group-hover:opacity-100 transition-opacity" />
           </a>
 
