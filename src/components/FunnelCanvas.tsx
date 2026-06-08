@@ -188,6 +188,9 @@ export function FunnelCanvas({ scrollProgress, onReady }: FunnelCanvasProps) {
       
       lastFrameTime = now - (deltaTime % targetFrameTime);
       time = ((now - startTime) / 1000) * 0.3;
+      if (isMobile) {
+        time += 5; // Fast-forward time so the funnel is already formed
+      }
       
       const progress = scrollProgress ? scrollProgress.get() : -1;
       const isScrubbing = progress >= 0;
