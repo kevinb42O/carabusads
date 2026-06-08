@@ -1,6 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { MotionValue } from 'motion/react';
 
+interface ProjectedPoint {
+  x: number;
+  y: number;
+  scale: number;
+  dz: number;
+}
+
 interface FunnelCanvasProps {
   scrollProgress?: MotionValue<number>;
   onReady?: () => void;
@@ -253,7 +260,7 @@ export function FunnelCanvas({ scrollProgress, onReady }: FunnelCanvasProps) {
         }
       });
 
-      const projectedGrid: any[][] = [];
+      const projectedGrid: (ProjectedPoint | null)[][] = [];
       for (let i = 0; i < gridRows; i++) {
         projectedGrid[i] = [];
         for (let j = 0; j < gridCols; j++) {
@@ -273,7 +280,7 @@ export function FunnelCanvas({ scrollProgress, onReady }: FunnelCanvasProps) {
         }
       }
 
-      const drawLine = (p1: any, p2: any, r1: number, r2: number) => {
+      const drawLine = (p1: ProjectedPoint | null, p2: ProjectedPoint | null, r1: number, r2: number) => {
         if (!p1 || !p2) return;
         
         // Fade out lines far from center to create a seamless infinite edge
