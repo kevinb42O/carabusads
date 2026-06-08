@@ -10,12 +10,12 @@ export function Boutique({ lang }: BoutiqueProps) {
       badge: "Onze Filosofie",
       h2: "Direct access. Geen accountmanagers.",
       p1: "Bij grote bureaus word je binnengehaald door de founder, maar wordt je account beheerd door een stagiair. Wij doen niet aan bait-and-switch. Je werkt 1-op-1 met de senior strategist.",
-      p2: "Dat betekent actie in plaats van bureaucratie. Geen eindeloze e-mailketens of ticketsystemen, maar een directe Slack/WhatsApp-lijn naar de persoon die daadwerkelijk de knoppen bedient.",
+      p2: "Dat betekent actie in plaats van bureaucratie. Geen eindeloze e-mailketens of ticketsystemen, maar een directe WhatsApp-lijn naar de persoon die daadwerkelijk de knoppen bedient.",
       quote: "We sturen niet op bereik of impressies. Als een campagne geen aantoonbare MRR oplevert, draaien we 'm uit.",
       name: "Hans Claes",
       role: "Oprichter & Lead Strategist",
       promises: [
-        "Directe communicatielijnen via WhatsApp/Slack",
+        "Directe communicatielijnen via WhatsApp",
         "Extreem korte iteratiecycli en snelle executie",
         "Brute eerlijkheid over je data en performance"
       ]
@@ -24,12 +24,12 @@ export function Boutique({ lang }: BoutiqueProps) {
       badge: "Our Philosophy",
       h2: "Direct access. No account managers.",
       p1: "Sold by the founder, serviced by the intern. That's the standard agency model we refuse to follow. At Carabus Ads, you work 1-on-1 with the senior strategist actually managing your budget.",
-      p2: "That means execution over bureaucracy. No endless email threads or ticketing systems, just a direct Slack/WhatsApp line to the person pulling the levers.",
+      p2: "That means execution over bureaucracy. No endless email threads or ticketing systems, just a direct WhatsApp line to the person pulling the levers.",
       quote: "We don't care about reach or impressions. If a campaign isn't driving measurable MRR, we kill it.",
       name: "Hans Claes",
       role: "Founder & Lead Strategist",
       promises: [
-        "Direct communication lines via WhatsApp/Slack",
+        "Direct communication lines via WhatsApp",
         "Extremely short iteration cycles and fast execution",
         "Brutal honesty about your data and performance"
       ]
@@ -111,7 +111,7 @@ export function Boutique({ lang }: BoutiqueProps) {
           
           <motion.h2 
             variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100 } } }}
-            className="font-display text-[36px] md:text-[48px] font-normal tracking-[-0.01em] mb-8 text-white leading-[1.1]"
+            className="font-display text-[36px] md:text-[48px] font-normal tracking-[-0.01em] mb-8 text-[var(--color-text-primary)] leading-[1.1]"
           >
             {content.h2}
           </motion.h2>
@@ -138,7 +138,7 @@ export function Boutique({ lang }: BoutiqueProps) {
               <motion.li 
                 key={i} 
                 variants={{ hidden: { opacity: 0, x: -10 }, visible: { opacity: 1, x: 0 } }}
-                className="flex items-center gap-4 text-[15px] sm:text-[16px] text-white/90 font-light"
+                className="flex items-center gap-4 text-[15px] sm:text-[16px] text-[var(--color-text-primary)] font-light"
               >
                 <div className="size-2 rounded-full bg-[var(--color-agency-accent)] shadow-[0_0_8px_rgba(92,203,186,0.6)]" />
                 {promise}

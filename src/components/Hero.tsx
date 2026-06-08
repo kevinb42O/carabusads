@@ -14,7 +14,7 @@ const contentDict = {
     h1: (
       <>
         Echte leads. <br className="hidden md:block"/>
-        Voorspelbare <span className="font-serif italic font-light text-[#9bbcd9] drop-shadow-[0_2px_10px_rgba(155,188,217,0.3)] relative pr-2">groei.</span>
+        Voorspelbare <span className="font-serif italic font-light text-white drop-shadow-[0_2px_10px_rgba(255,255,255,0.4)] relative pr-2">groei.</span>
       </>
     ),
     p: "Wij bouwen advertentiecampagnes die écht werken. Geen ijdelheidsstatistieken, maar een heldere strategie om de juiste klanten naar je bedrijf te halen.",
@@ -30,7 +30,7 @@ const contentDict = {
     h1: (
       <>
         Real leads. <br className="hidden md:block"/>
-        Predictable <span className="font-serif italic font-light text-[#9bbcd9] drop-shadow-[0_2px_10px_rgba(155,188,217,0.3)] relative pr-2">growth.</span>
+        Predictable <span className="font-serif italic font-light text-white drop-shadow-[0_2px_10px_rgba(255,255,255,0.4)] relative pr-2">growth.</span>
       </>
     ),
     p: "We build advertising campaigns that actually work. No vanity metrics, just a clear strategy to bring the right customers to your business.",
@@ -91,18 +91,18 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
   const p2TextShadow = useTransform(
     scrollYProgress, 
     [0.65, 0.8], 
-    ["0px 0px 0px rgba(155,188,217,0)", prefersReducedMotion ? "0px 0px 0px rgba(155,188,217,0)" : "0px 0px 60px rgba(155,188,217,0.5)"]
+    ["0px 0px 0px rgba(255,255,255,0)", prefersReducedMotion ? "0px 0px 0px rgba(255,255,255,0)" : "0px 0px 40px rgba(255,255,255,0.6)"]
   );
   const p2Display = useTransform(scrollYProgress, v => (v < 0.64 ? "none" : "flex") as "none" | "flex");
 
   const content = contentDict[lang];
 
   return (
-    <section ref={containerRef} className="relative bg-[#0b1a29]" style={{ height: "400vh" }}>
+    <section ref={containerRef} className="relative bg-[#6093ac]" style={{ height: "400vh" }}>
       
       <div 
         className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center"
-        style={{ backgroundColor: '#0b1a29' }}
+        style={{ backgroundColor: '#6093ac' }}
       >
         
         {/* End-state background: fades in ONLY at the end of the hero animation */}
@@ -112,7 +112,7 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
             opacity: bgImageOpacity,
             backgroundImage: isMobile
               ? "url('/carabusDarkBlue.png')"
-              : "linear-gradient(to bottom, rgba(11, 26, 41, 0.5), rgba(11, 26, 41, 0.95)), url('/carabusMETTEKST.png')"
+              : "linear-gradient(to bottom, rgba(96, 147, 172, 0.5), rgba(96, 147, 172, 0.95)), url('/carabusMETTEKST.png')"
           }}
         />
 
@@ -129,7 +129,7 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
         
         <div className="absolute top-[10%] left-[20%] w-[40%] h-[40%] bg-[var(--color-agency-accent)]/15 rounded-full blur-[140px] pointer-events-none z-0" />
         <div className="absolute bottom-[10%] right-[20%] w-[45%] h-[45%] bg-[#9bbcd9]/5 rounded-full blur-[160px] pointer-events-none z-0" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(11,26,41,0.7)_0%,transparent_60%)] blur-[20px] pointer-events-none z-0" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(96,147,172,0.7)_0%,transparent_60%)] blur-[20px] pointer-events-none z-0" />
         
         {/* PHASE 1: FLY-THROUGH */}
         <motion.div 
@@ -147,7 +147,7 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="font-display text-[36px] sm:text-[56px] md:text-[80px] lg:text-[96px] font-bold tracking-[-0.03em] text-white leading-[1.05] mb-5 sm:mb-8 max-w-[1000px] drop-shadow-2xl"
+          className="font-display text-[36px] sm:text-[56px] md:text-[80px] lg:text-[96px] font-bold tracking-[-0.03em] text-[#0b1a29] leading-[1.05] mb-5 sm:mb-8 max-w-[1000px]"
           >
             {content.h1}
           </motion.h1>
@@ -156,7 +156,7 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="font-sans text-[15px] sm:text-[18px] md:text-[21px] text-white/85 font-light max-w-[740px] leading-[1.7] text-center"
+            className="font-sans text-[15px] sm:text-[18px] md:text-[21px] text-[#0b1a29]/85 font-light max-w-[740px] leading-[1.7] text-center"
           >
             {content.p}
           </motion.p>
@@ -169,14 +169,14 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
           >
             <button 
               onClick={() => document.getElementById('boeken')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-7 py-3.5 sm:py-4 bg-[#9bbcd9] text-[#0b1a29] rounded-full font-bold text-base sm:text-lg hover:bg-[#6b9ec7] transition-colors flex items-center justify-center gap-2 w-full sm:w-auto"
+              className="px-7 py-3.5 sm:py-4 bg-[#0b1a29] text-white rounded-full font-bold text-base sm:text-lg hover:bg-[#132b3f] transition-colors flex items-center justify-center gap-2 w-full sm:w-auto shadow-xl"
             >
               {content.ctaPrimary}
               <ArrowUpRight className="w-5 h-5" />
             </button>
             <button 
               onClick={() => document.getElementById('werkwijze')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-7 py-3.5 sm:py-4 bg-transparent border border-white/20 text-white rounded-full font-bold text-base sm:text-lg hover:bg-white/10 transition-colors flex items-center justify-center gap-2 w-full sm:w-auto"
+              className="px-7 py-3.5 sm:py-4 bg-transparent border border-[#0b1a29]/20 text-[#0b1a29] rounded-full font-bold text-base sm:text-lg hover:bg-[#0b1a29]/5 transition-colors flex items-center justify-center gap-2 w-full sm:w-auto"
             >
               {content.ctaSecondary}
               <ChevronRight className="w-5 h-5" />
@@ -200,7 +200,7 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
           <div className="overflow-hidden py-4">
             <motion.h2 
               style={{ y: p1Y }}
-              className="font-display text-[34px] sm:text-[56px] md:text-[80px] font-bold text-white text-center tracking-[-0.03em] leading-tight drop-shadow-[0_0_30px_rgba(0,0,0,0.5)] max-w-[900px]"
+              className="font-display text-[34px] sm:text-[56px] md:text-[80px] font-bold text-[#0b1a29] text-center tracking-[-0.03em] leading-tight max-w-[900px]"
             >
               {content.punchline1}
             </motion.h2>
@@ -219,12 +219,12 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
         >
           <motion.h2 
             style={{ textShadow: p2TextShadow }}
-            className="font-display text-[38px] sm:text-[58px] md:text-[90px] font-bold text-white text-center tracking-[-0.02em] leading-tight max-w-[900px]"
+            className="font-display text-[38px] sm:text-[58px] md:text-[90px] font-bold text-[#0b1a29] text-center tracking-[-0.02em] leading-tight max-w-[900px]"
           >
             {content.punchline2_1}{" "}
-            <span className="text-white/50 italic font-serif tracking-normal">{content.punchline2_2}</span><br />
+            <span className="text-[#0b1a29]/50 italic font-serif tracking-normal">{content.punchline2_2}</span><br />
             {content.punchline2_3}{" "}
-            <span className="text-[#9bbcd9] italic font-serif tracking-normal">{content.punchline2_4}</span>
+            <span className="text-white italic font-serif tracking-normal">{content.punchline2_4}</span>
           </motion.h2>
         </motion.div>
 

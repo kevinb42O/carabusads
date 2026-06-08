@@ -1,3 +1,5 @@
+import { motion } from 'motion/react';
+
 interface LogoCloudProps {
   lang: 'nl' | 'en';
 }
@@ -43,21 +45,66 @@ const platforms = [
 ];
 
 export function LogoCloud({ lang }: LogoCloudProps) {
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.1,
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 15, filter: "blur(4px)" },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      filter: "blur(0px)",
+      transition: { 
+        duration: 0.8, 
+        ease: [0.16, 1, 0.3, 1] 
+      }
+    }
+  };
+
   return (
-    <section className="py-6 border-y border-white/5 bg-[var(--color-agency-bg)] relative z-10 scroll-reveal-fade">
-      <div className="max-w-[1100px] mx-auto px-6 flex flex-col sm:flex-row items-center gap-6 sm:gap-10 justify-center">
-        <p className="text-[12px] font-medium text-[var(--color-text-muted)] shrink-0 whitespace-nowrap">
-          {lang === 'nl' ? 'Gecertificeerd in' : 'Certified in'}
-        </p>
+    <section className="py-20 relative z-10 overflow-hidden">
+      <div className="max-w-[1000px] mx-auto px-6 w-full flex flex-col items-center justify-center gap-12 sm:gap-16">
         
-        <div className="flex flex-wrap justify-center items-center gap-x-6 gap-y-3">
-          {platforms.map((p) => (
-            <div key={p.name} className="flex items-center gap-1.5 text-[13px] text-[var(--color-text-secondary)] font-medium">
-              <p.Icon />
-              <span>{p.name}</span>
-            </div>
+        <motion.p 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 1 }}
+          className="text-[11px] sm:text-[13px] font-semibold text-[#0b1a29]/40 uppercase tracking-[0.3em] whitespace-nowrap text-center"
+        >
+          {lang === 'nl' ? 'Gecertificeerd in' : 'Certified in'}
+        </motion.p>
+
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          className="flex flex-wrap items-center justify-center gap-8 sm:gap-16 lg:gap-24 w-full"
+        >
+          {platforms.map((p, i) => (
+            <motion.div 
+              key={i} 
+              variants={itemVariants}
+              className="flex items-center gap-3 sm:gap-4 text-[#0b1a29]/70 hover:text-[#0b1a29] transition-colors duration-300 cursor-default"
+            >
+              <div className="shrink-0 scale-[1.3] sm:scale-[1.5]">
+                <p.Icon />
+              </div>
+              <span className="text-[14px] sm:text-[16px] font-medium tracking-wide whitespace-nowrap">
+                {p.name}
+              </span>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
+        
       </div>
     </section>
   );

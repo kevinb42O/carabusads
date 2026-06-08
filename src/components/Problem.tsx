@@ -10,20 +10,20 @@ export function Problem({ lang }: ProblemProps) {
     nl: {
       badge: "De Bottleneck",
       h2: "Je ad spend stijgt, maar de agenda blijft pijnlijk leeg.",
-      p: "Je investeert stevig in Google & Meta. De dashboards staan vol met impressies en klikken, maar onderaan de streep ontbreekt de voorspelbare omzet. Je weet dat de funnel lekt, maar niet wáár.",
+      p: "Je investeert stevig in Google & Meta. De overzichten staan vol met weergaven en klikken, maar onderaan de streep ontbreekt de voorspelbare omzet. Je weet dat je budget weglekt, maar niet wáár.",
       badTitle: "Het verouderde model",
       badBullets: [
-        "Duur advertentieverkeer dat doodloopt op een algemene homepage",
-        "Blinde vlekken in attributie: geen idee welke ad écht MRR oplevert",
-        "Vanity metrics: rapportages over 'bereik' in plaats van Cost Per Acquisition",
-        "Een bureau dat maandelijks de rekening stuurt, maar niet proactief meedenkt"
+        "Dure advertentieklikken die doodlopen op een standaard homepage",
+        "Geen idee welke advertentie daadwerkelijk nieuwe klanten oplevert",
+        "Mooie rapporten over 'bereik' in plaats van echte winstgevendheid",
+        "Een bureau dat maandelijks de factuur stuurt, maar niet meedenkt"
       ],
-      goodTitle: "De Carabus Ads Architectuur",
+      goodTitle: "De Carabus Ads Aanpak",
       goodBullets: [
-        "Dedicated conversie-flows voor elke traffic source",
-        "Server-side tracking (GTM) voor 100% waterdichte omzet-attributie",
-        "Keiharde focus op ROAS, CAC en gekwalificeerde leads",
-        "Direct contact met de strategist die zélf aan de knoppen zit"
+        "Een gerichte online ervaring voor elke specifieke advertentie",
+        "Waterdichte metingen zodat je precies ziet wat een klant kost",
+        "Keiharde focus op onderaan de streep: winst en warme leads",
+        "Direct contact met de expert die écht aan jouw knoppen zit"
       ],
     },
     en: {
@@ -198,11 +198,11 @@ export function Problem({ lang }: ProblemProps) {
             {/* Abstract Background Indicator for bad (Red-ish gradient) */}
             <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-red-500/[0.03] rounded-full blur-[80px] group-hover:bg-red-500/[0.06] transition-colors duration-700 pointer-events-none" />
             
-            <h3 className="font-outfit font-semibold text-[22px] text-[var(--color-text-primary)] mb-8 transition-colors duration-300 group-hover:text-white/90">{content.badTitle}</h3>
+            <h3 className="font-outfit font-semibold text-[22px] text-[var(--color-text-primary)] mb-8 transition-colors duration-300 group-hover:text-[#6093ac]">{content.badTitle}</h3>
             
             <ul className="flex flex-col gap-6 relative z-10">
               {content.badBullets.map((bullet, idx) => (
-                <li key={idx} className="flex items-start gap-4 text-[15px] sm:text-[16px] text-[var(--color-text-secondary)] font-light leading-relaxed group-hover:text-[var(--color-text-secondary)] transition-colors duration-300">
+                <li key={idx} className="flex items-start gap-4 text-[15px] sm:text-[16px] text-[var(--color-text-secondary)] font-light leading-relaxed group-hover:text-[var(--color-text-primary)] transition-colors duration-300">
                   <div className="mt-1.5 shrink-0 size-1.5 bg-red-500/50 rounded-full" />
                   <span className="pt-0">{bullet}</span>
                 </li>
@@ -230,12 +230,12 @@ export function Problem({ lang }: ProblemProps) {
               className="absolute top-0 bottom-0 w-1/2 bg-gradient-to-r from-transparent via-[var(--color-agency-accent)]/10 to-transparent skew-x-[-20deg] pointer-events-none z-0"
             />
             
-            <h3 className="font-outfit font-semibold text-[22px] text-white mb-8 relative z-10 transition-colors duration-300 group-hover:text-[var(--color-agency-accent)]">{content.goodTitle}</h3>
+            <h3 className="font-outfit font-semibold text-[22px] text-[var(--color-text-primary)] mb-8 relative z-10 transition-colors duration-300 group-hover:text-[#6093ac]">{content.goodTitle}</h3>
             
             <ul className="flex flex-col gap-6 relative z-10">
               {content.goodBullets.map((bullet, idx) => (
-                <li key={idx} className="flex items-start gap-4 text-[15px] sm:text-[16px] text-white/85 font-light leading-relaxed">
-                  <div className="mt-1.5 shrink-0 size-2 bg-[var(--color-agency-accent)] rounded-sm shadow-[0_0_10px_rgba(92,203,186,0.5)]" />
+                <li key={idx} className="flex items-start gap-4 text-[15px] sm:text-[16px] text-[var(--color-text-secondary)] font-light leading-relaxed">
+                  <div className="mt-1.5 shrink-0 size-2 bg-[#0b1a29] rounded-sm" />
                   <span className="pt-0">{bullet}</span>
                 </li>
               ))}

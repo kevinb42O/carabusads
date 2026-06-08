@@ -27,29 +27,29 @@ export function Results({ lang }: ResultsProps) {
   const content = {
     nl: {
       badge: "Track Record",
-      h2: "De ROI van Growth Engineering",
-      subtitle: "Wat er gebeurt wanneer je data-gedreven media buying combineert met high-converting infrastructuur.",
+      h2: "Het rendement van een doordachte aanpak",
+      subtitle: "Wat er gebeurt wanneer je slimme advertenties combineert met een website die daadwerkelijk verkoopt.",
       cases: [
         {
           odometer: <Odometer target={8.7} decimals={1} suffix="x" />,
-          label: "ROAS (was 4.2x)",
-          desc: "Winstgevendheid verdubbeld door over te stappen van basiscampagnes naar een rigide campagne-architectuur en server-side tracking.",
-          context: "B2B SaaS · Google Ads"
+          label: "ROAS",
+          desc: "Meer omzet uit hetzelfde advertentiebudget.",
+          context: "B2B Software · Google Ads"
         },
         {
           odometer: <Odometer start={142} target={38} prefix="€" />,
-          label: "CPA (was €142)",
-          desc: "Cost Per Acquisition gekelderd door dode traffic op te vangen in gespecialiseerde funnel-flows.",
+          label: "per klant",
+          desc: "Kosten per nieuwe klant verlaagd van €142 naar €38.",
           context: "E-commerce · Meta Ads"
         },
         {
           odometer: <Odometer target={210} prefix="+" suffix="%" />,
-          label: "Conversieratio",
-          desc: "Gekwalificeerde pipeline verdrievoudigd uit hetzelfde advertentiebudget dankzij harde data-driven A/B tests.",
+          label: "aanvragen",
+          desc: "Meer kwalitatieve leads zonder extra advertentiekosten.",
           context: "Dienstverlener · Google + Meta"
         }
       ],
-      note: "* Performance is afhankelijk van ad spend en uitgangssituatie. Data gebaseerd op ge-auditeerde klanttrajecten."
+      note: "* Resultaten zijn afhankelijk van het budget en de uitgangssituatie. Data is gebaseerd op echte klantcases."
     },
     en: {
       badge: "Track Record",
@@ -98,7 +98,7 @@ export function Results({ lang }: ResultsProps) {
             {content.badge}
           </div>
           
-          <h2 className="font-display text-[36px] md:text-[48px] font-normal tracking-[-0.01em] mb-6 text-white leading-[1.1]">
+          <h2 className="font-display text-[36px] md:text-[48px] font-normal tracking-[-0.01em] mb-6 text-[var(--color-text-primary)] leading-[1.1]">
             {content.h2}
           </h2>
           <p className="text-[17px] md:text-[19px] font-light text-[var(--color-text-secondary)] leading-[1.7]">
@@ -120,7 +120,7 @@ export function Results({ lang }: ResultsProps) {
               }
             }
           }}
-          className="grid lg:grid-cols-3 divide-y lg:divide-y-0 lg:divide-x divide-white/10 border-y border-white/10 mb-12"
+          className="grid lg:grid-cols-3 gap-6 lg:gap-8 mb-12"
         >
           {content.cases.map((c, i) => (
             <motion.div
@@ -129,14 +129,14 @@ export function Results({ lang }: ResultsProps) {
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
               }}
-              className="py-12 lg:py-16 lg:px-12 flex flex-col relative overflow-hidden group first:lg:pl-0 last:lg:pr-0"
+              className="bg-white/70 backdrop-blur-2xl border border-white/50 rounded-2xl p-8 lg:p-10 flex flex-col relative overflow-hidden group shadow-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:bg-white/90"
             >
               {/* Subtle hover line graph animation effect */}
               <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[var(--color-agency-accent)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700 translate-y-8 group-hover:translate-y-0 pointer-events-none" />
               
               {/* Big metric with odometer */}
               <div className="mb-8 relative z-10">
-                <div className="font-display font-bold text-[64px] sm:text-[80px] lg:text-[96px] text-white leading-none tracking-tight mb-4 transition-colors duration-500 group-hover:text-[var(--color-agency-accent)]">
+                <div className="font-display font-bold text-[64px] sm:text-[80px] lg:text-[96px] text-[var(--color-text-primary)] leading-none tracking-tight mb-4 transition-colors duration-500 group-hover:text-[#6093ac]">
                   {c.odometer}
                 </div>
                 <div className="text-[13px] font-semibold text-[var(--color-agency-accent)] uppercase tracking-widest">{c.label}</div>
@@ -146,7 +146,7 @@ export function Results({ lang }: ResultsProps) {
               <p className="text-[16px] font-light text-[var(--color-text-secondary)] leading-[1.7] mb-8 flex-1 relative z-10">{c.desc}</p>
               
               {/* Context tag */}
-              <span className="text-[12px] font-medium text-white/50 border border-white/10 px-4 py-2 rounded-lg self-start relative z-10 backdrop-blur-sm group-hover:border-white/20 transition-colors duration-300">
+              <span className="text-[12px] font-medium text-[var(--color-text-secondary)] bg-white/50 border border-white/40 px-4 py-2 rounded-lg self-start relative z-10 backdrop-blur-sm group-hover:border-white/80 transition-colors duration-300">
                 {c.context}
               </span>
             </motion.div>
@@ -159,7 +159,7 @@ export function Results({ lang }: ResultsProps) {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.8 }}
-          className="text-[13px] text-white/30 font-light"
+          className="text-[13px] text-[var(--color-text-muted)] font-light"
         >
           {content.note}
         </motion.p>

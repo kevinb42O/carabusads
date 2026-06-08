@@ -21,29 +21,29 @@ export function Methodology({ lang }: MethodologyProps) {
     nl: {
       badge: "Onze Blauwdruk",
       title: "Het protocol voor schaalbare groei",
-      subtitle: "Geen giswerk of vage processen. Een strak kader dat zorgt voor voorspelbare en winstgevende acquisitie.",
+      subtitle: "Geen giswerk of vage processen. Een strak kader dat zorgt voor winstgevende acquisitie.",
       steps: [
         {
           num: "01",
           timeline: "Fase 1",
-          title: "Growth Audit & Strategie",
-          desc: "We leggen je huidige accounts, tracking en funnels onder het vergrootglas. We identificeren de bottlenecks en leveren een data-gedreven actieplan om direct ROI te verbeteren.",
+          title: "Analyse & Strategie",
+          desc: "We leggen je huidige advertenties en website onder het vergrootglas. We sporen de knelpunten op en leveren een helder stappenplan om direct het rendement te verbeteren.",
           deliverables: [
-            "Diepgaande account audit",
-            "Data & attributie analyse",
-            "Schaalbaarheids-roadmap"
+            "Diepgaande analyse",
+            "Data en metingen in kaart",
+            "Duidelijk groeiplan"
           ],
           icon: Search
         },
         {
           num: "02",
           timeline: "Fase 2",
-          title: "Infrastructuur & Build",
-          desc: "We bouwen een waterdichte basis. Van converterende landing pages tot server-side GTM tracking en hyper-gerichte Meta/Google campagnes. Alles klaar voor schaal.",
+          title: "De Fundering",
+          desc: "We bouwen een waterdichte basis. Van overtuigende landingspagina's tot betrouwbare metingen en uiterst gerichte campagnes. Alles klaar voor omzetgroei.",
           deliverables: [
-            "High-converting funnel setup",
-            "Server-side tracking (GTM)",
-            "Nieuwe campagne-architectuur"
+            "Nieuwe actiepagina's",
+            "Waterdichte metingen",
+            "Nieuwe advertentiestructuur"
           ],
           icon: PenTool
         },
@@ -51,11 +51,11 @@ export function Methodology({ lang }: MethodologyProps) {
           num: "03",
           timeline: "Fase 3",
           title: "Schalen & Optimaliseren",
-          desc: "We draaien de kraan open. Met meedogenloos A/B-testen, dagelijks beheer en wekelijkse iteraties sturen we puur op Cost Per Acquisition (CPA) en Return on Ad Spend (ROAS).",
+          desc: "We draaien de kraan open. Met doorlopende optimalisaties en dagelijks beheer sturen we keihard op de kosten per klant en de daadwerkelijke winst.",
           deliverables: [
-            "Dagelijks performance beheer",
-            "Creatieve & funnel iteraties",
-            "Wekelijkse live rapportage"
+            "Dagelijks beheer",
+            "Doorlopende optimalisaties",
+            "Wekelijkse heldere rapportage"
           ],
           icon: TrendingUp
         }
@@ -125,7 +125,7 @@ export function Methodology({ lang }: MethodologyProps) {
           {translations.steps.map((step, i) => (
             <div key={i} className="relative">
               {/* Massive background number */}
-              <div className="absolute -top-10 -left-4 text-[120px] font-display font-bold text-white/5 pointer-events-none z-0">
+              <div className="absolute -top-10 -left-4 text-[120px] font-display font-bold text-black/5 pointer-events-none z-0">
                 {step.num}
               </div>
               
@@ -134,14 +134,14 @@ export function Methodology({ lang }: MethodologyProps) {
                   <div className="size-10 rounded-xl bg-[var(--color-agency-accent)]/10 text-[var(--color-agency-accent)] flex items-center justify-center shrink-0">
                     <step.icon className="size-5" />
                   </div>
-                  <h3 className="font-outfit font-semibold text-[20px] text-white">{step.title}</h3>
+                  <h3 className="font-outfit font-semibold text-[20px] text-[var(--color-text-primary)]">{step.title}</h3>
                 </div>
                 <p className="text-[15px] font-light text-[var(--color-text-secondary)] leading-[1.7] mb-6">
                   {step.desc}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {step.deliverables.map((d, idx) => (
-                    <span key={idx} className="text-[12px] text-white/70 bg-white/5 border border-white/10 px-3 py-1.5 rounded-md">
+                    <span key={idx} className="text-[12px] text-[var(--color-text-secondary)] bg-white/50 border border-white/40 px-3 py-1.5 rounded-md">
                       {d}
                     </span>
                   ))}
@@ -192,7 +192,7 @@ export function Methodology({ lang }: MethodologyProps) {
               <div key={i} className="w-[85vw] max-w-[450px] shrink-0 h-[500px] flex items-center justify-center relative">
                 
                 {/* Kinetic Typography Number */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[280px] lg:text-[380px] font-display font-bold text-transparent" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.03)' }}>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[280px] lg:text-[380px] font-display font-bold text-transparent" style={{ WebkitTextStroke: '2px rgba(0,0,0,0.05)' }}>
                   {step.num}
                 </div>
 
@@ -200,19 +200,19 @@ export function Methodology({ lang }: MethodologyProps) {
                   whileHover={{ y: -10 }}
                   className="w-full dark-panel rounded-3xl p-8 lg:p-10 relative z-10 shadow-2xl border border-white/10 group hover:border-[var(--color-agency-accent)]/30 transition-all duration-500 bg-[var(--color-agency-surface)]/90 backdrop-blur-md"
                 >
-                  <div className="absolute top-0 right-0 p-8 text-white/5 text-[80px] font-display leading-none pointer-events-none transition-colors duration-500 group-hover:text-[var(--color-agency-accent)]/10">
+                  <div className="absolute top-0 right-0 p-8 text-black/5 text-[80px] font-display leading-none pointer-events-none transition-colors duration-500 group-hover:text-[var(--color-agency-accent)]/10">
                     {step.num}
                   </div>
                   
                   <div className="flex items-center gap-4 mb-8 relative z-10">
-                    <div className="size-14 rounded-2xl bg-white/5 border border-white/10 text-[var(--color-agency-accent)] flex items-center justify-center shrink-0 group-hover:bg-[var(--color-agency-accent)] group-hover:text-white transition-colors duration-500">
+                    <div className="size-14 rounded-2xl bg-white/50 border border-white/40 text-[var(--color-agency-accent)] flex items-center justify-center shrink-0 group-hover:bg-[var(--color-agency-accent)] group-hover:text-white transition-colors duration-500">
                       <step.icon className="size-6" />
                     </div>
                     <div>
                       <span className="text-[12px] font-semibold tracking-wider text-[var(--color-agency-accent)] uppercase block mb-1">
                         {step.timeline}
                       </span>
-                      <h3 className="font-outfit font-semibold text-[22px] lg:text-[24px] text-white">{step.title}</h3>
+                      <h3 className="font-outfit font-semibold text-[22px] lg:text-[24px] text-[var(--color-text-primary)]">{step.title}</h3>
                     </div>
                   </div>
                   
@@ -222,7 +222,7 @@ export function Methodology({ lang }: MethodologyProps) {
                   
                   <div className="flex flex-wrap gap-2 relative z-10">
                     {step.deliverables.map((d, idx) => (
-                      <span key={idx} className="text-[12px] lg:text-[13px] text-white/80 bg-white/5 border border-white/10 px-4 py-2 rounded-lg backdrop-blur-sm">
+                      <span key={idx} className="text-[12px] lg:text-[13px] text-[var(--color-text-secondary)] bg-white/50 border border-white/40 px-4 py-2 rounded-lg backdrop-blur-sm">
                         {d}
                       </span>
                     ))}

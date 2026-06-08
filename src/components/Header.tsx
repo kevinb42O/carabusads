@@ -47,16 +47,16 @@ export function Header({ lang, setLang, setActivePage }: HeaderProps) {
         
         {/* Navigation - Desktop */}
         <nav className={`hidden lg:flex items-center gap-8 text-[13px] font-medium transition-colors duration-300 ${
-          isScrolled ? 'text-[var(--color-text-secondary)]' : 'text-white/80'
+          isScrolled ? 'text-[var(--color-text-secondary)]' : 'text-[#0b1a29]/80'
         }`}>
           {navLinks.map((link) => (
             <a 
               key={link.name} 
               href={link.href} 
               onClick={() => setActivePage?.('home')}
-              className={`transition-colors duration-200 ${
-                isScrolled ? 'hover:text-[var(--color-text-primary)]' : 'hover:text-white'
-              }`}
+              className={`relative py-1 transition-colors duration-300 ${
+                isScrolled ? 'hover:text-white' : 'hover:text-[#0b1a29]'
+              } after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[2px] after:bg-[#f59e0b] after:scale-x-0 after:origin-bottom-right hover:after:origin-bottom-left hover:after:scale-x-100 after:transition-transform after:duration-300 after:ease-out`}
             >
               {link.name}
             </a>
@@ -67,14 +67,14 @@ export function Header({ lang, setLang, setActivePage }: HeaderProps) {
         <div className="flex items-center gap-4">
           {/* Language toggle */}
           <div className={`flex items-center border rounded-md overflow-hidden text-[11px] font-semibold transition-colors duration-300 ${
-            isScrolled ? 'border-white/10 text-[var(--color-text-secondary)]' : 'border-white/20 text-white/90'
+            isScrolled ? 'border-black/10 text-[var(--color-text-secondary)]' : 'border-[#0b1a29]/20 text-[#0b1a29]/90'
           }`}>
             <button 
               onClick={() => setLang('nl')} 
               className={`px-2.5 py-1 transition-all cursor-pointer ${
                 lang === 'nl' 
-                  ? 'bg-white text-[var(--color-agency-bg)]' 
-                  : 'bg-transparent hover:bg-white/10 text-white/70'
+                  ? 'bg-[#0b1a29] text-white' 
+                  : 'bg-transparent hover:bg-[#0b1a29]/10 text-[#0b1a29]/70'
               }`}
             >
               NL
@@ -83,8 +83,8 @@ export function Header({ lang, setLang, setActivePage }: HeaderProps) {
               onClick={() => setLang('en')} 
               className={`px-2.5 py-1 transition-all cursor-pointer ${
                 lang === 'en' 
-                  ? 'bg-white text-[var(--color-agency-bg)]' 
-                  : 'bg-transparent hover:bg-white/10 text-white/70'
+                  ? 'bg-[#0b1a29] text-white' 
+                  : 'bg-transparent hover:bg-[#0b1a29]/10 text-[#0b1a29]/70'
               }`}
             >
               EN
@@ -94,13 +94,9 @@ export function Header({ lang, setLang, setActivePage }: HeaderProps) {
           <a 
             href="#boeken" 
             onClick={() => setActivePage?.('home')}
-            className={`hidden sm:inline-flex items-center gap-1.5 px-5 py-2 rounded-lg text-[13px] font-semibold transition-all duration-300 ${
-              isScrolled 
-                ? 'bg-white hover:bg-[var(--color-agency-accent)] text-[var(--color-agency-bg)] hover:text-white' 
-                : 'bg-white/10 hover:bg-white text-white hover:text-[var(--color-agency-bg)] border border-white/20 backdrop-blur-sm'
-            }`}
+            className={`hidden sm:inline-flex items-center gap-1.5 px-5 py-2 rounded-lg text-[13px] font-bold transition-all duration-300 bg-[#f59e0b] hover:bg-[#d97706] text-[#0b1a29] shadow-[0_4px_14px_rgba(245,158,11,0.3)] hover:shadow-[0_6px_20px_rgba(245,158,11,0.5)]`}
           >
-            {lang === 'nl' ? 'Growth Audit' : 'Growth Audit'}
+            {lang === 'nl' ? 'Plan een kennismaking' : 'Schedule a call'}
           </a>
 
           {/* Mobile Menu Button */}
@@ -109,7 +105,7 @@ export function Header({ lang, setLang, setActivePage }: HeaderProps) {
             className={`lg:hidden p-1.5 transition-colors ${
               isScrolled 
                 ? 'text-[var(--color-text-primary)] hover:text-[var(--color-agency-accent)]' 
-                : 'text-white hover:text-white/80'
+                : 'text-[#0b1a29] hover:text-[#0b1a29]/80'
             }`}
             aria-label="Toggle menu"
           >
@@ -165,7 +161,7 @@ export function Header({ lang, setLang, setActivePage }: HeaderProps) {
                   onClick={() => { setIsMobileMenuOpen(false); setActivePage?.('home'); }}
                   className="w-full bg-[var(--color-agency-accent)] text-[var(--color-agency-bg)] text-center py-3.5 rounded-lg text-[14px] font-bold transition-all hover:bg-[var(--color-agency-accent-hover)]"
                 >
-                  {lang === 'nl' ? 'Claim mijn Audit' : 'Claim my Audit'}
+                  {lang === 'nl' ? 'Plan mijn gesprek' : 'Schedule a call'}
                 </a>
                 <p className="text-center text-[11px] text-[var(--color-text-muted)]">
                   {lang === 'nl' ? '1-op-1 met de founder' : '1-on-1 with the founder'}

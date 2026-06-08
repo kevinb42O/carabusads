@@ -26,39 +26,39 @@ export function Services({ lang }: ServicesProps) {
     nl: {
       badge: "Onze Expertise",
       title: "De Groei-Infrastructuur",
-      subtitle: "We ontwerpen het volledige acquisitie-traject: van de allereerste impressie tot gesloten deal.",
+      subtitle: "We ontwerpen het volledige acquisitie-traject: van de allereerste indruk tot aan de gesloten deal.",
       items: [
         {
           title: "Meta & Social Ads",
-          desc: "Data-gedreven campagnes die marktaandeel claimen nog vóór je concurrentie doorheeft dat er vraag is.",
+          desc: "Slimme campagnes die de juiste mensen bereiken, nog vóórdat je concurrentie doorheeft dat ze op zoek zijn.",
           icon: Target,
           bullets: [
-            "High-intent audience targeting",
-            "Rapid creative testing & iteratie",
-            "Winstgevende retargeting flows",
-            "Lead generation op schaal"
+            "Zeer gerichte doelgroepbepaling",
+            "Snel testen van verschillende advertenties",
+            "Winstgevende vervolgcampagnes (retargeting)",
+            "Structureel nieuwe aanvragen werven"
           ]
         },
         {
-          title: "Funnels & Landing Pages",
-          desc: "High-converting architectuur die je duurbetaalde traffic meedogenloos omzet in gekwalificeerde pipeline.",
+          title: "Funnels & Landingspagina's",
+          desc: "We bouwen landingspagina's die meer bezoekers omzetten in leads, klanten en omzet.",
           icon: Layers,
           bullets: [
-            "Dedicated conversie-pagina's",
-            "Data-driven A/B testing",
-            "Naadloze CRM integraties",
-            "Server-side tracking (GTM)"
+            "Pagina's volledig gericht op actie",
+            "Continu meten en testen wat écht werkt",
+            "Directe koppeling met je klantensysteem",
+            "100% waterdichte en eerlijke metingen"
           ]
         },
         {
-          title: "Strategie & Advisory",
-          desc: "Voor bedrijven die klaar zijn om te schalen. We strippen je account, zoeken de lekken en bouwen een robuuste roadmap.",
+          title: "Strategie & Advies",
+          desc: "Voor bedrijven die willen groeien. We analyseren je advertenties, ontdekken wat beter kan en maken een duidelijk plan om meer klanten en omzet te realiseren.",
           icon: Share2,
           bullets: [
-            "Diepgaande account audits",
-            "CPA & ROAS forecasting",
-            "Funnel architectuur",
-            "Executive strategie calls"
+            "Diepgaande analyse van je accounts",
+            "Heldere voorspellingen van kosten en winst",
+            "Ontwerp van het ideale verkooptraject",
+            "Persoonlijk en eerlijk strategisch overleg"
           ]
         }
       ]
@@ -188,26 +188,36 @@ export function Services({ lang }: ServicesProps) {
               variants={cardVariants}
               className={`bento-card dark-panel rounded-2xl p-8 sm:p-10 flex flex-col relative overflow-clip group ${bentoClasses[i]}`}
             >
+              {i === 0 && (
+                <>
+                  <div 
+                    className="absolute inset-0 z-0 bg-cover bg-center pointer-events-none transition-transform duration-1000 group-hover:scale-105 blur-[3px]"
+                    style={{ backgroundImage: 'url(/metaachtergrond.jpeg)' }}
+                  />
+                  <div className="absolute inset-0 z-0 bg-[#0b1a29]/60 pointer-events-none mix-blend-multiply" />
+                  <div className="absolute inset-0 z-0 bg-[var(--color-agency-bg)]/40 pointer-events-none" />
+                </>
+              )}
               <div 
                 className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                 style={{ background: `radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(92,203,186,0.08), transparent 40%)` }}
               />
               
               <div className={`flex-1 relative z-10 ${i === 0 ? 'pb-12' : 'pb-8'}`}>
-                <div className={i === 0 ? 'sticky top-32' : ''}>
-                  <div className={`flex gap-6 mb-8 ${i === 0 ? 'flex-col md:flex-row md:items-center' : 'flex-col items-start'}`}>
+                <div className={i === 0 ? 'sticky top-32 p-6 sm:p-8 rounded-3xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl border border-white/40 shadow-xl bg-[#c7d9e2] relative overflow-hidden' : ''}>
+                  <div className={`flex gap-5 mb-5 relative z-10 ${i === 0 ? 'flex-col md:flex-row md:items-center' : 'flex-col items-start'}`}>
                     <div 
-                      className="size-14 rounded-2xl flex items-center justify-center bg-white/[0.03] text-[var(--color-agency-accent)] shrink-0 border border-white/10 group-hover:bg-[var(--color-agency-accent)]/10 transition-colors duration-500"
+                      className="size-14 rounded-2xl flex items-center justify-center bg-white/50 text-[#0b1a29] shrink-0 border border-white/40 group-hover:bg-white/80 transition-colors duration-500"
                     >
                       <service.icon className="size-6" />
                     </div>
 
                     <div>
-                      <h3 className={`font-outfit font-semibold text-[var(--color-text-primary)] leading-tight ${i === 0 ? 'text-[28px]' : 'text-[22px]'}`}>{service.title}</h3>
+                      <h3 className={`font-outfit font-semibold tracking-tight text-[var(--color-text-primary)] leading-tight ${i === 0 ? 'text-[26px]' : 'text-[22px]'}`}>{service.title}</h3>
                     </div>
                   </div>
 
-                  <p className={`font-light text-[var(--color-text-secondary)] leading-[1.7] ${i === 0 ? 'text-[17px] max-w-lg' : 'text-[15px]'}`}>
+                  <p className={`font-light text-[var(--color-text-secondary)] leading-[1.7] ${i === 0 ? 'text-[16px] max-w-lg' : 'text-[15px]'}`}>
                     {service.desc}
                   </p>
                 </div>
@@ -215,8 +225,8 @@ export function Services({ lang }: ServicesProps) {
               
               <ul className={`grid gap-4 mt-auto border-t border-white/[0.05] pt-6 relative z-10 ${i === 0 ? 'md:grid-cols-2' : 'grid-cols-1'}`}>
                 {service.bullets.map((bullet, idx) => (
-                  <li key={idx} className="flex items-center gap-3 text-[14px] text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)] transition-colors duration-300">
-                    <div className="size-1.5 rounded-full bg-[var(--color-agency-accent)]/50 group-hover:bg-[var(--color-agency-accent)] transition-colors duration-300 shadow-[0_0_8px_rgba(92,203,186,0.3)]" />
+                  <li key={idx} className={`flex items-center gap-3 text-[14px] transition-colors duration-300 ${i === 0 ? 'text-white/90 group-hover:text-white font-medium tracking-wide' : 'text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)]'}`}>
+                    <div className={`size-1.5 rounded-full transition-colors duration-300 ${i === 0 ? 'bg-[var(--color-agency-accent)] shadow-[0_0_8px_rgba(92,203,186,0.6)]' : 'bg-[#0b1a29]/50 group-hover:bg-[#0b1a29]'}`} />
                     <span>{bullet}</span>
                   </li>
                 ))}

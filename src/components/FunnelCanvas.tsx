@@ -41,10 +41,10 @@ export function FunnelCanvas({ scrollProgress, onReady }: FunnelCanvasProps) {
     let cameraY = -400; 
     const cameraZ = -800;
     const isMobile = window.innerWidth < 768;
-    // Mobile: 10x10 grid (vs 30x30), much cheaper to project and draw
-    const gridCols = isMobile ? 10 : 30;
-    const gridRows = isMobile ? 10 : 30;
-    const spacing = isMobile ? 200 : 100;
+    // Expand grid for "infinite" feel while keeping performance in check by fading far nodes
+    const gridCols = isMobile ? 16 : 46;
+    const gridRows = isMobile ? 16 : 46;
+    const spacing = isMobile ? 240 : 160;
     
     const vertices: {x: number, z: number, currentY: number}[] = [];
     for (let i = 0; i < gridRows; i++) {
@@ -72,7 +72,7 @@ export function FunnelCanvas({ scrollProgress, onReady }: FunnelCanvasProps) {
       
       reset() {
         const angle = Math.random() * Math.PI * 2;
-        const radius = 1000 + Math.random() * 800; 
+        const radius = 1200 + Math.random() * 1800; 
         this.x = Math.cos(angle) * radius;
         this.z = Math.sin(angle) * radius;
         this.y = 0;
@@ -124,7 +124,18 @@ export function FunnelCanvas({ scrollProgress, onReady }: FunnelCanvasProps) {
       }
     }
 
-    const particles = Array.from({ length: isMobile ? 8 : 45 }, () => new Particle());
+    const particles = Array.from({ length: isMobile ? 12 : 65 }, () => new Particle());
+
+    // Generate 3D dust particles that float in the sky, respecting camera projection
+    const dustCount = isMobile ? 40 : 150;
+    const dustParticles = Array.from({ length: dustCount }, () => ({
+      x: (Math.random() - 0.5) * 6000,
+      y: -Math.random() * 2500 - 200, // Float high above the ground (negative Y is up)
+      z: (Math.random() - 0.5) * 6000,
+      baseSize: Math.random() * 2 + 0.5,
+      wobbleSpeed: Math.random() * 0.002 + 0.001,
+      wobbleOffset: Math.random() * Math.PI * 2
+    }));
 
     const project = (x: number, y: number, z: number, time: number, pitch: number, theta: number) => {
       const rotatedX = x * Math.cos(theta) - z * Math.sin(theta);
@@ -206,8 +217,41 @@ export function FunnelCanvas({ scrollProgress, onReady }: FunnelCanvasProps) {
         ? progress * Math.PI * 4 
         : ((time % loopDuration) / loopDuration) * Math.PI * 2;
 
-      ctx.fillStyle = '#0b1a29';
+      // Create a stable sky gradient that is always visible.
+      // We apply a very subtle parallax shift based on pitch rather than strict 3D math,
+      // so the sky doesn't violently bounce up and down when the camera moves.
+      const pitchParallax = (pitch - 0.5) * 80; 
+      const gradientBottom = (height * 0.8) - pitchParallax;
+
+      const bgGradient = ctx.createLinearGradient(0, 0, 0, gradientBottom);
+      bgGradient.addColorStop(0, '#467a92'); // Subtly deeper blue, not too dark
+      bgGradient.addColorStop(1, '#6093ac'); 
+      
+      ctx.fillStyle = bgGradient;
       ctx.fillRect(0, 0, width, height);
+
+      // Draw 3D floating dust / atmospheric particles in the sky
+      dustParticles.forEach(dust => {
+        const dx = Math.sin(time * dust.wobbleSpeed * 1000 + dust.wobbleOffset) * 200;
+        const dz = Math.cos(time * dust.wobbleSpeed * 1000 + dust.wobbleOffset) * 200;
+        
+        const proj = project(dust.x + dx, dust.y, dust.z + dz, time, pitch, theta);
+        
+        if (proj && proj.dz > 0) {
+           const distToCenter = Math.sqrt(dust.x * dust.x + dust.z * dust.z);
+           const edgeFade = Math.max(0, 1 - Math.pow(distToCenter / 3000, 2));
+           const depthAlpha = Math.max(0.01, Math.min(0.4, 1500 / proj.dz));
+           const alpha = depthAlpha * edgeFade;
+
+           if (alpha > 0.005) {
+             ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+             ctx.beginPath();
+             const visualSize = Math.min(dust.baseSize * proj.scale, dust.baseSize * 3);
+             ctx.arc(proj.x, proj.y, Math.max(0.5, visualSize), 0, Math.PI * 2);
+             ctx.fill();
+           }
+        }
+      });
 
       const projectedGrid: any[][] = [];
       for (let i = 0; i < gridRows; i++) {
@@ -229,16 +273,27 @@ export function FunnelCanvas({ scrollProgress, onReady }: FunnelCanvasProps) {
         }
       }
 
-      const drawLine = (p1: any, p2: any) => {
+      const drawLine = (p1: any, p2: any, r1: number, r2: number) => {
         if (!p1 || !p2) return;
+        
+        // Fade out lines far from center to create a seamless infinite edge
+        const avgR = (r1 + r2) / 2;
+        const maxR = isMobile ? 1800 : 3600;
+        if (avgR > maxR) return;
+
+        const edgeFade = Math.max(0, 1 - Math.pow(avgR / maxR, 2));
         const avgDz = (p1.dz + p2.dz) / 2;
-        const alpha = Math.max(0.005, Math.min(0.2, 1200 / avgDz));
-        ctx.strokeStyle = `rgba(155, 188, 217, ${alpha})`;
-        ctx.lineWidth = 0.5;
-        ctx.beginPath();
-        ctx.moveTo(p1.x, p1.y);
-        ctx.lineTo(p2.x, p2.y);
-        ctx.stroke();
+        const depthAlpha = Math.max(0.005, Math.min(0.2, 1200 / avgDz));
+        const alpha = depthAlpha * edgeFade;
+
+        if (alpha > 0.005) {
+          ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.stroke();
+        }
       };
 
       for (let i = 0; i < gridRows; i++) {
@@ -246,19 +301,34 @@ export function FunnelCanvas({ scrollProgress, onReady }: FunnelCanvasProps) {
           const p = projectedGrid[i][j];
           if (!p) continue;
 
+          const v = vertices[i * gridCols + j];
+          const r = Math.sqrt(v.x * v.x + v.z * v.z);
+          const maxR = isMobile ? 1800 : 3600;
+
           if (j < gridCols - 1) {
-            drawLine(p, projectedGrid[i][j+1]);
+            const vNext = vertices[i * gridCols + j + 1];
+            const rNext = Math.sqrt(vNext.x * vNext.x + vNext.z * vNext.z);
+            drawLine(p, projectedGrid[i][j+1], r, rNext);
           }
           if (i < gridRows - 1) {
-            drawLine(p, projectedGrid[i+1][j]);
+            const vDown = vertices[(i + 1) * gridCols + j];
+            const rDown = Math.sqrt(vDown.x * vDown.x + vDown.z * vDown.z);
+            drawLine(p, projectedGrid[i+1][j], r, rDown);
           }
 
-          const nodeAlpha = Math.max(0.02, Math.min(0.5, 1000 / p.dz));
-          ctx.fillStyle = `rgba(180, 210, 230, ${nodeAlpha})`;
-          ctx.beginPath();
-          // Cap scale to prevent massive nodes near camera
-          ctx.arc(p.x, p.y, Math.min(p.scale, 1.5) * 1.5, 0, Math.PI * 2);
-          ctx.fill();
+          if (r > maxR) continue;
+
+          const edgeFade = Math.max(0, 1 - Math.pow(r / maxR, 2));
+          const depthAlpha = Math.max(0.02, Math.min(0.5, 1000 / p.dz));
+          const nodeAlpha = depthAlpha * edgeFade;
+
+          if (nodeAlpha > 0.01) {
+            ctx.fillStyle = `rgba(255, 255, 255, ${nodeAlpha})`;
+            ctx.beginPath();
+            // Cap scale to prevent massive nodes near camera
+            ctx.arc(p.x, p.y, Math.min(p.scale, 1.5) * 1.5, 0, Math.PI * 2);
+            ctx.fill();
+          }
         }
       }
 
@@ -283,7 +353,7 @@ export function FunnelCanvas({ scrollProgress, onReady }: FunnelCanvasProps) {
           }
         }
         
-        ctx.strokeStyle = `rgba(155, 188, 217, ${Math.min(0.8, p.trail.length * 0.05)})`;
+        ctx.strokeStyle = `rgba(255, 255, 255, ${Math.min(0.8, p.trail.length * 0.05)})`;
         ctx.lineWidth = 1.5; 
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
@@ -305,7 +375,7 @@ export function FunnelCanvas({ scrollProgress, onReady }: FunnelCanvasProps) {
           
           ctx.beginPath();
           ctx.arc(head.x, head.y, visualScale * 8, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(155, 188, 217, 0.25)'; 
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.25)'; 
           ctx.fill();
         }
       });
@@ -316,9 +386,9 @@ export function FunnelCanvas({ scrollProgress, onReady }: FunnelCanvasProps) {
         if (coreProj && funnelIntensity > 0.05) {
           const glowRadius = Math.min(width * 0.5, 400 * coreProj.scale * funnelIntensity);
           const grad = ctx.createRadialGradient(coreProj.x, coreProj.y, 0, coreProj.x, coreProj.y, glowRadius);
-          grad.addColorStop(0, `rgba(155, 188, 217, ${0.4 * funnelIntensity})`);
-          grad.addColorStop(0.2, `rgba(155, 188, 217, ${0.1 * funnelIntensity})`);
-          grad.addColorStop(1, 'rgba(155, 188, 217, 0)');
+          grad.addColorStop(0, `rgba(255, 255, 255, ${0.4 * funnelIntensity})`);
+          grad.addColorStop(0.2, `rgba(255, 255, 255, ${0.1 * funnelIntensity})`);
+          grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
           ctx.fillStyle = grad;
           ctx.beginPath();
           ctx.arc(coreProj.x, coreProj.y, glowRadius, 0, Math.PI * 2);

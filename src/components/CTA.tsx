@@ -21,15 +21,15 @@ export function CTA({ lang }: CTAProps) {
 
   const translations = {
     nl: {
-      badge: "Growth Audit",
+      badge: "Strategiegesprek",
       h2: "Klaar om winstgevend te schalen?",
-      p: "Boek een Discovery Call van 30 minuten. We leggen je huidige funnel onder de loep en spotten direct de bottlenecks die je nu MRR kosten — zonder hard-selling BS.",
+      p: "Boek een adviesgesprek van 30 minuten. We leggen je huidige funnel onder de loep en spotten direct de bottlenecks die je nu MRR kosten — zonder hard-selling BS.",
       bullets: [
         "Diepgaande scan van je huidige ad-architectuur",
-        "Identificatie van de grootste lekken in je funnel",
-        "1-op-1 strategische sparring met de founder"
+        "Identificatie van de grootste knelpunten in je funnel",
+        "1-op-1 strategisch advies met de founder"
       ],
-      formTitle: "Vraag je audit aan",
+      formTitle: "Plan een kennismaking",
       formSubtitle: "We reageren binnen 4 uur.",
       labelName: "Naam",
       placeholderName: "Je volledige naam",
@@ -37,12 +37,12 @@ export function CTA({ lang }: CTAProps) {
       placeholderEmail: "naam@bedrijf.be",
       labelPhone: "Telefoonnummer",
       placeholderPhone: "+32 470 12 34 56",
-      submitBtn: "Claim mijn Audit",
+      submitBtn: "Plan mijn gesprek",
       security: "Je data wordt 100% vertrouwelijk behandeld.",
       successTitle: "Aanvraag ontvangen",
       successDesc: (naam: string) => (
         <>
-          Bedankt {naam && <strong className="font-semibold text-[var(--color-agency-accent)]">{naam}</strong>}. We plannen binnen <strong className="font-semibold text-white">4 kantooruren</strong> de audit in.
+          Bedankt {naam && <strong className="font-semibold text-[#0b1a29]">{naam}</strong>}. We plannen binnen <strong className="font-semibold text-[#0b1a29]">4 kantooruren</strong> de audit in.
         </>
       ),
     },
@@ -68,7 +68,7 @@ export function CTA({ lang }: CTAProps) {
       successTitle: "Request received",
       successDesc: (naam: string) => (
         <>
-          Thanks {naam && <strong className="font-semibold text-[var(--color-agency-accent)]">{naam}</strong>}. We'll reach out within <strong className="font-semibold text-white">4 business hours</strong> to schedule your audit.
+          Thanks {naam && <strong className="font-semibold text-[#0b1a29]">{naam}</strong>}. We'll reach out within <strong className="font-semibold text-[#0b1a29]">4 business hours</strong> to schedule your audit.
         </>
       ),
     }
@@ -77,7 +77,7 @@ export function CTA({ lang }: CTAProps) {
   return (
     <section 
       id="boeken" 
-      className="section-padding relative bg-[var(--color-agency-surface)] z-20"
+      className="section-padding relative bg-[var(--color-agency-bg)] z-20"
     >
       {/* Premium Glowing Top Border Separator */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--color-agency-accent)]/30 to-transparent" />
@@ -110,14 +110,14 @@ export function CTA({ lang }: CTAProps) {
                 transition: { staggerChildren: 0.15 }
               }
             }}
-            className="text-white"
+            className="text-[var(--color-text-primary)]"
           >
             <motion.div 
               variants={{
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0, transition: { type: "spring" } }
               }}
-              className="section-badge !border-white/10 !bg-white/[0.06] !text-[var(--color-agency-accent)]"
+              className="section-badge"
             >
               {translations.badge}
             </motion.div>
@@ -127,7 +127,7 @@ export function CTA({ lang }: CTAProps) {
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0, transition: { type: "spring" } }
               }}
-              className="font-display text-[32px] md:text-[42px] font-normal tracking-[-0.01em] mb-6 text-white leading-[1.15]"
+              className="font-display text-[32px] md:text-[42px] font-normal tracking-[-0.01em] mb-6 text-[var(--color-text-primary)] leading-[1.15]"
             >
               {translations.h2}
             </motion.h2>
@@ -137,7 +137,7 @@ export function CTA({ lang }: CTAProps) {
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0, transition: { type: "spring" } }
               }}
-              className="text-[16px] sm:text-[17px] font-light text-white/75 max-w-[480px] mb-10 leading-[1.75]"
+              className="text-[16px] sm:text-[17px] font-light text-[var(--color-text-secondary)] max-w-[480px] mb-10 leading-[1.75]"
             >
               {translations.p}
             </motion.p>
@@ -159,8 +159,8 @@ export function CTA({ lang }: CTAProps) {
                   }}
                   className="flex items-center gap-3"
                 >
-                  <CheckCircle2 className="size-4 text-[var(--color-agency-accent)] shrink-0" />
-                  <span className="text-[15px] text-white/85 font-light">{bullet}</span>
+                  <CheckCircle2 className="size-4 text-[#0b1a29] shrink-0" />
+                  <span className="text-[15px] text-[var(--color-text-secondary)] font-light">{bullet}</span>
                 </motion.div>
               ))}
             </motion.div>
@@ -177,7 +177,7 @@ export function CTA({ lang }: CTAProps) {
             {/* Form Glow Effect */}
             <div className="absolute -inset-1 bg-gradient-to-r from-[var(--color-agency-accent)]/20 to-[var(--color-agency-accent)]/0 rounded-2xl blur-lg opacity-0 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 pointer-events-none" />
             
-            <div className="bg-[#132b3f] border border-white/[0.08] rounded-xl p-7 sm:p-9 shadow-2xl relative z-10 transition-colors duration-500 hover:border-white/[0.15]">
+            <div className="bg-white/70 backdrop-blur-2xl border border-white/50 rounded-xl p-7 sm:p-9 shadow-xl relative z-10 transition-colors duration-500">
               
               <AnimatePresence mode="wait">
                 {!isSubmitted ? (
@@ -187,43 +187,43 @@ export function CTA({ lang }: CTAProps) {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0, y: -20 }}
                   >
-                    <h3 className="font-outfit font-semibold text-[20px] text-white mb-1">{translations.formTitle}</h3>
-                    <p className="text-[13px] text-white/50 mb-7">{translations.formSubtitle}</p>
+                    <h3 className="font-outfit font-semibold text-[20px] text-[var(--color-text-primary)] mb-1">{translations.formTitle}</h3>
+                    <p className="text-[13px] text-[var(--color-text-secondary)] mb-7">{translations.formSubtitle}</p>
 
                     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                       <div className="flex flex-col gap-1.5">
-                        <label className="text-[12px] font-medium text-white/60">{translations.labelName}</label>
+                        <label className="text-[12px] font-medium text-[var(--color-text-primary)]">{translations.labelName}</label>
                         <input 
                           type="text" 
                           required
                           value={formData.naam}
                           onChange={(e) => setFormData({...formData, naam: e.target.value})}
                           placeholder={translations.placeholderName}
-                          className="bg-black/20 border border-white/[0.08] rounded-lg px-4 py-3 text-white placeholder-white/25 outline-none text-[15px] focus:border-[var(--color-agency-accent)]/70 focus:bg-black/30 transition-colors font-light"
+                          className="bg-white/50 border border-white/60 rounded-lg px-4 py-3 text-[#0b1a29] placeholder-[#0b1a29]/40 outline-none text-[15px] focus:border-[#0b1a29]/40 focus:bg-white/80 transition-colors font-light"
                         />
                       </div>
 
                       <div className="grid sm:grid-cols-2 gap-4">
                         <div className="flex flex-col gap-1.5">
-                          <label className="text-[12px] font-medium text-white/60">{translations.labelEmail}</label>
+                          <label className="text-[12px] font-medium text-[var(--color-text-primary)]">{translations.labelEmail}</label>
                           <input 
                             type="email" 
                             required
                             value={formData.email}
                             onChange={(e) => setFormData({...formData, email: e.target.value})}
                             placeholder={translations.placeholderEmail}
-                            className="bg-black/20 border border-white/[0.08] rounded-lg px-4 py-3 text-white placeholder-white/25 outline-none text-[15px] focus:border-[var(--color-agency-accent)]/70 focus:bg-black/30 transition-colors font-light"
+                            className="bg-white/50 border border-white/60 rounded-lg px-4 py-3 text-[#0b1a29] placeholder-[#0b1a29]/40 outline-none text-[15px] focus:border-[#0b1a29]/40 focus:bg-white/80 transition-colors font-light"
                           />
                         </div>
                         <div className="flex flex-col gap-1.5">
-                          <label className="text-[12px] font-medium text-white/60">{translations.labelPhone}</label>
+                          <label className="text-[12px] font-medium text-[var(--color-text-primary)]">{translations.labelPhone}</label>
                           <input 
                             type="tel" 
                             required
                             value={formData.telefoon}
                             onChange={(e) => setFormData({...formData, telefoon: e.target.value})}
                             placeholder={translations.placeholderPhone}
-                            className="bg-black/20 border border-white/[0.08] rounded-lg px-4 py-3 text-white placeholder-white/25 outline-none text-[15px] focus:border-[var(--color-agency-accent)]/70 focus:bg-black/30 transition-colors font-light"
+                            className="bg-white/50 border border-white/60 rounded-lg px-4 py-3 text-[#0b1a29] placeholder-[#0b1a29]/40 outline-none text-[15px] focus:border-[#0b1a29]/40 focus:bg-white/80 transition-colors font-light"
                           />
                         </div>
                       </div>
@@ -232,13 +232,13 @@ export function CTA({ lang }: CTAProps) {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         type="submit" 
-                        className="bg-[var(--color-agency-accent)] hover:bg-[var(--color-agency-accent-hover)] text-white font-semibold text-[14px] py-3.5 rounded-lg flex items-center justify-center gap-2 mt-2 shadow-[0_4px_14px_0_rgba(45,125,111,0.39)] hover:shadow-[0_6px_20px_rgba(45,125,111,0.23)] transition-[background-color,box-shadow] duration-300 cursor-pointer border border-transparent"
+                        className="bg-[#f59e0b] hover:bg-[#d97706] text-[#0b1a29] font-bold text-[14px] py-3.5 rounded-lg flex items-center justify-center gap-2 mt-2 shadow-[0_4px_14px_rgba(245,158,11,0.3)] hover:shadow-[0_6px_20px_rgba(245,158,11,0.5)] transition-[background-color,box-shadow,transform] duration-300 cursor-pointer border border-transparent"
                       >
                         {translations.submitBtn}
                         <ArrowRight className="size-4" />
                       </motion.button>
 
-                      <div className="flex items-center justify-center gap-2 text-white/40 text-[11px] mt-2">
+                      <div className="flex items-center justify-center gap-2 text-[var(--color-text-muted)] text-[11px] mt-2">
                         <Shield className="size-3" />
                         <span>{translations.security}</span>
                       </div>
@@ -261,9 +261,9 @@ export function CTA({ lang }: CTAProps) {
                       <CheckCircle2 className="size-8" />
                     </motion.div>
                     
-                    <h3 className="font-outfit font-semibold text-2xl mb-3 text-white">{translations.successTitle}</h3>
+                    <h3 className="font-outfit font-semibold text-2xl mb-3 text-[var(--color-text-primary)]">{translations.successTitle}</h3>
                     
-                    <p className="text-[15px] font-light text-white/75 leading-relaxed max-w-[360px]">
+                    <p className="text-[15px] font-light text-[var(--color-text-secondary)] leading-relaxed max-w-[360px]">
                       {translations.successDesc(formData.naam)}
                     </p>
                   </motion.div>
