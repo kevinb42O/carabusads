@@ -200,33 +200,40 @@ export function FunnelCanvas({ scrollProgress, onReady }: FunnelCanvasProps) {
       const loopTime = isScrubbing ? progress : ((time % loopDuration) / loopDuration);
       
       let funnelIntensity = 0;
-      if (loopTime > 0.05 && loopTime < 0.95) {
-        const activeTime = (loopTime - 0.05) / 0.9;
-        funnelIntensity = Math.pow(Math.sin(activeTime * Math.PI), 1.5); 
-      }
+      let cameraY = -400;
+      let theta = 0;
 
-      const lerp = (start: number, end: number, t: number) => start + (end - start) * t;
-      const easeInOut = (t: number) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-      
-      if (loopTime < 0.2) {
-        const t = easeInOut(loopTime / 0.2);
-        cameraY = lerp(-400, -900, t);
-      } else if (loopTime < 0.5) {
-        const t = easeInOut((loopTime - 0.2) / 0.3);
-        cameraY = lerp(-900, -150, t);
-      } else if (loopTime < 0.95) {
-        const t = easeInOut((loopTime - 0.5) / 0.45);
-        cameraY = lerp(-150, -400, t);
+      if (isMobile) {
+        // Continuous optimal spin on mobile
+        cameraY = -150;
+        funnelIntensity = 1;
+        theta = ((now - startTime) / 1000) * 0.1 * Math.PI * 2;
       } else {
-        cameraY = -400;
+        if (loopTime > 0.05 && loopTime < 0.95) {
+          const activeTime = (loopTime - 0.05) / 0.9;
+          funnelIntensity = Math.pow(Math.sin(activeTime * Math.PI), 1.5); 
+        }
+
+        if (loopTime < 0.2) {
+          const t = easeInOut(loopTime / 0.2);
+          cameraY = lerp(-400, -900, t);
+        } else if (loopTime < 0.5) {
+          const t = easeInOut((loopTime - 0.2) / 0.3);
+          cameraY = lerp(-900, -150, t);
+        } else if (loopTime < 0.95) {
+          const t = easeInOut((loopTime - 0.5) / 0.45);
+          cameraY = lerp(-150, -400, t);
+        } else {
+          cameraY = -400;
+        }
+
+        theta = isScrubbing 
+          ? progress * Math.PI * 4 
+          : ((time % loopDuration) / loopDuration) * Math.PI * 2;
       }
 
       const targetY = 0; 
       const pitch = Math.atan2(-(cameraY - targetY), -cameraZ);
-
-      const theta = isScrubbing 
-        ? progress * Math.PI * 4 
-        : ((time % loopDuration) / loopDuration) * Math.PI * 2;
 
       // Create a stable sky gradient that is always visible.
       // We apply a very subtle parallax shift based on pitch rather than strict 3D math,

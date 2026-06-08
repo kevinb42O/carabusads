@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { motion } from 'motion/react';
 import { ArrowUpRight, ChevronRight } from 'lucide-react';
 import { FunnelCanvas } from './FunnelCanvas';
@@ -9,14 +10,14 @@ interface HeroMobileProps {
 }
 
 export function HeroMobile({ lang, onReady, content }: HeroMobileProps) {
+  // Fix Safari deadlock: Safari pauses requestAnimationFrame if the canvas is covered by the preloader.
+  // We call onReady immediately on mobile so the preloader dismisses instantly.
+  useEffect(() => {
+    onReady?.();
+  }, [onReady]);
+
   return (
     <section className="relative w-full min-h-screen bg-[#6093ac] overflow-hidden flex flex-col items-center justify-center pt-20">
-      {/* End-state background */}
-      <div
-        className="absolute inset-0 z-0 pointer-events-none bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/carabusDarkBlue.png')" }}
-      />
-
       {/* Background Vortex */}
       <div className="absolute inset-0 w-full h-full z-[1] pointer-events-none origin-center">
         <FunnelCanvas onReady={onReady} />
