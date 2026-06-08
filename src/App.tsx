@@ -26,6 +26,7 @@ export default function App() {
     setIsReady(true);
     const preloader = document.getElementById('preloader');
     if (preloader) {
+      preloader.style.pointerEvents = 'none';
       preloader.style.transition = 'opacity 0.5s ease-out';
       preloader.style.opacity = '0';
       setTimeout(() => preloader.remove(), 500);

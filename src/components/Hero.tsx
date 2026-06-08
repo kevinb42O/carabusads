@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'motion/react';
 import { ArrowUpRight, ChevronRight } from 'lucide-react';
 import { FunnelCanvas } from './FunnelCanvas';
+import { HeroMobile } from './HeroMobile';
 
 interface HeroProps {
   lang: 'nl' | 'en';
@@ -67,7 +68,11 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
     damping: 20,
     restDelta: 0.001
   });
-  const scrollYProgress = isMobile ? rawProgress : springProgress;
+  const scrollYProgress = springProgress;
+
+  if (isMobile) {
+    return <HeroMobile lang={lang} onReady={onReady} content={contentDict[lang]} />;
+  }
 
   // --- Background Canvas ---
   const bgBlurValue = useTransform(scrollYProgress, [0.7, 1], [0, prefersReducedMotion ? 0 : 20]);
@@ -104,10 +109,10 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
   const content = contentDict[lang];
 
   return (
-    <section ref={containerRef} className="relative bg-[#6093ac]" style={{ height: isMobile ? "100vh" : "400vh" }}>
+    <section ref={containerRef} className="relative bg-[#6093ac]" style={{ height: "400vh" }}>
       
       <div 
-        className={`${isMobile ? "relative min-h-screen" : "sticky top-0 h-screen"} w-full overflow-hidden flex items-center justify-center`}
+        className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center"
         style={{ backgroundColor: '#6093ac' }}
       >
         
@@ -115,10 +120,8 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
         <motion.div
           className="absolute inset-0 z-0 pointer-events-none bg-cover bg-center bg-no-repeat"
           style={{
-            opacity: isMobile ? 0 : bgImageOpacity, // hide background text image on mobile to keep it clean
-            backgroundImage: isMobile
-              ? "url('/carabusDarkBlue.png')"
-              : "linear-gradient(to bottom, rgba(96, 147, 172, 0.5), rgba(96, 147, 172, 0.95)), url('/carabusMETTEKST.png')"
+            opacity: bgImageOpacity,
+            backgroundImage: "linear-gradient(to bottom, rgba(96, 147, 172, 0.5), rgba(96, 147, 172, 0.95)), url('/carabusMETTEKST.png')"
           }}
         />
 
@@ -126,11 +129,11 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
         <motion.div 
           className="absolute inset-0 w-full h-full z-[1] pointer-events-none origin-center"
           style={{ 
-            opacity: isMobile ? 1 : bgOpacity,
+            opacity: bgOpacity,
             willChange: "opacity"
           }}
         >
-          <FunnelCanvas scrollProgress={isMobile ? undefined : scrollYProgress} onReady={onReady} />
+          <FunnelCanvas scrollProgress={scrollYProgress} onReady={onReady} />
         </motion.div>
         
         <div className="absolute top-[10%] left-[20%] w-[40%] h-[40%] bg-[var(--color-agency-accent)]/15 rounded-full blur-[140px] pointer-events-none z-0" />
@@ -140,11 +143,11 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
         {/* PHASE 1: FLY-THROUGH */}
         <motion.div 
           style={{ 
-            opacity: isMobile ? 1 : initialOpacity, 
-            scale: isMobile ? 1 : initialScale,
-            filter: isMobile ? "blur(0px)" : initialBlur,
-            display: isMobile ? "flex" : initialDisplay,
-            pointerEvents: isMobile ? "auto" : initialPointerEvents,
+            opacity: initialOpacity, 
+            scale: initialScale,
+            filter: initialBlur,
+            display: initialDisplay,
+            pointerEvents: initialPointerEvents,
             willChange: "transform, opacity, filter"
           }}
           className="absolute inset-0 w-full max-w-[1200px] mx-auto flex flex-col items-center justify-center text-center px-6 sm:px-12 md:px-16 z-10 origin-center"
@@ -192,8 +195,7 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
         </motion.div>
 
         {/* PHASE 2: MASKED REVEAL */}
-        {!isMobile && (
-          <motion.div
+        <motion.div
           style={{
             opacity: p1Opacity,
             scale: p1Scale,
@@ -213,11 +215,9 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
             </motion.h2>
           </div>
         </motion.div>
-        )}
 
         {/* PHASE 3: GLOWING FOCUS */}
-        {!isMobile && (
-          <motion.div
+        <motion.div
           style={{
             opacity: p2Opacity,
             scale: p2Scale,
@@ -236,7 +236,6 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
             <span className="text-white italic font-serif tracking-normal">{content.punchline2_4}</span>
           </motion.h2>
         </motion.div>
-        )}
 
       </div>
     </section>
