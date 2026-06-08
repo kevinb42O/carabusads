@@ -186,7 +186,8 @@ export function FunnelCanvas({ scrollProgress, onReady }: FunnelCanvasProps) {
         return;
       }
       
-      lastFrameTime = now - (deltaTime % targetFrameTime);
+      try {
+        lastFrameTime = now - (deltaTime % targetFrameTime);
       time = ((now - startTime) / 1000) * 0.3;
       if (isMobile) {
         time += 5; // Fast-forward time so the funnel is already formed
@@ -407,11 +408,14 @@ export function FunnelCanvas({ scrollProgress, onReady }: FunnelCanvasProps) {
       }
 
       ctx.globalCompositeOperation = 'source-over';
-
-      // Signal ready after the very first complete frame is painted
-      if (!firstFrameDone) {
-        firstFrameDone = true;
-        onReadyRef.current?.();
+      } catch (err) {
+        // Silently catch canvas errors to prevent the animation loop from dying completely on iOS Safari
+      } finally {
+        // Signal ready after the very first complete frame is painted (or if it crashed, so the preloader dismisses immediately)
+        if (!firstFrameDone) {
+          firstFrameDone = true;
+          onReadyRef.current?.();
+        }
       }
 
       animationFrameId = requestAnimationFrame(render);

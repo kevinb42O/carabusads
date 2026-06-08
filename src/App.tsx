@@ -38,20 +38,11 @@ export default function App() {
     return () => clearTimeout(fallback);
   }, [handleCanvasReady]);
 
-  // Lock scroll until ready — prevents user flying past the hero while it initialises
+  // Note: Removed body overflow locking here because it breaks Framer Motion's whileInView IntersectionObservers on iOS Safari, resulting in a completely empty page.
   useEffect(() => {
-    if (!isReady) {
-      document.body.style.overflow = 'hidden';
-      document.body.style.touchAction = 'none';
-    } else {
-      document.body.style.overflow = '';
-      document.body.style.touchAction = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-      document.body.style.touchAction = '';
-    };
-  }, [isReady]);
+    // Just scroll to top on mount to ensure clean start
+    window.scrollTo(0, 0);
+  }, []);
   const [lang, setLang] = useState<'nl' | 'en'>(() => {
     if (typeof window !== 'undefined') {
       const hostname = window.location.hostname;
