@@ -79,6 +79,8 @@ export function Results({ lang }: ResultsProps) {
     }
   }[lang];
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   return (
     <section className="section-padding bg-[var(--color-agency-bg)] w-full relative z-10 overflow-hidden">
       {/* Decorative gradient for premium feel */}
@@ -88,9 +90,7 @@ export function Results({ lang }: ResultsProps) {
         
         {/* Header */}
         <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          {...(!isMobile && { initial: { opacity: 0, y: 30 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: "-100px" } })}
           transition={{ duration: 0.6 }}
           className="max-w-[640px] mb-20"
         >
@@ -108,18 +108,20 @@ export function Results({ lang }: ResultsProps) {
 
         {/* Data Wall */}
         <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: {
-                staggerChildren: 0.15
+          {...(!isMobile && {
+            initial: "hidden",
+            whileInView: "visible",
+            viewport: { once: true, margin: "-100px" },
+            variants: {
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.15
+                }
               }
             }
-          }}
+          })}
           className="grid lg:grid-cols-3 gap-6 lg:gap-8 mb-12"
         >
           {content.cases.map((c, i) => (
@@ -155,9 +157,7 @@ export function Results({ lang }: ResultsProps) {
 
         {/* Disclaimer */}
         <motion.p 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          {...(!isMobile && { initial: { opacity: 0 }, whileInView: { opacity: 1 }, viewport: { once: true } })}
           transition={{ delay: 0.8 }}
           className="text-[13px] text-[var(--color-text-muted)] font-light"
         >

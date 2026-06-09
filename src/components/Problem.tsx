@@ -149,6 +149,8 @@ export function Problem({ lang }: ProblemProps) {
     }
   };
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   return (
     <section id="pijnpunt" className="section-padding bg-[var(--color-agency-bg)] w-full relative">
       {/* Ambient background glow */}
@@ -165,10 +167,7 @@ export function Problem({ lang }: ProblemProps) {
         {/* Left Side: Sticky Header */}
         <div className="lg:sticky lg:top-40 w-full lg:w-[45%] shrink-0 z-20">
           <motion.div 
-            variants={headerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
+            {...(!isMobile && { variants: headerVariants, initial: "hidden", whileInView: "visible", viewport: { once: true, amount: 0.3 } })}
           >
             <motion.div variants={headerItem} className="section-badge mb-8">
               {content.badge}
@@ -189,9 +188,7 @@ export function Problem({ lang }: ProblemProps) {
           
           {/* Card 1: The broken model */}
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            {...(!isMobile && { initial: { opacity: 0, y: 50 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: "-100px" } })}
             transition={{ duration: 0.8, ease: customEase }}
             className="card-elevated rounded-2xl p-8 sm:p-10 flex flex-col group relative overflow-hidden ring-1 ring-white/5"
           >
@@ -212,9 +209,7 @@ export function Problem({ lang }: ProblemProps) {
 
           {/* Card 2: The Solution */}
           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            {...(!isMobile && { initial: { opacity: 0, y: 50 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: "-100px" } })}
             transition={{ duration: 0.8, ease: customEase }}
             className="dark-panel bg-[var(--color-agency-surface)] rounded-2xl p-8 sm:p-10 flex flex-col relative overflow-hidden group border border-[var(--color-agency-accent)]/20 hover:border-[var(--color-agency-accent)]/40 hover:shadow-[0_0_50px_rgba(45,125,111,0.15)] transition-all duration-700"
           >
@@ -223,9 +218,7 @@ export function Problem({ lang }: ProblemProps) {
             
             {/* Shimmer effect */}
             <motion.div 
-              initial={{ x: "-100%" }}
-              whileInView={{ x: "200%" }}
-              viewport={{ once: true }}
+              {...(!isMobile && { initial: { x: "-100%" }, whileInView: { x: "200%" }, viewport: { once: true } })}
               transition={{ duration: 1.5, ease: "easeInOut", delay: 0.5 }}
               className="absolute top-0 bottom-0 w-1/2 bg-gradient-to-r from-transparent via-[var(--color-agency-accent)]/10 to-transparent skew-x-[-20deg] pointer-events-none z-0"
             />

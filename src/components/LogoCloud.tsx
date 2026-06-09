@@ -68,14 +68,14 @@ export function LogoCloud({ lang }: LogoCloudProps) {
     }
   };
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   return (
     <section className="py-20 relative z-10 overflow-hidden">
       <div className="max-w-[1000px] mx-auto px-6 w-full flex flex-col items-center justify-center gap-12 sm:gap-16">
         
         <motion.p 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: "-50px" }}
+          {...(!isMobile && { initial: { opacity: 0 }, whileInView: { opacity: 1 }, viewport: { once: true, margin: "-50px" } })}
           transition={{ duration: 1 }}
           className="text-[11px] sm:text-[13px] font-semibold text-[#0b1a29]/40 uppercase tracking-[0.3em] whitespace-nowrap text-center"
         >
@@ -83,10 +83,7 @@ export function LogoCloud({ lang }: LogoCloudProps) {
         </motion.p>
 
         <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
+          {...(!isMobile && { variants: containerVariants, initial: "hidden", whileInView: "visible", viewport: { once: true, margin: "-50px" } })}
           className="flex flex-wrap items-center justify-center gap-8 sm:gap-16 lg:gap-24 w-full"
         >
           {platforms.map((p, i) => (

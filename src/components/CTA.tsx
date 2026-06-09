@@ -74,6 +74,8 @@ export function CTA({ lang }: CTAProps) {
     }
   }[lang];
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   return (
     <section 
       id="boeken" 
@@ -100,16 +102,18 @@ export function CTA({ lang }: CTAProps) {
           
           {/* Left: Copy */}
           <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={{
-              hidden: { opacity: 0 },
-              visible: {
-                opacity: 1,
-                transition: { staggerChildren: 0.15 }
+            {...(!isMobile && {
+              initial: "hidden",
+              whileInView: "visible",
+              viewport: { once: true, margin: "-100px" },
+              variants: {
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: { staggerChildren: 0.15 }
+                }
               }
-            }}
+            })}
             className="text-[var(--color-text-primary)]"
           >
             <motion.div 
@@ -168,9 +172,7 @@ export function CTA({ lang }: CTAProps) {
 
           {/* Right: Form (Starts overlapping, springs down to balanced position) */}
           <motion.div 
-            initial={{ opacity: 0, y: -250 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            {...(!isMobile && { initial: { opacity: 0, y: -250 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: "-100px" } })}
             transition={{ duration: 1.4, type: "spring", bounce: 0.5, delay: 0.1 }}
             className="w-full relative group z-30"
           >

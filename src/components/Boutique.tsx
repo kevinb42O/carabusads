@@ -50,6 +50,8 @@ export function Boutique({ lang }: BoutiqueProps) {
     visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.6 } }
   };
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   return (
     <section id="aanpak" className="section-padding bg-[var(--color-agency-bg)] overflow-hidden relative z-10">
       {/* Abstract geometric pulsing background behind the photo area */}
@@ -72,9 +74,7 @@ export function Boutique({ lang }: BoutiqueProps) {
           {/* Main Workspace Image with Clip-Path Reveal */}
           <div className="relative rounded-3xl overflow-hidden shadow-2xl group border border-white/5">
             <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, amount: 0.1 }}
+              {...(!isMobile && { initial: { opacity: 0, scale: 0.95 }, whileInView: { opacity: 1, scale: 1 }, viewport: { once: true, amount: 0.1 } })}
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
               className="w-full aspect-[4/5] sm:aspect-square lg:aspect-[4/5]"
             >
@@ -93,13 +93,15 @@ export function Boutique({ lang }: BoutiqueProps) {
 
         {/* Copy Column */}
         <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
-          }}
+          {...(!isMobile && {
+            initial: "hidden",
+            whileInView: "visible",
+            viewport: { once: true, amount: 0.2 },
+            variants: {
+              hidden: { opacity: 0 },
+              visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
+            }
+          })}
           className="flex-1 w-full lg:max-w-[500px] order-1 lg:order-2"
         >
           <motion.div 

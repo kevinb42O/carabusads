@@ -148,6 +148,8 @@ export function Services({ lang }: ServicesProps) {
     "lg:col-span-1"
   ];
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   return (
     <section id="diensten" className="section-padding w-full bg-[var(--color-agency-bg)] relative z-10 overflow-clip">
       <div className="absolute top-1/2 right-0 w-[800px] h-[800px] bg-[var(--color-agency-accent)]/5 rounded-full blur-[150px] -translate-y-1/2 pointer-events-none translate-x-1/3" />
@@ -155,10 +157,7 @@ export function Services({ lang }: ServicesProps) {
       <div className="max-w-[1200px] mx-auto relative z-10">
         
         <motion.div 
-          variants={headerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          {...(!isMobile && { variants: headerVariants, initial: "hidden", whileInView: "visible", viewport: { once: true, margin: "-100px" } })}
           className="max-w-[600px] mb-16"
         >
           <motion.div variants={itemFadeUp} className="section-badge">
@@ -176,10 +175,7 @@ export function Services({ lang }: ServicesProps) {
         <motion.div 
           ref={containerRef}
           onMouseMove={handleMouseMove}
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-50px" }}
+          {...(!isMobile && { variants: containerVariants, initial: "hidden", whileInView: "visible", viewport: { once: true, margin: "-50px" } })}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full"
         >
           {translations.items.map((service, i) => (

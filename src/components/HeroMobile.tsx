@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { motion } from 'motion/react';
 import { ArrowUpRight, ChevronRight } from 'lucide-react';
+import { FunnelCanvas } from './FunnelCanvas';
 
 interface HeroMobileProps {
   lang: 'nl' | 'en';
@@ -9,27 +10,26 @@ interface HeroMobileProps {
 }
 
 export function HeroMobile({ lang, onReady, content }: HeroMobileProps) {
-  // Dismiss preloader immediately on mobile — no canvas dependency.
-  // iOS Safari throttles requestAnimationFrame when the canvas is covered by the preloader,
-  // creating a deadlock where the preloader waits for the canvas and the canvas waits for the preloader.
+  // Dismiss preloader immediately on mobile.
+  // iOS Safari throttles rAF when canvas is behind the preloader → deadlock.
+  // The canvas still renders for visual effect, but we don't wait for it.
   useEffect(() => {
     onReady?.();
   }, [onReady]);
 
   return (
     <section className="relative w-full min-h-[100dvh] bg-[#6093ac] overflow-hidden flex flex-col items-center justify-center pt-20">
-      {/* Static gradient background — no canvas, no GPU pressure */}
-      <div className="absolute inset-0 z-0 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse at 50% 60%, rgba(70, 122, 146, 0.9) 0%, #6093ac 60%)'
-        }}
-      />
+      {/* Background Vortex — lightweight version */}
+      <div className="absolute inset-0 w-full h-full z-[1] pointer-events-none origin-center">
+        <FunnelCanvas />
+      </div>
       
-      {/* Subtle ambient glow — pure CSS, zero GPU cost */}
+      {/* Subtle ambient glow */}
       <div className="absolute top-[10%] left-[20%] w-[40%] h-[40%] bg-[#9bbcd9]/15 rounded-full blur-[100px] pointer-events-none z-0" />
       <div className="absolute bottom-[10%] right-[20%] w-[45%] h-[45%] bg-[#9bbcd9]/5 rounded-full blur-[80px] pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(96,147,172,0.7)_0%,transparent_60%)] blur-[20px] pointer-events-none z-0" />
       
-      {/* Content — simple fade-in animations only, no scroll-driven anything */}
+      {/* Content — simple fade-in only */}
       <div className="relative w-full max-w-[1200px] mx-auto flex flex-col items-center justify-center text-center px-6 z-10">
         <motion.h1 
           initial={{ y: 30, opacity: 0 }}
