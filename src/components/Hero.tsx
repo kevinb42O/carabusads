@@ -57,14 +57,14 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
     offset: ["start start", isMobile ? "end start" : "end end"]
   });
 
-  // Keep the spring instantiated for hook stability, but scrub from raw progress.
-  // A spring can lag behind fast wheel/touch scrolling and leave empty phase gaps.
+  // Desktop uses spring-smoothed progress for the premium scroll feel.
+  // Mobile renders a separate static hero before these values are used.
   const springProgress = useSpring(rawProgress, {
-    stiffness: 60,
-    damping: 20,
-    restDelta: 0.001
+    stiffness: 42,
+    damping: 18,
+    restDelta: 0.0005
   });
-  const scrollYProgress = rawProgress;
+  const scrollYProgress = isMobile ? rawProgress : springProgress;
 
   // --- Background Canvas ---
   const bgBlurValue = useTransform(scrollYProgress, [0.7, 1], [0, prefersReducedMotion ? 0 : 20]);
@@ -106,7 +106,7 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
   const content = contentDict[lang];
 
   return (
-    <section ref={containerRef} className="relative bg-[#6093ac]" style={{ height: "300vh" }}>
+    <section ref={containerRef} className="relative bg-[#6093ac]" style={{ height: "430vh" }}>
       
       <div 
         className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center"
