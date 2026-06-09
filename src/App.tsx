@@ -54,7 +54,7 @@ export default function App() {
   });
 
   return (
-    <div className="min-h-screen flex flex-col w-full overflow-x-hidden">
+    <div className="min-h-screen flex flex-col w-full">
       <Header lang={lang} setLang={setLang} setActivePage={setActivePage} />
       <main className="flex-1 w-full flex flex-col">
         {activePage === 'home' ? (

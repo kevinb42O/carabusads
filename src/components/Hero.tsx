@@ -57,14 +57,14 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
     offset: ["start start", isMobile ? "end start" : "end end"]
   });
 
-  // Always call useSpring (rules of hooks), but only USE it on desktop.
-  // On mobile the spring lags badly behind fast touch swipes — phases get skipped.
+  // Keep the spring instantiated for hook stability, but scrub from raw progress.
+  // A spring can lag behind fast wheel/touch scrolling and leave empty phase gaps.
   const springProgress = useSpring(rawProgress, {
     stiffness: 60,
     damping: 20,
     restDelta: 0.001
   });
-  const scrollYProgress = springProgress;
+  const scrollYProgress = rawProgress;
 
   // --- Background Canvas ---
   const bgBlurValue = useTransform(scrollYProgress, [0.7, 1], [0, prefersReducedMotion ? 0 : 20]);
@@ -76,27 +76,27 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
 
   // --- Phase 1: The Fly-Through (Initial Content) ---
   const initialScale = useTransform(scrollYProgress, [0, 0.25], [1, prefersReducedMotion ? 1 : 4]);
-  const initialOpacity = useTransform(scrollYProgress, [0.1, 0.25], [1, 0]);
-  const initialBlur = useTransform(scrollYProgress, [0, 0.25], ["blur(0px)", prefersReducedMotion ? "blur(0px)" : "blur(20px)"]);
+  const initialOpacity = useTransform(scrollYProgress, [0.12, 0.32], [1, 0]);
+  const initialBlur = useTransform(scrollYProgress, [0, 0.32], ["blur(0px)", prefersReducedMotion ? "blur(0px)" : "blur(20px)"]);
   const initialPointerEvents = useTransform(scrollYProgress, v => (v > 0.05 ? "none" : "auto") as "none" | "auto");
-  const initialDisplay = useTransform(scrollYProgress, v => (v > 0.26 ? "none" : "flex") as "none" | "flex");
+  const initialDisplay = useTransform(scrollYProgress, v => (v > 0.34 ? "none" : "flex") as "none" | "flex");
 
   // --- Phase 2: The Masked Reveal (Punchline 1) ---
-  const p1Opacity = useTransform(scrollYProgress, [0.25, 0.35, 0.5, 0.6], [0, 1, 1, 0]);
-  const p1Y = useTransform(scrollYProgress, [0.25, 0.35], [prefersReducedMotion ? 0 : 100, 0]);
-  const p1Scale = useTransform(scrollYProgress, [0.35, 0.6], [1, prefersReducedMotion ? 1 : 0.8]);
-  const p1Blur = useTransform(scrollYProgress, [0.5, 0.6], ["blur(0px)", prefersReducedMotion ? "blur(0px)" : "blur(15px)"]);
-  const p1Display = useTransform(scrollYProgress, v => (v < 0.24 || v > 0.61 ? "none" : "flex") as "none" | "flex");
+  const p1Opacity = useTransform(scrollYProgress, [0.22, 0.32, 0.56, 0.7], [0, 1, 1, 0]);
+  const p1Y = useTransform(scrollYProgress, [0.22, 0.32], [prefersReducedMotion ? 0 : 100, 0]);
+  const p1Scale = useTransform(scrollYProgress, [0.32, 0.7], [1, prefersReducedMotion ? 1 : 0.8]);
+  const p1Blur = useTransform(scrollYProgress, [0.56, 0.7], ["blur(0px)", prefersReducedMotion ? "blur(0px)" : "blur(15px)"]);
+  const p1Display = useTransform(scrollYProgress, v => (v < 0.2 || v > 0.72 ? "none" : "flex") as "none" | "flex");
 
   // --- Phase 3: The Glowing Focus (Punchline 2) ---
-  const p2Opacity = useTransform(scrollYProgress, [0.65, 0.75, 0.9, 1], [0, 1, 1, 0]);
-  const p2Scale = useTransform(scrollYProgress, [0.65, 0.9], [prefersReducedMotion ? 1 : 1.1, 1]);
+  const p2Opacity = useTransform(scrollYProgress, [0.58, 0.7, 1], [0, 1, 1]);
+  const p2Scale = useTransform(scrollYProgress, [0.58, 0.9], [prefersReducedMotion ? 1 : 1.1, 1]);
   const p2TextShadow = useTransform(
     scrollYProgress, 
-    [0.65, 0.8], 
+    [0.58, 0.8], 
     ["0px 0px 0px rgba(255,255,255,0)", prefersReducedMotion ? "0px 0px 0px rgba(255,255,255,0)" : "0px 0px 40px rgba(255,255,255,0.6)"]
   );
-  const p2Display = useTransform(scrollYProgress, v => (v < 0.64 ? "none" : "flex") as "none" | "flex");
+  const p2Display = useTransform(scrollYProgress, v => (v < 0.56 ? "none" : "flex") as "none" | "flex");
 
   // Early return for mobile AFTER all hooks have been called
   if (isMobile) {
@@ -106,7 +106,7 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
   const content = contentDict[lang];
 
   return (
-    <section ref={containerRef} className="relative bg-[#6093ac]" style={{ height: "400vh" }}>
+    <section ref={containerRef} className="relative bg-[#6093ac]" style={{ height: "300vh" }}>
       
       <div 
         className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center"

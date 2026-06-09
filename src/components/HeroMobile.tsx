@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { motion } from 'motion/react';
 import { ArrowUpRight, ChevronRight } from 'lucide-react';
-import { FunnelCanvas } from './FunnelCanvas';
 
 interface HeroMobileProps {
   lang: 'nl' | 'en';
@@ -10,24 +9,22 @@ interface HeroMobileProps {
 }
 
 export function HeroMobile({ lang, onReady, content }: HeroMobileProps) {
-  // Dismiss preloader immediately on mobile.
-  // iOS Safari throttles rAF when canvas is behind the preloader → deadlock.
-  // The canvas still renders for visual effect, but we don't wait for it.
+  // Dismiss preloader immediately on mobile. Keep this hero compositor-light:
+  // iOS Safari can fail to repaint later sections after scrolling past animated canvases.
   useEffect(() => {
     onReady?.();
   }, [onReady]);
 
   return (
-    <section className="relative w-full min-h-[100dvh] bg-[#6093ac] overflow-hidden flex flex-col items-center justify-center pt-20">
-      {/* Background Vortex — lightweight version */}
-      <div className="absolute inset-0 w-full h-full z-[1] pointer-events-none origin-center">
-        <FunnelCanvas />
-      </div>
-      
-      {/* Subtle ambient glow */}
-      <div className="absolute top-[10%] left-[20%] w-[40%] h-[40%] bg-[#9bbcd9]/15 rounded-full blur-[100px] pointer-events-none z-0" />
-      <div className="absolute bottom-[10%] right-[20%] w-[45%] h-[45%] bg-[#9bbcd9]/5 rounded-full blur-[80px] pointer-events-none z-0" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(96,147,172,0.7)_0%,transparent_60%)] blur-[20px] pointer-events-none z-0" />
+    <section className="relative w-full min-h-[100svh] bg-[#6093ac] overflow-hidden flex flex-col items-center justify-center pt-20">
+      <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(180deg,#6093ac_0%,#7caac0_54%,#6093ac_100%)]" />
+      <img
+        src="/carabusDarkBlue.png"
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover object-center opacity-[0.12] pointer-events-none select-none"
+      />
+      <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(180deg,rgba(96,147,172,0.34)_0%,rgba(96,147,172,0.62)_48%,rgba(96,147,172,0.86)_100%)]" />
       
       {/* Content — simple fade-in only */}
       <div className="relative w-full max-w-[1200px] mx-auto flex flex-col items-center justify-center text-center px-6 z-10">

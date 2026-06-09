@@ -36,7 +36,7 @@ export function Header({ lang, setLang, setActivePage }: HeaderProps) {
       <header 
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-400 px-6 sm:px-10 flex items-center justify-between ${
           isScrolled 
-            ? 'bg-[var(--color-agency-bg)]/90 backdrop-blur-md border-b border-black/[0.05] py-3 shadow-[0_1px_3px_rgba(0,0,0,0.03)]' 
+            ? 'bg-[var(--color-agency-bg)]/95 border-b border-black/[0.05] py-3 shadow-[0_1px_3px_rgba(0,0,0,0.03)]' 
             : 'bg-transparent border-b border-transparent py-5'
         }`}
       >
@@ -121,7 +121,7 @@ export function Header({ lang, setLang, setActivePage }: HeaderProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-40 bg-black/20 lg:hidden"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             <motion.div 
