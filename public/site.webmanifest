@@ -1,0 +1,24 @@
+{
+  "name": "Carabus Ads",
+  "short_name": "Carabus Ads",
+  "description": "Google Ads, Social Ads en funnels voor groeiende bedrijven.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#9CC6DB",
+  "theme_color": "#74A9C5",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

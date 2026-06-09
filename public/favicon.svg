@@ -1,29 +1,21 @@
-<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <style>
-    /* Default light theme colors for tabs */
-    .layer1 { stroke: #1a2e2e; }
-    .layer2 { stroke: #2D7D6F; }
-    .layer3 { stroke: #45A593; }
-    .dot { fill: #5CCBBA; }
+<svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="96" y1="64" x2="416" y2="448" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#9CC6DB" />
+      <stop offset="1" stop-color="#74A9C5" />
+    </linearGradient>
+    <filter id="soft-shadow" x="80" y="92" width="352" height="332" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#356D86" flood-opacity="0.22" />
+    </filter>
+  </defs>
 
-    /* Automated dark theme adjustments for dark browser tabs */
-    @media (prefers-color-scheme: dark) {
-      .layer1 { stroke: #FFFFFF; }
-      .layer2 { stroke: #5CCBBA; }
-      .layer3 { stroke: #86DDD0; }
-      .dot { fill: #A5F3E6; }
-    }
-  </style>
+  <rect width="512" height="512" rx="104" fill="url(#bg)" />
+  <rect x="13" y="13" width="486" height="486" rx="91" stroke="#FFFFFF" stroke-opacity="0.16" stroke-width="26" />
 
-  <!-- Top Funnel Layer -->
-  <path class="layer1" d="M6 9L16 14L26 9" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
-  
-  <!-- Middle Funnel Layer -->
-  <path class="layer2" d="M9 16L16 20L23 16" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
-  
-  <!-- Bottom Funnel Layer -->
-  <path class="layer3" d="M12 23L16 26L20 23" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
-  
-  <!-- Conversion Focus Point -->
-  <circle class="dot" cx="16" cy="29" r="1.6" />
+  <g filter="url(#soft-shadow)">
+    <path d="M151 153L256 209L361 153" stroke="#FFFFFF" stroke-width="42" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M181 233L256 277L331 233" stroke="#FFFFFF" stroke-width="42" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M211 312L256 346L301 312" stroke="#FFFFFF" stroke-width="42" stroke-linecap="round" stroke-linejoin="round" />
+    <circle cx="256" cy="392" r="17" fill="#FFFFFF" />
+  </g>
 </svg>
