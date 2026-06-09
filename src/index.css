@@ -121,3 +121,20 @@ body {
 .section-badge {
   @apply inline-flex items-center gap-2 py-1.5 px-3.5 rounded-md border border-[#0b1a29]/10 bg-white/50 text-[11px] font-semibold text-[#0b1a29] mb-5 uppercase tracking-[0.12em] shadow-sm;
 }
+
+/* ============================================
+   iOS Safari Performance Fix:
+   Disable backdrop-blur on touch devices.
+   Safari's compositor recalculates blur() for
+   every scroll frame → severe jank & broken UX.
+   ============================================ */
+@media (pointer: coarse) {
+  .card-elevated,
+  .glass-float,
+  .glass-panel,
+  .dark-panel {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: rgba(255, 255, 255, 0.85) !important;
+  }
+}
