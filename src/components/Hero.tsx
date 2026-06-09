@@ -1,8 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring, useReducedMotion } from 'motion/react';
 import { ArrowUpRight, ChevronRight } from 'lucide-react';
 import { FunnelCanvas } from './FunnelCanvas';
 import { HeroMobile } from './HeroMobile';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 interface HeroProps {
   lang: 'nl' | 'en';
@@ -49,12 +50,7 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
   const containerRef = useRef<HTMLElement>(null);
   const prefersReducedMotion = useReducedMotion();
   
-  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  const isMobile = useIsMobile();
   
   const { scrollYProgress: rawProgress } = useScroll({
     target: containerRef,

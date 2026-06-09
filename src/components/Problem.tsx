@@ -1,5 +1,6 @@
 import { X, Check } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 interface ProblemProps {
   lang: 'nl' | 'en';
@@ -149,7 +150,7 @@ export function Problem({ lang }: ProblemProps) {
     }
   };
 
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const isMobile = useIsMobile();
 
   return (
     <section id="pijnpunt" className="section-padding bg-[var(--color-agency-bg)] w-full relative">

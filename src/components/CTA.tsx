@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, CheckCircle2, Shield } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 interface CTAProps {
   lang: 'nl' | 'en';
@@ -16,6 +17,31 @@ export function CTA({ lang }: CTAProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const recipient = `info@carabusads.${lang === 'nl' ? 'be' : 'com'}`;
+    const subject = lang === 'nl'
+      ? `Nieuwe strategiegesprek aanvraag van ${formData.naam}`
+      : `New growth audit request from ${formData.naam}`;
+    const body = lang === 'nl'
+      ? [
+          "Nieuwe aanvraag via het hoofdformulier op carabusads.",
+          "",
+          `Naam: ${formData.naam}`,
+          `E-mail: ${formData.email}`,
+          `Telefoon: ${formData.telefoon}`,
+          "Taal: Nederlands",
+          "Aanvraag: Strategiegesprek / gratis audit",
+        ].join("\n")
+      : [
+          "New request via the main form on carabusads.",
+          "",
+          `Name: ${formData.naam}`,
+          `Email: ${formData.email}`,
+          `Phone: ${formData.telefoon}`,
+          "Language: English",
+          "Request: Growth audit / discovery call",
+        ].join("\n");
+
+    window.location.href = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setIsSubmitted(true);
   };
 
@@ -39,10 +65,10 @@ export function CTA({ lang }: CTAProps) {
       placeholderPhone: "+32 470 12 34 56",
       submitBtn: "Plan mijn gesprek",
       security: "Je data wordt 100% vertrouwelijk behandeld.",
-      successTitle: "Aanvraag ontvangen",
+      successTitle: "E-mail geopend",
       successDesc: (naam: string) => (
         <>
-          Bedankt {naam && <strong className="font-semibold text-[#0b1a29]">{naam}</strong>}. We plannen binnen <strong className="font-semibold text-[#0b1a29]">4 kantooruren</strong> de audit in.
+          Bedankt {naam && <strong className="font-semibold text-[#0b1a29]">{naam}</strong>}. Je e-mailclient is geopend met je aanvraag. Verstuur de e-mail en we reageren binnen <strong className="font-semibold text-[#0b1a29]">4 kantooruren</strong>.
         </>
       ),
     },
@@ -65,16 +91,16 @@ export function CTA({ lang }: CTAProps) {
       placeholderPhone: "+32 470 12 34 56",
       submitBtn: "Claim my Audit",
       security: "Your data is treated with 100% confidentiality.",
-      successTitle: "Request received",
+      successTitle: "Email opened",
       successDesc: (naam: string) => (
         <>
-          Thanks {naam && <strong className="font-semibold text-[#0b1a29]">{naam}</strong>}. We'll reach out within <strong className="font-semibold text-[#0b1a29]">4 business hours</strong> to schedule your audit.
+          Thanks {naam && <strong className="font-semibold text-[#0b1a29]">{naam}</strong>}. Your email client opened with the request. Send the email and we'll respond within <strong className="font-semibold text-[#0b1a29]">4 business hours</strong>.
         </>
       ),
     }
   }[lang];
 
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const isMobile = useIsMobile();
 
   return (
     <section 
@@ -197,6 +223,8 @@ export function CTA({ lang }: CTAProps) {
                         <label className="text-[12px] font-medium text-[var(--color-text-primary)]">{translations.labelName}</label>
                         <input 
                           type="text" 
+                          name="name"
+                          autoComplete="name"
                           required
                           value={formData.naam}
                           onChange={(e) => setFormData({...formData, naam: e.target.value})}
@@ -210,6 +238,8 @@ export function CTA({ lang }: CTAProps) {
                           <label className="text-[12px] font-medium text-[var(--color-text-primary)]">{translations.labelEmail}</label>
                           <input 
                             type="email" 
+                            name="email"
+                            autoComplete="email"
                             required
                             value={formData.email}
                             onChange={(e) => setFormData({...formData, email: e.target.value})}
@@ -221,6 +251,8 @@ export function CTA({ lang }: CTAProps) {
                           <label className="text-[12px] font-medium text-[var(--color-text-primary)]">{translations.labelPhone}</label>
                           <input 
                             type="tel" 
+                            name="tel"
+                            autoComplete="tel"
                             required
                             value={formData.telefoon}
                             onChange={(e) => setFormData({...formData, telefoon: e.target.value})}

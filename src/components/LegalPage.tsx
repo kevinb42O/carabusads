@@ -9,6 +9,16 @@ interface LegalPageProps {
 }
 
 export function LegalPage({ type, lang, onBack }: LegalPageProps) {
+  const company = {
+    name: "I-Transform SLU",
+    brand: "Carabus Ads",
+    address: "AD100 Canillo, Andorra",
+    vat: "L-720368-C",
+    emailNl: "info@carabusads.be",
+    emailEn: "info@carabusads.com",
+  };
+  const contactEmail = lang === 'nl' ? company.emailNl : company.emailEn;
+
   const content = {
     privacy: {
       nl: {
@@ -36,11 +46,11 @@ export function LegalPage({ type, lang, onBack }: LegalPageProps) {
           },
           {
             h: "4. Gegevens delen met derden",
-            p: "[Bedrijfsnaam] verstrekt jouw gegevens uitsluitend aan derden als dit nodig is voor de uitvoering van onze overeenkomst of om te voldoen aan een wettelijke verplichting. In geen enkel geval verkopen wij jouw gegevens."
+            p: `${company.name}, handelend onder de naam ${company.brand}, verstrekt jouw gegevens uitsluitend aan derden als dit nodig is voor de uitvoering van onze overeenkomst of om te voldoen aan een wettelijke verplichting. In geen enkel geval verkopen wij jouw gegevens.`
           },
           {
             h: "5. Jouw rechten",
-            p: "Je hebt het recht om je persoonsgegevens in te zien, te corrigeren of te verwijderen. Daarnaast heb je het recht om je eventuele toestemming voor de gegevensverwerking in te trekken of bezwaar te maken tegen de verwerking van jouw persoonsgegevens door [Bedrijfsnaam]. Stuur hiervoor een e-mail naar info@carabusads.be of info@carabusads.com."
+            p: `Je hebt het recht om je persoonsgegevens in te zien, te corrigeren of te verwijderen. Daarnaast heb je het recht om je eventuele toestemming voor de gegevensverwerking in te trekken of bezwaar te maken tegen de verwerking van jouw persoonsgegevens door ${company.name}. Stuur hiervoor een e-mail naar ${company.emailNl} of ${company.emailEn}.`
           }
         ]
       },
@@ -69,11 +79,11 @@ export function LegalPage({ type, lang, onBack }: LegalPageProps) {
           },
           {
             h: "4. Sharing data with third parties",
-            p: "[Company Name] only provides your data to third parties if this is necessary for the execution of our agreement or to comply with a legal obligation. Under no circumstances do we sell your data."
+            p: `${company.name}, trading as ${company.brand}, only provides your data to third parties if this is necessary for the execution of our agreement or to comply with a legal obligation. Under no circumstances do we sell your data.`
           },
           {
             h: "5. Your rights",
-            p: "You have the right to view, correct, or delete your personal data. In addition, you have the right to withdraw your consent for data processing or object to the processing of your personal data by [Company Name]. To do so, please send an email to info@carabusads.be or info@carabusads.com."
+            p: `You have the right to view, correct, or delete your personal data. In addition, you have the right to withdraw your consent for data processing or object to the processing of your personal data by ${company.name}. To do so, please send an email to ${company.emailNl} or ${company.emailEn}.`
           }
         ]
       }
@@ -85,7 +95,7 @@ export function LegalPage({ type, lang, onBack }: LegalPageProps) {
         sections: [
           {
             h: "1. Toepasselijkheid",
-            p: "Deze algemene voorwaarden zijn van toepassing op alle aanbiedingen, offertes, werkzaamheden en overeenkomsten tussen [Bedrijfsnaam] (hierna: Opdrachtnemer) en de opdrachtgever."
+            p: `Deze algemene voorwaarden zijn van toepassing op alle aanbiedingen, offertes, werkzaamheden en overeenkomsten tussen ${company.name}, handelend onder de naam ${company.brand} (hierna: Opdrachtnemer), en de opdrachtgever.`
           },
           {
             h: "2. Inspanningsverbintenis",
@@ -109,7 +119,7 @@ export function LegalPage({ type, lang, onBack }: LegalPageProps) {
           },
           {
             h: "7. Bedrijfsgegevens",
-            p: "[Bedrijfsnaam]\n[Adres]\n[BTW Nummer]\nE-mail: info@carabusads.be / info@carabusads.com"
+            p: `${company.name}\n${company.address}\nVAT: ${company.vat}\nE-mail: ${company.emailNl} / ${company.emailEn}`
           }
         ]
       },
@@ -119,7 +129,7 @@ export function LegalPage({ type, lang, onBack }: LegalPageProps) {
         sections: [
           {
             h: "1. Applicability",
-            p: "These general terms and conditions apply to all offers, quotations, work, and agreements between [Company Name] (hereinafter: Contractor) and the client."
+            p: `These general terms and conditions apply to all offers, quotations, work, and agreements between ${company.name}, trading as ${company.brand} (hereinafter: Contractor), and the client.`
           },
           {
             h: "2. Obligation to Perform to the Best of Ability",
@@ -143,7 +153,7 @@ export function LegalPage({ type, lang, onBack }: LegalPageProps) {
           },
           {
             h: "7. Company Details",
-            p: "[Company Name]\n[Address]\n[VAT Number]\nEmail: info@carabusads.be / info@carabusads.com"
+            p: `${company.name}\n${company.address}\nVAT: ${company.vat}\nEmail: ${company.emailNl} / ${company.emailEn}`
           }
         ]
       }
@@ -177,6 +187,14 @@ export function LegalPage({ type, lang, onBack }: LegalPageProps) {
           </p>
 
           <div className="flex flex-col gap-8 text-[15px] font-light text-[var(--color-text-secondary)] leading-relaxed">
+            <div>
+              <h2 className="font-outfit font-semibold text-[18px] text-[var(--color-text-primary)] mb-3">
+                {lang === 'nl' ? 'Contactgegevens' : 'Contact details'}
+              </h2>
+              <p className="whitespace-pre-line">
+                {`${company.name}\n${company.address}\nVAT: ${company.vat}\n${lang === 'nl' ? 'E-mail' : 'Email'}: ${contactEmail}`}
+              </p>
+            </div>
             {activeContent.sections.map((section, idx) => (
               <div key={idx}>
                 {section.h && (

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useSpring, useTransform, useInView } from 'motion/react';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 interface ResultsProps {
   lang: 'nl' | 'en';
@@ -79,7 +80,7 @@ export function Results({ lang }: ResultsProps) {
     }
   }[lang];
 
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const isMobile = useIsMobile();
 
   return (
     <section className="section-padding bg-[var(--color-agency-bg)] w-full relative z-10 overflow-hidden">

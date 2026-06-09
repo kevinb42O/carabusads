@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { Target, Share2, Layers } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 interface ServicesProps {
   lang: 'nl' | 'en';
@@ -148,10 +149,10 @@ export function Services({ lang }: ServicesProps) {
     "lg:col-span-1"
   ];
 
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const isMobile = useIsMobile();
 
   return (
-    <section id="diensten" className="section-padding w-full bg-[var(--color-agency-bg)] relative z-10 overflow-clip">
+    <section id="diensten" className="section-padding w-full bg-[var(--color-agency-bg)] relative z-10 overflow-hidden">
       <div className="absolute top-1/2 right-0 w-[800px] h-[800px] bg-[var(--color-agency-accent)]/5 rounded-full blur-[150px] -translate-y-1/2 pointer-events-none translate-x-1/3" />
       
       <div className="max-w-[1200px] mx-auto relative z-10">
@@ -182,7 +183,7 @@ export function Services({ lang }: ServicesProps) {
             <motion.div
               key={i}
               variants={cardVariants}
-              className={`bento-card dark-panel rounded-2xl p-8 sm:p-10 flex flex-col relative overflow-clip group ${bentoClasses[i]}`}
+              className={`bento-card dark-panel rounded-2xl p-8 sm:p-10 flex flex-col relative overflow-hidden group ${bentoClasses[i]}`}
             >
               {i === 0 && (
                 <>

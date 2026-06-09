@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 interface LogoCloudProps {
   lang: 'nl' | 'en';
@@ -68,7 +69,7 @@ export function LogoCloud({ lang }: LogoCloudProps) {
     }
   };
 
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const isMobile = useIsMobile();
 
   return (
     <section className="py-20 relative z-10 overflow-hidden">

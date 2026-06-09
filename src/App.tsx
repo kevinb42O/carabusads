@@ -1,15 +1,15 @@
 import { useState, useEffect, useRef, useCallback, lazy, Suspense } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
+import { LogoCloud } from './components/LogoCloud';
+import { Problem } from './components/Problem';
+import { Services } from './components/Services';
+import { Results } from './components/Results';
+import { Methodology } from './components/Methodology';
+import { Boutique } from './components/Boutique';
+import { CTA } from './components/CTA';
+import { Footer } from './components/Footer';
 
-const LogoCloud = lazy(() => import('./components/LogoCloud').then(m => ({ default: m.LogoCloud })));
-const Problem = lazy(() => import('./components/Problem').then(m => ({ default: m.Problem })));
-const Services = lazy(() => import('./components/Services').then(m => ({ default: m.Services })));
-const Results = lazy(() => import('./components/Results').then(m => ({ default: m.Results })));
-const Methodology = lazy(() => import('./components/Methodology').then(m => ({ default: m.Methodology })));
-const Boutique = lazy(() => import('./components/Boutique').then(m => ({ default: m.Boutique })));
-const CTA = lazy(() => import('./components/CTA').then(m => ({ default: m.CTA })));
-const Footer = lazy(() => import('./components/Footer').then(m => ({ default: m.Footer })));
 const ChatWidget = lazy(() => import('./components/ChatWidget').then(m => ({ default: m.ChatWidget })));
 const LegalPage = lazy(() => import('./components/LegalPage').then(m => ({ default: m.LegalPage })));
 
@@ -54,21 +54,19 @@ export default function App() {
   });
 
   return (
-    <div className="min-h-screen flex flex-col w-full overflow-x-clip">
+    <div className="min-h-screen flex flex-col w-full overflow-x-hidden">
       <Header lang={lang} setLang={setLang} setActivePage={setActivePage} />
       <main className="flex-1 w-full flex flex-col">
         {activePage === 'home' ? (
           <>
             <Hero lang={lang} isReady={isReady} onReady={handleCanvasReady} />
-            <Suspense fallback={null}>
-              <LogoCloud lang={lang} />
-              <Problem lang={lang} />
-              <Services lang={lang} />
-              <Results lang={lang} />
-              <Methodology lang={lang} />
-              <Boutique lang={lang} />
-              <CTA lang={lang} />
-            </Suspense>
+            <LogoCloud lang={lang} />
+            <Problem lang={lang} />
+            <Services lang={lang} />
+            <Results lang={lang} />
+            <Methodology lang={lang} />
+            <Boutique lang={lang} />
+            <CTA lang={lang} />
           </>
         ) : (
           <Suspense fallback={<div className="h-screen w-full" />}>

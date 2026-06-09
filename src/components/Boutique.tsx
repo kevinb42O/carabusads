@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import founderImg from '../assets/images/founder_portrait_1780056093258.png';
+import { useIsMobile } from '../hooks/useIsMobile';
 interface BoutiqueProps {
   lang: 'nl' | 'en';
 }
@@ -50,7 +50,7 @@ export function Boutique({ lang }: BoutiqueProps) {
     visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.6 } }
   };
 
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const isMobile = useIsMobile();
 
   return (
     <section id="aanpak" className="section-padding bg-[var(--color-agency-bg)] overflow-hidden relative z-10">
