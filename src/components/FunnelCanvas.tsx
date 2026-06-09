@@ -199,6 +199,9 @@ export function FunnelCanvas({ scrollProgress, onReady }: FunnelCanvasProps) {
       const loopDuration = 15;
       const loopTime = isScrubbing ? progress : ((time % loopDuration) / loopDuration);
       
+      const lerp = (start: number, end: number, t: number) => start + (end - start) * t;
+      const easeInOut = (t: number) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+
       let funnelIntensity = 0;
       let cameraY = -400;
       let theta = 0;

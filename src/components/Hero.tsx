@@ -70,10 +70,6 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
   });
   const scrollYProgress = springProgress;
 
-  if (isMobile) {
-    return <HeroMobile lang={lang} onReady={onReady} content={contentDict[lang]} />;
-  }
-
   // --- Background Canvas ---
   const bgBlurValue = useTransform(scrollYProgress, [0.7, 1], [0, prefersReducedMotion ? 0 : 20]);
   const bgOpacity = useTransform(scrollYProgress, [0.8, 1], [1, 0]);
@@ -105,6 +101,11 @@ export function Hero({ lang, isReady = false, onReady }: HeroProps) {
     ["0px 0px 0px rgba(255,255,255,0)", prefersReducedMotion ? "0px 0px 0px rgba(255,255,255,0)" : "0px 0px 40px rgba(255,255,255,0.6)"]
   );
   const p2Display = useTransform(scrollYProgress, v => (v < 0.64 ? "none" : "flex") as "none" | "flex");
+
+  // Early return for mobile AFTER all hooks have been called
+  if (isMobile) {
+    return <HeroMobile lang={lang} onReady={onReady} content={contentDict[lang]} />;
+  }
 
   const content = contentDict[lang];
 
